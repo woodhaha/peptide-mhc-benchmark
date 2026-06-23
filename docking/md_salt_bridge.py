@@ -15,6 +15,7 @@ import numpy as np
 import json
 import time
 from pathlib import Path
+import pdbfixer
 import openmm as mm
 import openmm.app as app
 import openmm.unit as unit
@@ -35,15 +36,21 @@ print("=" * 70)
 t0 = time.perf_counter()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-#  1. BUILD SYSTEM
+#  1. BUILD SYSTEM (pdbfixer → OpenMM)
 # ═══════════════════════════════════════════════════════════════════════════════
-print("\n[1/5] Building system from 1DUZ...")
+print("\n[1/5] Building system from 1DUZ (pdbfixer → OpenMM)...")
 
-pdb = app.PDBFile(str(DOCK_DIR / "1DUZ.pdb"))
+# 1a. Fix PDB with pdbfixer
+fixer = pdbfixer.PDBFixer(str(DOCK_DIR / "1DUZ.pdb"))
+fixer.findMissingResidues()
+fixer.findMissingAtoms()
+fixer.addMissingAtoms()
+fixer.addMissingHydrogens(7.0)  # pH 7.0
+print(f"  PDBFixer: {len(fixer.missingResidues)} missing residues, "
+      f"{len(fixer.missingAtoms)} missing atoms fixed")
 
-modeller = app.Modeller(pdb.topology, pdb.positions)
-
-# Keep only chains A (heavy), B (B2M), C (peptide), delete everything else + HOH
+# 1b. Keep only chains A (heavy), B (B2M), C (peptide)
+modeller = app.Modeller(fixer.topology, fixer.positions)
 to_delete = []
 for chain in modeller.topology.chains():
     if chain.id not in ("A", "B", "C"):
@@ -53,8 +60,8 @@ for chain in modeller.topology.chains():
         to_delete.extend([r for r in chain.residues() if r.name == "HOH"])
 modeller.delete(to_delete)
 
+# 1c. Forcefield + solvate
 ff = app.ForceField("amber14-all.xml", "amber14/tip3pfb.xml")
-modeller.addHydrogens(forcefield=ff)
 modeller.addSolvent(
     ff, model="tip3p", padding=1.0 * unit.nanometer,
     ionicStrength=0.15 * unit.molar,
@@ -65,8 +72,9 @@ system = ff.createSystem(
     nonbondedMethod=app.PME,
     nonbondedCutoff=1.0 * unit.nanometer,
     constraints=app.HBonds,
-    # NO HMR — use standard masses for stability
 )
+n_atoms = sum(1 for _ in modeller.topology.atoms())
+print(f"  System: {n_atoms} atoms, {len(list(modeller.topology.chains()))} chains")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #  2. PRE-COMPUTE ATOM INDICES
@@ -99,50 +107,68 @@ if p2_ca_idx is None or e63_cd_idx is None:
     print("  ❌ FATAL: Could not find key atoms. Check PDB structure.")
     exit(1)
 
-# Light backbone restraints (k=5 kJ/mol/nm² — gentler than original 10)
+# Backbone restraints with gradual annealing (k=20→10→5→2→1→0)
+RESTRAINT_K = 20.0  # start value (will be ramped down)
 force = mm.CustomExternalForce("k*((x-x0)^2+(y-y0)^2+(z-z0)^2)")
-force.addGlobalParameter("k", 5.0 * unit.kilojoules_per_mole / unit.nanometer**2)
+force.addGlobalParameter("k", RESTRAINT_K * unit.kilojoules_per_mole / unit.nanometer**2)
 force.addPerParticleParameter("x0")
 force.addPerParticleParameter("y0")
 force.addPerParticleParameter("z0")
 for i in bb_indices:
     pos = modeller.positions[i]
     force.addParticle(i, [pos.x, pos.y, pos.z])
-system.addForce(force)
+restraint_idx = system.addForce(force)
 
 # ═══════════════════════════════════════════════════════════════════════════════
-#  3. MINIMIZE + EQUILIBRATE
+#  3. MINIMIZE + EQUILIBRATE (gradual restraint annealing)
 # ═══════════════════════════════════════════════════════════════════════════════
-print("[3/5] Minimizing + equilibrating...")
+print("[3/5] Minimizing + equilibrating (gradual restraint release)...")
 
 integrator = mm.LangevinMiddleIntegrator(
     300 * unit.kelvin, 1.0 / unit.picosecond, TIMESTEP * unit.femtosecond
 )
-# Use CPU platform for stability (CUDA can have precision issues with small systems)
 sim = app.Simulation(modeller.topology, system, integrator)
 sim.context.setPositions(modeller.positions)
 
-# Energy minimization
+# Energy minimization (with restraints at k=20)
 e0 = sim.context.getState(getEnergy=True).getPotentialEnergy().value_in_unit(unit.kilojoules_per_mole)
 sim.minimizeEnergy(maxIterations=5000)
 e1 = sim.context.getState(getEnergy=True).getPotentialEnergy().value_in_unit(unit.kilojoules_per_mole)
 print(f"  Minimized: {e0:.0f} → {e1:.0f} kJ/mol")
 
-# NVT warmup (100 ps)
-sim.step(50000)
+# NVT warmup (50 ps, k=20)
+sim.step(25000)
 
-# NPT equilibration (200 ps)
+# NPT equilibration with gradual restraint annealing
 system.addForce(mm.MonteCarloBarostat(1 * unit.atmosphere, 300 * unit.kelvin, 25))
 sim.context.reinitialize(preserveState=True)
-sim.step(100000)
 
-# Remove backbone restraints for production
-for i in range(system.getNumForces()):
-    f = system.getForce(i)
-    if isinstance(f, mm.CustomExternalForce):
-        f.setGlobalParameterDefaultValue(0, 0.0)
-        f.updateParametersInContext(sim.context)
-        break
+def set_restraint_k(sim, system, k_val):
+    """Gradually update restraint force constant."""
+    for i in range(system.getNumForces()):
+        f = system.getForce(i)
+        if isinstance(f, mm.CustomExternalForce):
+            f.setGlobalParameterDefaultValue(0, k_val * unit.kilojoules_per_mole / unit.nanometer**2)
+            f.updateParametersInContext(sim.context)
+            return
+
+anneal_schedule = [
+    (20.0, 25000,  "k=20"),    # 50 ps
+    (10.0, 25000,  "k=10"),    # 50 ps
+    (5.0,  50000,  "k=5"),     # 100 ps
+    (2.0,  50000,  "k=2"),     # 100 ps
+    (1.0,  50000,  "k=1"),     # 100 ps
+    (0.0,  25000,  "k=0"),     # 50 ps — fully released for last bit
+]
+total_eq_ps = sum(steps for _, steps, _ in anneal_schedule) * TIMESTEP / 1000
+print(f"  Annealing: {total_eq_ps:.0f}ps NPT ({sum(steps for _,steps,_ in anneal_schedule)} steps)")
+
+for k_val, steps, label in anneal_schedule:
+    set_restraint_k(sim, system, k_val)
+    sim.step(steps)
+    state = sim.context.getState(getEnergy=True)
+    e = state.getPotentialEnergy().value_in_unit(unit.kilojoules_per_mole)
+    print(f"    {label}  E={e:.0f} kJ/mol")
 
 print(f"  Equilibration done [{time.perf_counter() - t0:.0f}s]")
 
