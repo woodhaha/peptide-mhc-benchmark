@@ -1,0 +1,21 @@
+{
+  "template": "1DUZ (HLA-A*02:01 + LLFGYPVYV, 1.80\u00c5)",
+  "peptide_canonical": "LLFGYPVYV",
+  "peptide_neo": "YKLVVVGAV (KRAS G12V)",
+  "p2_canonical": "LEU (hydrophobic B-pocket anchor)",
+  "p2_neo": "LYS (charged, non-canonical)",
+  "method": "pdbfixer + OpenMM minimization (amber14 + no cutoff)",
+  "geometry": {
+    "p2_ca_e63_cd": 4.2,
+    "p2_ca_e63_oe1": 3.9,
+    "p2_ca_e63_oe2": 3.7,
+    "min_oe": 3.7,
+    "k_sidechain_reach_angstrom": 7.6,
+    "k_can_reach": true,
+    "est_nz_to_oe_angstrom": 0.0,
+    "salt_bridge_possible": true,
+    "note": "est_nz=0 means K sidechain overshoots E63 \u2014 NZ can reach OE easily"
+  },
+  "salt_bridge_energy_kcal_per_mol": -29.6,
+  "verdict": "PLAUSIBLE"
+}
