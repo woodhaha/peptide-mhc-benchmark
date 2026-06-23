@@ -1,0 +1,7 @@
+{
+  "tool_name": "PowerShell",
+  "tool_input_preview": "{\"command\":\"wsl bash -c 'cd ~/hdock_work3 && echo \\\"nmax only:\\\" && ./createpl KRAS_G12V_neo.out t1.pdb -nmax 3 2>&1 && ls t1* && echo \\\"models:\\\" && ./createpl KRAS_G12V_neo.out t2.pdb -nmax 3 -model...",
+  "error": "Exit code 2\nls: cannot access 't2*': No such file or directory",
+  "timestamp": "2026-06-19T09:00:36.281Z",
+  "retry_count": 1
+}

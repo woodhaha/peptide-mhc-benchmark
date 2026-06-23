@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd \\\"D:/Researching/Peptide epitope/docking\\\" && python -c \\\"\\nimport openmm as mm, openmm.app as app, openmm.unit as unit\\nimport numpy as np\\n\\nforcefield = app.ForceField('amber14-all.x...",
+  "error": "Exit code 1\nTraceback (most recent call last):\r\n  File \"<string>\", line 51, in <module>\r\n    d = np.linalg.norm(pos[p2_ca_idx] - pos[e63_oe2_idx])\r\n                           ^^^^^^^^^\r\nNameError: name 'p2_ca_idx' is not defined\r\nTemplate complex (LLFGYPVYV): E = -49963 kJ/mol\r\n  Chain A (heavy): -49963 kJ/mol\r\n  Chain B (B2M): 0 kJ/mol\r\n  Chain C (peptide): 0 kJ/mol\r\n  Interaction A-C: 0 kJ/mol",
+  "timestamp": "2026-06-19T09:09:19.101Z",
+  "retry_count": 2
+}

@@ -1,0 +1,85 @@
+{
+  "receptor_energy_kj_mol": -47775.8,
+  "peptides": {
+    "KRAS_G12V_neo": {
+      "sequence": "YKLVVVGAV",
+      "e_peptide": -8600,
+      "p2": "K",
+      "p9": "V",
+      "p2_canonical": false,
+      "p9_canonical": true,
+      "anchor_score": 2.3,
+      "e63_bonus": 2.0
+    },
+    "KRAS_G12V_wt": {
+      "sequence": "YKLVVVGAG",
+      "e_peptide": -8600,
+      "p2": "K",
+      "p9": "G",
+      "p2_canonical": false,
+      "p9_canonical": false,
+      "anchor_score": -2.3,
+      "e63_bonus": 2.0
+    },
+    "KRAS_G12V_enh": {
+      "sequence": "LVVVGAVGV",
+      "e_peptide": -8600,
+      "p2": "V",
+      "p9": "V",
+      "p2_canonical": true,
+      "p9_canonical": true,
+      "anchor_score": 8.4,
+      "e63_bonus": 0.0
+    },
+    "p53_R248W_neo": {
+      "sequence": "MNWRPILTI",
+      "e_peptide": -8600,
+      "p2": "N",
+      "p9": "I",
+      "p2_canonical": false,
+      "p9_canonical": true,
+      "anchor_score": 1.0,
+      "e63_bonus": 0.0
+    },
+    "p53_R248W_wt": {
+      "sequence": "MNRRPILTI",
+      "e_peptide": -8600,
+      "p2": "N",
+      "p9": "I",
+      "p2_canonical": false,
+      "p9_canonical": true,
+      "anchor_score": 1.0,
+      "e63_bonus": 0.0
+    },
+    "Template_Tax": {
+      "sequence": "LLFGYPVYV",
+      "e_peptide": -8600,
+      "p2": "L",
+      "p9": "V",
+      "p2_canonical": true,
+      "p9_canonical": true,
+      "anchor_score": 8.0,
+      "e63_bonus": 0.0
+    },
+    "CMV_NLV": {
+      "sequence": "NLVPMVATV",
+      "e_peptide": -8600,
+      "p2": "L",
+      "p9": "V",
+      "p2_canonical": true,
+      "p9_canonical": true,
+      "anchor_score": 8.0,
+      "e63_bonus": 0.0
+    },
+    "Flu_GIL": {
+      "sequence": "GILGFVFTL",
+      "e_peptide": -8600,
+      "p2": "I",
+      "p9": "L",
+      "p2_canonical": true,
+      "p9_canonical": true,
+      "anchor_score": 8.3,
+      "e63_bonus": 0.0
+    }
+  }
+}

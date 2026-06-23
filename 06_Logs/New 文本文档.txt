@@ -1,0 +1,40 @@
+https://pypi.org/project/mhctools/
+
+results = predictor.predict(["SIINFEKL", "GILGFVFTL"])
+r = results[0]
+
+r.peptide                    # "SIINFEKL"
+r.affinity.value             # IC50 in nM
+r.affinity.percentile_rank   # 0-100, lower = better
+r.affinity.allele            # best allele for this kind
+r.presentation               # None if predictor doesn't produce it
+
+https://github.com/tzina97/netMHCpan
+
+https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2025.1616113/full
+
+plot the feature map using pep_plot_images() function puls the feature heatmap of high score predicted and comfermed
+  epitops
+
+
+∴ The user wants two things:
+  1. Use pep_plot_images() function to visualize the BLOSUM62-encoded peptide "images" for the high-scoring predicted and confirmed epitopes
+  2. A feature heatmap showing the learned features (from the penultimate layer) for those same epitopes
+
+  pep_plot_images() is from the PepTools package which isn't installed. But I can recreate it using ggplot2 — it visualizes the 9×20 BLOSUM62 encoding as a heatmap/image.
+
+  Let me create:
+  1. BLOSUM62 encoding visualization for top epitopes (the "peptide images")
+  2. A heatmap of the 90 learned features for those same epitopes
+
+  I'll select the top confirmed and novel epitopes from the benchmark and scan results.
+
+
+
+
+
+
+
+ assemble the full manuscript FOR Briefings in Bioinformatics
+
+

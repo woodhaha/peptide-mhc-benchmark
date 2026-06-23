@@ -1,0 +1,7 @@
+,accuracy,macro_f1
+Deep FFN,0.8137,0.8185
+FFN (Jessen),0.8431,0.8501
+CNN,0.8431,0.8482
+LSTM,0.6961,0.7073
+ResNet,0.7549,0.7619
+Random Forest,0.8529,0.8584

@@ -1,0 +1,450 @@
+REMARK Number:     1
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -157.27
+REMARK RMSD:     22.29
+MODEL        1
+HEADER lig_1.pdb
+ATOM      1  N   M A   1        12.414 -19.959  21.324 
+ATOM      2  CA  M A   1        12.203 -18.833  20.419 
+ATOM      3  C   M A   1        11.982 -17.653  19.471 
+ATOM      4  O   M A   1        11.236 -17.668  18.334 
+ATOM      5  N   N A   2        11.791 -16.627  18.646 
+ATOM      6  CA  N A   2        11.580 -15.500  17.742 
+ATOM      7  C   N A   2        11.360 -14.320  16.793 
+ATOM      8  O   N A   2        10.613 -14.336  15.657 
+ATOM      9  N   R A   3        11.168 -13.294  15.969 
+ATOM     10  CA  R A   3        10.957 -12.168  15.064 
+ATOM     11  C   R A   3        10.737 -10.988  14.116 
+ATOM     12  O   R A   3         9.990 -11.004  12.979 
+ATOM     13  N   R A   4        10.545  -9.962  13.291 
+ATOM     14  CA  R A   4        10.334  -8.836  12.387 
+ATOM     15  C   R A   4        10.114  -7.655  11.438 
+ATOM     16  O   R A   4         9.367  -7.671  10.302 
+ATOM     17  N   P A   5         9.922  -6.629  10.614 
+ATOM     18  CA  P A   5         9.711  -5.503   9.709 
+ATOM     19  C   P A   5         9.491  -4.323   8.761 
+ATOM     20  O   P A   5         8.744  -4.339   7.624 
+ATOM     21  N   I A   6         9.299  -3.297   7.936 
+ATOM     22  CA  I A   6         9.089  -2.171   7.031 
+ATOM     23  C   I A   6         8.868  -0.990   6.083 
+ATOM     24  O   I A   6         8.121  -1.006   4.947 
+ATOM     25  N   L A   7         8.676   0.036   5.259 
+ATOM     26  CA  L A   7         8.466   1.162   4.354 
+ATOM     27  C   L A   7         8.245   2.342   3.406 
+ATOM     28  O   L A   7         7.498   2.326   2.269 
+ATOM     29  N   T A   8         8.053   3.368   2.581 
+ATOM     30  CA  T A   8         7.843   4.494   1.676 
+ATOM     31  C   T A   8         7.622   5.674   0.728 
+ATOM     32  O   T A   8         6.875   5.659  -0.408 
+ATOM     33  N   I A   9         7.430   6.700  -0.096 
+ATOM     34  CA  I A   9         7.220   7.827  -1.001 
+ATOM     35  C   I A   9         6.999   9.007  -1.949 
+ATOM     36  O   I A   9         6.252   8.991  -3.086 
+TER
+ENDMDL
+REMARK Number:     2
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -145.41
+REMARK RMSD:     20.84
+MODEL        2
+HEADER lig_2.pdb
+ATOM      1  N   M A   1         7.018   9.491  -2.475 
+ATOM      2  CA  M A   1         7.218   8.366  -1.567 
+ATOM      3  C   M A   1         7.428   7.187  -0.614 
+ATOM      4  O   M A   1         6.565   6.155  -0.416 
+ATOM      5  N   N A   2         7.611   6.162   0.213 
+ATOM      6  CA  N A   2         7.812   5.037   1.122 
+ATOM      7  C   N A   2         8.022   3.858   2.074 
+ATOM      8  O   N A   2         7.158   2.826   2.273 
+ATOM      9  N   R A   3         8.204   2.833   2.902 
+ATOM     10  CA  R A   3         8.405   1.708   3.811 
+ATOM     11  C   R A   3         8.615   0.529   4.763 
+ATOM     12  O   R A   3         7.751  -0.503   4.961 
+ATOM     13  N   R A   4         8.797  -0.496   5.591 
+ATOM     14  CA  R A   4         8.998  -1.621   6.499 
+ATOM     15  C   R A   4         9.208  -2.800   7.452 
+ATOM     16  O   R A   4         8.344  -3.832   7.650 
+ATOM     17  N   P A   5         9.391  -3.825   8.279 
+ATOM     18  CA  P A   5         9.591  -4.950   9.188 
+ATOM     19  C   P A   5         9.801  -6.129  10.140 
+ATOM     20  O   P A   5         8.937  -7.161  10.339 
+ATOM     21  N   I A   6         9.984  -7.154  10.968 
+ATOM     22  CA  I A   6        10.184  -8.279  11.877 
+ATOM     23  C   I A   6        10.394  -9.458  12.829 
+ATOM     24  O   I A   6         9.531 -10.490  13.027 
+ATOM     25  N   L A   7        10.577 -10.483  13.657 
+ATOM     26  CA  L A   7        10.777 -11.608  14.565 
+ATOM     27  C   L A   7        10.987 -12.787  15.518 
+ATOM     28  O   L A   7        10.124 -13.819  15.716 
+ATOM     29  N   T A   8        11.170 -13.812  16.345 
+ATOM     30  CA  T A   8        11.370 -14.937  17.254 
+ATOM     31  C   T A   8        11.580 -16.116  18.206 
+ATOM     32  O   T A   8        10.717 -17.148  18.405 
+ATOM     33  N   I A   9        11.763 -17.141  19.034 
+ATOM     34  CA  I A   9        11.964 -18.266  19.943 
+ATOM     35  C   I A   9        12.174 -19.445  20.895 
+ATOM     36  O   I A   9        11.310 -20.477  21.093 
+TER
+ENDMDL
+REMARK Number:     3
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -142.12
+REMARK RMSD:     18.42
+MODEL        3
+HEADER lig_3.pdb
+ATOM      1  N   M A   1         2.968   4.327 -17.358 
+ATOM      2  CA  M A   1         3.318   3.849 -16.023 
+ATOM      3  C   M A   1         3.685   3.348 -14.625 
+ATOM      4  O   M A   1         2.969   3.556 -13.487 
+ATOM      5  N   N A   2         4.004   2.913 -13.409 
+ATOM      6  CA  N A   2         4.354   2.435 -12.075 
+ATOM      7  C   N A   2         4.721   1.934 -10.677 
+ATOM      8  O   N A   2         4.005   2.142  -9.539 
+ATOM      9  N   R A   3         5.040   1.499  -9.461 
+ATOM     10  CA  R A   3         5.390   1.021  -8.127 
+ATOM     11  C   R A   3         5.757   0.521  -6.728 
+ATOM     12  O   R A   3         5.041   0.728  -5.591 
+ATOM     13  N   R A   4         6.076   0.085  -5.513 
+ATOM     14  CA  R A   4         6.427  -0.392  -4.178 
+ATOM     15  C   R A   4         6.794  -0.893  -2.780 
+ATOM     16  O   R A   4         6.077  -0.686  -1.642 
+ATOM     17  N   P A   5         7.113  -1.329  -1.564 
+ATOM     18  CA  P A   5         7.463  -1.806  -0.230 
+ATOM     19  C   P A   5         7.830  -2.307   1.169 
+ATOM     20  O   P A   5         7.113  -2.099   2.306 
+ATOM     21  N   I A   6         8.149  -2.742   2.384 
+ATOM     22  CA  I A   6         8.499  -3.220   3.719 
+ATOM     23  C   I A   6         8.866  -3.721   5.117 
+ATOM     24  O   I A   6         8.150  -3.513   6.255 
+ATOM     25  N   L A   7         9.185  -4.156   6.333 
+ATOM     26  CA  L A   7         9.535  -4.634   7.667 
+ATOM     27  C   L A   7         9.902  -5.135   9.065 
+ATOM     28  O   L A   7         9.186  -4.927  10.203 
+ATOM     29  N   T A   8        10.221  -5.570  10.281 
+ATOM     30  CA  T A   8        10.571  -6.048  11.615 
+ATOM     31  C   T A   8        10.938  -6.549  13.014 
+ATOM     32  O   T A   8        10.222  -6.341  14.151 
+ATOM     33  N   I A   9        11.257  -6.984  14.229 
+ATOM     34  CA  I A   9        11.607  -7.462  15.564 
+ATOM     35  C   I A   9        11.974  -7.962  16.962 
+ATOM     36  O   I A   9        11.258  -7.755  18.100 
+TER
+ENDMDL
+REMARK Number:     4
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -139.68
+REMARK RMSD:     21.36
+MODEL        4
+HEADER lig_4.pdb
+ATOM      1  N   M A   1        12.964  -9.347  20.956 
+ATOM      2  CA  M A   1        12.623  -8.858  19.623 
+ATOM      3  C   M A   1        12.266  -8.345  18.226 
+ATOM      4  O   M A   1        11.010  -8.157  17.740 
+ATOM      5  N   N A   2        11.956  -7.899  17.012 
+ATOM      6  CA  N A   2        11.615  -7.410  15.680 
+ATOM      7  C   N A   2        11.258  -6.898  14.283 
+ATOM      8  O   N A   2        10.002  -6.710  13.797 
+ATOM      9  N   R A   3        10.948  -6.452  13.069 
+ATOM     10  CA  R A   3        10.607  -5.963  11.736 
+ATOM     11  C   R A   3        10.250  -5.450  10.339 
+ATOM     12  O   R A   3         8.994  -5.262   9.853 
+ATOM     13  N   R A   4         9.940  -5.004   9.125 
+ATOM     14  CA  R A   4         9.599  -4.515   7.793 
+ATOM     15  C   R A   4         9.242  -4.003   6.396 
+ATOM     16  O   R A   4         7.986  -3.815   5.910 
+ATOM     17  N   P A   5         8.932  -3.557   5.182 
+ATOM     18  CA  P A   5         8.591  -3.068   3.849 
+ATOM     19  C   P A   5         8.234  -2.555   2.452 
+ATOM     20  O   P A   5         6.978  -2.367   1.966 
+ATOM     21  N   I A   6         7.924  -2.109   1.238 
+ATOM     22  CA  I A   6         7.583  -1.620  -0.094 
+ATOM     23  C   I A   6         7.226  -1.108  -1.491 
+ATOM     24  O   I A   6         5.970  -0.920  -1.977 
+ATOM     25  N   L A   7         6.916  -0.662  -2.705 
+ATOM     26  CA  L A   7         6.575  -0.173  -4.038 
+ATOM     27  C   L A   7         6.218   0.340  -5.435 
+ATOM     28  O   L A   7         4.962   0.528  -5.921 
+ATOM     29  N   T A   8         5.908   0.786  -6.649 
+ATOM     30  CA  T A   8         5.567   1.275  -7.981 
+ATOM     31  C   T A   8         5.210   1.787  -9.378 
+ATOM     32  O   T A   8         3.954   1.975  -9.864 
+ATOM     33  N   I A   9         4.900   2.233 -10.592 
+ATOM     34  CA  I A   9         4.559   2.722 -11.925 
+ATOM     35  C   I A   9         4.202   3.235 -13.322 
+ATOM     36  O   I A   9         2.946   3.423 -13.808 
+TER
+ENDMDL
+REMARK Number:     5
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -134.72
+REMARK RMSD:     38.57
+MODEL        5
+HEADER lig_5.pdb
+ATOM      1  N   M A   1        16.099 -12.446 -24.317 
+ATOM      2  CA  M A   1        14.852 -12.955 -23.755 
+ATOM      3  C   M A   1        13.545 -13.489 -23.166 
+ATOM      4  O   M A   1        13.042 -13.196 -21.936 
+ATOM      5  N   N A   2        12.408 -13.953 -22.654 
+ATOM      6  CA  N A   2        11.161 -14.463 -22.092 
+ATOM      7  C   N A   2         9.853 -14.996 -21.503 
+ATOM      8  O   N A   2         9.351 -14.703 -20.273 
+ATOM      9  N   R A   3         8.717 -15.460 -20.991 
+ATOM     10  CA  R A   3         7.469 -15.970 -20.429 
+ATOM     11  C   R A   3         6.162 -16.504 -19.840 
+ATOM     12  O   R A   3         5.660 -16.210 -18.611 
+ATOM     13  N   R A   4         5.026 -16.968 -19.328 
+ATOM     14  CA  R A   4         3.778 -17.477 -18.766 
+ATOM     15  C   R A   4         2.471 -18.011 -18.177 
+ATOM     16  O   R A   4         1.969 -17.718 -16.948 
+ATOM     17  N   P A   5         1.335 -18.475 -17.665 
+ATOM     18  CA  P A   5         0.087 -18.984 -17.103 
+ATOM     19  C   P A   5        -1.220 -19.518 -16.514 
+ATOM     20  O   P A   5        -1.723 -19.225 -15.285 
+ATOM     21  N   I A   6        -2.357 -19.982 -16.002 
+ATOM     22  CA  I A   6        -3.604 -20.492 -15.440 
+ATOM     23  C   I A   6        -4.912 -21.026 -14.851 
+ATOM     24  O   I A   6        -5.414 -20.732 -13.622 
+ATOM     25  N   L A   7        -6.048 -21.490 -14.339 
+ATOM     26  CA  L A   7        -7.295 -21.999 -13.777 
+ATOM     27  C   L A   7        -8.603 -22.533 -13.189 
+ATOM     28  O   L A   7        -9.105 -22.240 -11.959 
+ATOM     29  N   T A   8        -9.739 -22.997 -12.677 
+ATOM     30  CA  T A   8       -10.987 -23.506 -12.115 
+ATOM     31  C   T A   8       -12.294 -24.040 -11.526 
+ATOM     32  O   T A   8       -12.796 -23.747 -10.296 
+ATOM     33  N   I A   9       -13.430 -24.504 -11.014 
+ATOM     34  CA  I A   9       -14.678 -25.014 -10.452 
+ATOM     35  C   I A   9       -15.985 -25.548  -9.863 
+ATOM     36  O   I A   9       -16.487 -25.254  -8.633 
+TER
+ENDMDL
+REMARK Number:     6
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -133.27
+REMARK RMSD:     31.85
+MODEL        6
+HEADER lig_6.pdb
+ATOM      1  N   M A   1       -15.952 -25.581  -9.833 
+ATOM      2  CA  M A   1       -14.703 -25.071 -10.389 
+ATOM      3  C   M A   1       -13.393 -24.536 -10.972 
+ATOM      4  O   M A   1       -12.693 -23.463 -10.515 
+ATOM      5  N   N A   2       -12.254 -24.072 -11.478 
+ATOM      6  CA  N A   2       -11.004 -23.561 -12.034 
+ATOM      7  C   N A   2        -9.695 -23.027 -12.617 
+ATOM      8  O   N A   2        -8.995 -21.954 -12.160 
+ATOM      9  N   R A   3        -8.556 -22.562 -13.124 
+ATOM     10  CA  R A   3        -7.306 -22.052 -13.680 
+ATOM     11  C   R A   3        -5.996 -21.517 -14.262 
+ATOM     12  O   R A   3        -5.297 -20.444 -13.805 
+ATOM     13  N   R A   4        -4.858 -21.053 -14.769 
+ATOM     14  CA  R A   4        -3.608 -20.542 -15.325 
+ATOM     15  C   R A   4        -2.298 -20.008 -15.908 
+ATOM     16  O   R A   4        -1.598 -18.935 -15.451 
+ATOM     17  N   P A   5        -1.160 -19.543 -16.414 
+ATOM     18  CA  P A   5         0.090 -19.033 -16.970 
+ATOM     19  C   P A   5         1.400 -18.498 -17.553 
+ATOM     20  O   P A   5         2.100 -17.425 -17.096 
+ATOM     21  N   I A   6         2.538 -18.033 -18.059 
+ATOM     22  CA  I A   6         3.788 -17.523 -18.615 
+ATOM     23  C   I A   6         5.098 -16.989 -19.198 
+ATOM     24  O   I A   6         5.798 -15.915 -18.741 
+ATOM     25  N   L A   7         6.237 -16.524 -19.705 
+ATOM     26  CA  L A   7         7.487 -16.014 -20.261 
+ATOM     27  C   L A   7         8.796 -15.479 -20.843 
+ATOM     28  O   L A   7         9.496 -14.406 -20.386 
+ATOM     29  N   T A   8         9.935 -15.014 -21.350 
+ATOM     30  CA  T A   8        11.185 -14.504 -21.906 
+ATOM     31  C   T A   8        12.495 -13.969 -22.489 
+ATOM     32  O   T A   8        13.194 -12.896 -22.032 
+ATOM     33  N   I A   9        13.633 -13.505 -22.995 
+ATOM     34  CA  I A   9        14.883 -12.994 -23.551 
+ATOM     35  C   I A   9        16.193 -12.460 -24.134 
+ATOM     36  O   I A   9        16.892 -11.387 -23.677 
+TER
+ENDMDL
+REMARK Number:     7
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -133.25
+REMARK RMSD:     22.48
+MODEL        7
+HEADER lig_7.pdb
+ATOM      1  N   M A   1        11.505  -6.958  13.289 
+ATOM      2  CA  M A   1        11.130  -6.460  11.969 
+ATOM      3  C   M A   1        10.736  -5.939  10.585 
+ATOM      4  O   M A   1         9.835  -4.953  10.329 
+ATOM      5  N   N A   2        10.394  -5.486   9.383 
+ATOM      6  CA  N A   2        10.018  -4.989   8.062 
+ATOM      7  C   N A   2         9.624  -4.467   6.679 
+ATOM      8  O   N A   2         8.724  -3.481   6.422 
+ATOM      9  N   R A   3         9.282  -4.014   5.476 
+ATOM     10  CA  R A   3         8.907  -3.517   4.156 
+ATOM     11  C   R A   3         8.513  -2.995   2.772 
+ATOM     12  O   R A   3         7.612  -2.009   2.516 
+ATOM     13  N   R A   4         8.171  -2.542   1.570 
+ATOM     14  CA  R A   4         7.795  -2.045   0.250 
+ATOM     15  C   R A   4         7.401  -1.524  -1.134 
+ATOM     16  O   R A   4         6.500  -0.537  -1.391 
+ATOM     17  N   P A   5         7.059  -1.070  -2.337 
+ATOM     18  CA  P A   5         6.683  -0.573  -3.657 
+ATOM     19  C   P A   5         6.290  -0.052  -5.040 
+ATOM     20  O   P A   5         5.389   0.934  -5.297 
+ATOM     21  N   I A   6         5.948   0.401  -6.243 
+ATOM     22  CA  I A   6         5.572   0.899  -7.563 
+ATOM     23  C   I A   6         5.178   1.420  -8.947 
+ATOM     24  O   I A   6         4.277   2.406  -9.204 
+ATOM     25  N   L A   7         4.836   1.873 -10.150 
+ATOM     26  CA  L A   7         4.460   2.371 -11.470 
+ATOM     27  C   L A   7         4.067   2.892 -12.853 
+ATOM     28  O   L A   7         3.166   3.878 -13.110 
+ATOM     29  N   T A   8         3.724   3.345 -14.056 
+ATOM     30  CA  T A   8         3.349   3.842 -15.376 
+ATOM     31  C   T A   8         2.955   4.364 -16.760 
+ATOM     32  O   T A   8         2.054   5.350 -17.017 
+ATOM     33  N   I A   9         2.613   4.817 -17.963 
+ATOM     34  CA  I A   9         2.237   5.314 -19.283 
+ATOM     35  C   I A   9         1.843   5.836 -20.666 
+ATOM     36  O   I A   9         0.943   6.822 -20.923 
+TER
+ENDMDL
+REMARK Number:     8
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -132.52
+REMARK RMSD:     33.83
+MODEL        8
+HEADER lig_8.pdb
+ATOM      1  N   M A   1         5.017 -23.714   7.712 
+ATOM      2  CA  M A   1         4.265 -22.493   7.987 
+ATOM      3  C   M A   1         3.477 -21.214   8.274 
+ATOM      4  O   M A   1         3.424 -20.111   7.481 
+ATOM      5  N   N A   2         2.791 -20.102   8.525 
+ATOM      6  CA  N A   2         2.039 -18.881   8.799 
+ATOM      7  C   N A   2         1.251 -17.601   9.087 
+ATOM      8  O   N A   2         1.199 -16.498   8.293 
+ATOM      9  N   R A   3         0.566 -16.489   9.337 
+ATOM     10  CA  R A   3        -0.187 -15.268   9.612 
+ATOM     11  C   R A   3        -0.975 -13.989   9.899 
+ATOM     12  O   R A   3        -1.027 -12.886   9.105 
+ATOM     13  N   R A   4        -1.660 -12.877  10.149 
+ATOM     14  CA  R A   4        -2.412 -11.656  10.424 
+ATOM     15  C   R A   4        -3.201 -10.377  10.712 
+ATOM     16  O   R A   4        -3.253  -9.274   9.918 
+ATOM     17  N   P A   5        -3.886  -9.265  10.962 
+ATOM     18  CA  P A   5        -4.638  -8.044  11.236 
+ATOM     19  C   P A   5        -5.426  -6.765  11.524 
+ATOM     20  O   P A   5        -5.478  -5.661  10.730 
+ATOM     21  N   I A   6        -6.111  -5.652  11.774 
+ATOM     22  CA  I A   6        -6.864  -4.432  12.049 
+ATOM     23  C   I A   6        -7.652  -3.152  12.337 
+ATOM     24  O   I A   6        -7.704  -2.049  11.543 
+ATOM     25  N   L A   7        -8.337  -2.040  12.587 
+ATOM     26  CA  L A   7        -9.089  -0.819  12.861 
+ATOM     27  C   L A   7        -9.878   0.460  13.149 
+ATOM     28  O   L A   7        -9.930   1.563  12.355 
+ATOM     29  N   T A   8       -10.563   1.572  13.399 
+ATOM     30  CA  T A   8       -11.315   2.793  13.674 
+ATOM     31  C   T A   8       -12.103   4.072  13.961 
+ATOM     32  O   T A   8       -12.155   5.176  13.167 
+ATOM     33  N   I A   9       -12.788   5.185  14.211 
+ATOM     34  CA  I A   9       -13.541   6.405  14.486 
+ATOM     35  C   I A   9       -14.329   7.685  14.774 
+ATOM     36  O   I A   9       -14.381   8.788  13.980 
+TER
+ENDMDL
+REMARK Number:     9
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -131.84
+REMARK RMSD:     31.94
+MODEL        9
+HEADER lig_9.pdb
+ATOM      1  N   M A   1        -0.818  -2.918  27.649 
+ATOM      2  CA  M A   1        -1.002  -3.574  26.357 
+ATOM      3  C   M A   1        -1.194  -4.261  25.004 
+ATOM      4  O   M A   1        -0.561  -3.937  23.845 
+ATOM      5  N   N A   2        -1.362  -4.858  23.828 
+ATOM      6  CA  N A   2        -1.546  -5.514  22.536 
+ATOM      7  C   N A   2        -1.738  -6.201  21.183 
+ATOM      8  O   N A   2        -1.105  -5.877  20.024 
+ATOM      9  N   R A   3        -1.906  -6.799  20.006 
+ATOM     10  CA  R A   3        -2.089  -7.455  18.715 
+ATOM     11  C   R A   3        -2.282  -8.142  17.362 
+ATOM     12  O   R A   3        -1.649  -7.817  16.202 
+ATOM     13  N   R A   4        -2.450  -8.739  16.185 
+ATOM     14  CA  R A   4        -2.633  -9.395  14.894 
+ATOM     15  C   R A   4        -2.826 -10.082  13.540 
+ATOM     16  O   R A   4        -2.193  -9.758  12.381 
+ATOM     17  N   P A   5        -2.993 -10.680  12.364 
+ATOM     18  CA  P A   5        -3.177 -11.335  11.073 
+ATOM     19  C   P A   5        -3.370 -12.023   9.719 
+ATOM     20  O   P A   5        -2.737 -11.698   8.560 
+ATOM     21  N   I A   6        -3.537 -12.620   8.543 
+ATOM     22  CA  I A   6        -3.721 -13.276   7.251 
+ATOM     23  C   I A   6        -3.914 -13.963   5.898 
+ATOM     24  O   I A   6        -3.280 -13.639   4.739 
+ATOM     25  N   L A   7        -4.081 -14.561   4.722 
+ATOM     26  CA  L A   7        -4.265 -15.216   3.430 
+ATOM     27  C   L A   7        -4.458 -15.904   2.077 
+ATOM     28  O   L A   7        -3.824 -15.579   0.918 
+ATOM     29  N   T A   8        -4.625 -16.501   0.900 
+ATOM     30  CA  T A   8        -4.809 -17.157  -0.391 
+ATOM     31  C   T A   8        -5.001 -17.844  -1.744 
+ATOM     32  O   T A   8        -4.368 -17.520  -2.904 
+ATOM     33  N   I A   9        -5.169 -18.441  -2.921 
+ATOM     34  CA  I A   9        -5.353 -19.097  -4.212 
+ATOM     35  C   I A   9        -5.545 -19.784  -5.565 
+ATOM     36  O   I A   9        -4.912 -19.460  -6.725 
+TER
+ENDMDL
+REMARK Number:    10
+REMARK Ligand:     peptide_p53_R248W_wt.pdb
+REMARK Contact:     0     0     0
+REMARK Score:  -131.34
+REMARK RMSD:     30.46
+MODEL       10
+HEADER lig_10.pdb
+ATOM      1  N   M A   1       -16.281  10.326  15.163 
+ATOM      2  CA  M A   1       -15.520   9.109  14.895 
+ATOM      3  C   M A   1       -14.722   7.834  14.615 
+ATOM      4  O   M A   1       -14.013   7.566  13.486 
+ATOM      5  N   N A   2       -14.028   6.726  14.372 
+ATOM      6  CA  N A   2       -13.266   5.509  14.104 
+ATOM      7  C   N A   2       -12.468   4.235  13.824 
+ATOM      8  O   N A   2       -11.759   3.966  12.695 
+ATOM      9  N   R A   3       -11.774   3.126  13.581 
+ATOM     10  CA  R A   3       -11.013   1.910  13.313 
+ATOM     11  C   R A   3       -10.215   0.635  13.033 
+ATOM     12  O   R A   3        -9.506   0.367  11.904 
+ATOM     13  N   R A   4        -9.521  -0.473  12.790 
+ATOM     14  CA  R A   4        -8.759  -1.690  12.522 
+ATOM     15  C   R A   4        -7.961  -2.965  12.242 
+ATOM     16  O   R A   4        -7.252  -3.233  11.113 
+ATOM     17  N   P A   5        -7.267  -4.073  11.998 
+ATOM     18  CA  P A   5        -6.506  -5.290  11.731 
+ATOM     19  C   P A   5        -5.708  -6.565  11.451 
+ATOM     20  O   P A   5        -4.999  -6.833  10.321 
+ATOM     21  N   I A   6        -5.014  -7.673  11.207 
+ATOM     22  CA  I A   6        -4.252  -8.890  10.940 
+ATOM     23  C   I A   6        -3.454 -10.164  10.660 
+ATOM     24  O   I A   6        -2.745 -10.433   9.530 
+ATOM     25  N   L A   7        -2.760 -11.273  10.416 
+ATOM     26  CA  L A   7        -1.999 -12.489  10.149 
+ATOM     27  C   L A   7        -1.200 -13.764   9.869 
+ATOM     28  O   L A   7        -0.492 -14.032   8.739 
+ATOM     29  N   T A   8        -0.507 -14.872   9.625 
+ATOM     30  CA  T A   8         0.255 -16.089   9.358 
+ATOM     31  C   T A   8         1.053 -17.364   9.078 
+ATOM     32  O   T A   8         1.762 -17.632   7.948 
+ATOM     33  N   I A   9         1.747 -18.472   8.834 
+ATOM     34  CA  I A   9         2.509 -19.689   8.567 
+ATOM     35  C   I A   9         3.307 -20.964   8.287 
+ATOM     36  O   I A   9         4.015 -21.232   7.157 
+TER
+ENDMDL
