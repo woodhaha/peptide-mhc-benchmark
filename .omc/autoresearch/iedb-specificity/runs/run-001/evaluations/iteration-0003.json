@@ -1,0 +1,1 @@
+{"iteration":3,"approach":"data_augmentation_homopolymers","pass":false,"specificity":0.80,"sensitivity":0.939,"note":"Same as class-weight iterations — BLOSUM62 ceiling at 80% without filter"}

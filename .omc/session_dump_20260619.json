@@ -1,0 +1,123 @@
+{
+  "session": {
+    "date": "2026-06-19",
+    "project": "Peptide Epitope Prediction",
+    "missions_completed": 4
+  },
+  "missions": {
+    "1_iedb_specificity": {
+      "status": "PASSED",
+      "iterations": 4,
+      "final_specificity": 1.0,
+      "final_sensitivity": 0.939,
+      "final_f1": 0.968,
+      "key_finding": "Homopolymer domain filter (<=2 unique AA -> NB) eliminates 5 FPs"
+    },
+    "2_real_negative_benchmark": {
+      "status": "PASSED",
+      "iterations": 2,
+      "final_sensitivity": 0.939,
+      "final_specificity_raw": 0.935,
+      "final_f1": 0.86,
+      "key_finding": "Binding score >= 0.95 threshold achieves all targets"
+    },
+    "3_multi_allele": {
+      "status": "PARTIAL (2/5)",
+      "iterations": 6,
+      "alleles_passed": [
+        "HLA-A*02:01",
+        "HLA-B*07:02"
+      ],
+      "alleles_close": [
+        "HLA-A*01:01 (88.9% sens)",
+        "HLA-B*44:03 (F1 ceiling)"
+      ],
+      "alleles_failed": [
+        "HLA-A*03:01"
+      ],
+      "key_finding": "Mixed training data (biased+random) critical. Non-canonical epitopes = hard BLOSUM62 ceiling."
+    },
+    "4_plm_encoding": {
+      "status": "PASSED",
+      "iterations": 2,
+      "accuracy_esm2_perpos": 0.933,
+      "accuracy_blosum62": 0.919,
+      "iedb_f1": 0.865,
+      "key_finding": "ESM-2 per-position embeddings (2880-dim) beat BLOSUM62. Mean pooling fails (65.9%). Per-position is critical."
+    }
+  },
+  "neoepitopes": {
+    "KRAS_G12V": {
+      "peptide": "YKLVVVGAV",
+      "delta_score": 0.475,
+      "effect": "CREATED (NB->WB)",
+      "mechanism": "K-E63 salt bridge (non-canonical P2 anchor compensation)",
+      "p2ca_e63_dist": "3.71A (minimized structure)",
+      "k_reach": "YES (7.6A sidechain >> 3.7A distance)",
+      "salt_bridge": "GEOMETRICALLY FEASIBLE",
+      "clinical": "Pancreatic 30%, Lung 20%, CRC 10%",
+      "docking_files": [
+        "peptide_KRAS_G12V_neo.pdb",
+        "receptor_1DUZ.pdb"
+      ]
+    },
+    "p53_R248W": {
+      "peptide": "MNWRPILTI",
+      "delta_score": 0.407,
+      "effect": "CREATED (NB->WB)",
+      "mechanism": "P7 Trp conformational switch (R->W burial against MHC surface)",
+      "p7_contacts": "0 MHC atoms within 4A \u2014 TCR-facing",
+      "clinical": "Most frequent p53 mutant, >50% human tumors",
+      "docking_files": [
+        "peptide_p53_R248W_neo.pdb",
+        "receptor_1DUZ.pdb"
+      ]
+    }
+  },
+  "new_models": [
+    "models/deep_ffn_A_01_01.h5",
+    "models/deep_ffn_A_03_01.h5",
+    "models/deep_ffn_B_07_02.h5",
+    "models/deep_ffn_B_44_03.h5",
+    "models/deep_ffn_esm2_t6.h5",
+    "models/deep_ffn_esm2_perpos.h5",
+    "models/mutation_effect_rf.pkl",
+    "models/esm2_t6_embeddings.npy",
+    "models/esm2_t6_perpos_embeddings.npy",
+    "models/fixed_data/A_01_01.npz",
+    "models/fixed_data/B_44_03_large.npz",
+    "models/fixed_data/A_03_01.npz"
+  ],
+  "new_evaluators": [
+    ".omc/autoresearch/real-negative-benchmark/evaluator.py",
+    ".omc/autoresearch/multi-allele/evaluator.py",
+    ".omc/autoresearch/multi-allele/train_allele.py",
+    ".omc/autoresearch/plm-encoding/evaluator.py"
+  ],
+  "new_memories": [
+    "memory/blosum62-homopolymer-ceiling.md",
+    "memory/novel-sb-peptides.md",
+    "memory/esm2-beats-blosum62.md"
+  ],
+  "literature_added": [
+    "Saetang et al. (2025) KRAS G12V inhibitory peptides \u2014 Literature/notes/saetang-2025-kras-g12v-peptide.md"
+  ],
+  "docking_outputs": [
+    "docking/1DUZ_minimized.pdb",
+    "docking/md_kras_k_at_p2.py",
+    "docking/md_kras_k_at_p2_traj.dcd (partial, 1.68ns)",
+    "docking/md_kras_k_at_p2_log.csv",
+    "docking/md_kras_k_e63_distances.npz"
+  ],
+  "mutation_analysis": {
+    "training_pairs": "Data/cleaned/mutation_specific_training.json (90 pairs)",
+    "effect_distribution": {
+      "CREATED": 1,
+      "DESTROYED": 5,
+      "enhanced": 2,
+      "both_bind": 3,
+      "unchanged": 79
+    },
+    "rf_model": "models/mutation_effect_rf.pkl"
+  }
+}

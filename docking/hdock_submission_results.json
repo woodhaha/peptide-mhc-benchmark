@@ -1,0 +1,32 @@
+{
+  "KRAS_G12V_neo": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "K-E63 salt bridge: K at P2 compensated by GLU63"
+  },
+  "KRAS_G12V_wt": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "WT control: K at P2, G at P9 \u2014 no compensation"
+  },
+  "p53_R248W_neo": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "P7 Trp burial: R->W at P7 improves MHC complementarity"
+  },
+  "p53_R248W_wt": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "WT control: R at P7 \u2014 charged, solvent-exposed"
+  },
+  "KRAS_G12V_enh": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "Canonical anchor control: V at P2, V at P9"
+  },
+  "KRAS_G12V_enh_wt": {
+    "status": 200,
+    "job_id": "check manually",
+    "desc": "WT control for canonical anchor comparison"
+  }
+}

@@ -1,0 +1,432 @@
+# Systematic Benchmarking of Deep Learning Architectures for Peptide-MHC Binding Prediction Reveals Label Quality, Not Architecture, Defines Performance
+
+**Running head**: Deep Learning for Peptide-MHC Binding Prediction
+
+**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Yongyu Bai<sup>1,†</sup>, Qigang Xu<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Shaoliang Han<sup>1</sup>
+
+**Affiliations**:  
+<sup>1</sup> Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China  
+<sup>2</sup> Department of Hepatobiliary and Pancreatic Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China  
+<sup>3</sup> Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China  
+
+<sup>†</sup> These authors contributed equally to this work.  
+<sup>*</sup> Corresponding author: Zhuha Zhou, Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China. E-mail: zhouzhuha@wmu.edu.cn. ORCID: 0009-0005-1818-4789
+
+**Word count**: ~9,000 (main text) | **Tables**: 6 | **Figures**: 8
+
+---
+
+## Abstract
+
+**Background**: Computational prediction of peptide binding to major histocompatibility complex class I (MHC-I) supports epitope screening for vaccine design and cancer immunotherapy. Systematic architecture comparisons under controlled conditions and quantification of label quality effects remain limited. **Methods**: Six classifier architectures were benchmarked on 5,088 MHCflurry 2.2.0-labelled 9-mer peptides targeting HLA-A\*02:01, with external validation against 49 experimentally verified IEDB epitopes and 20 negative controls. Peptide encodings used BLOSUM62 and ESM-2 protein language model embeddings (t6 and t12). The best model was applied to epitope scanning of 10 proteins and cancer hotspot mutation analysis (p53, KRAS). Molecular docking (HDOCKlite) was used to generate structural hypotheses for neoepitope-MHC interactions. **Results**: A deep feed-forward network with batch normalisation achieved 91.9% accuracy (macro F1 0.921). ESM-2 t6 per-position embeddings (2,880 dim) improved accuracy to 93.3%, while t12 embeddings overfit (90.9%) and mean-pooled embeddings collapsed to 65.9%, confirming that positional information is essential. Label quality proved dominant: deterministic PSSM labels yielded 94.8%, with the gap concentrated in the weak binder class (F1: 0.925 vs. 0.880), demonstrating that label provenance, not architecture, defines the achievable performance. IEDB benchmarking achieved 93.9% sensitivity (46/49) with 75.0% specificity (ROC AUC 0.947). Protein scanning confirmed 10 of 11 known epitopes. Mutation analysis identified neoepitope-creating events in p53 R248W and KRAS G12V. Molecular docking of the KRAS G12V neoepitope (YKLVVVGAV) predicted a potential K-E63 salt bridge in the HLA-A\*02:01 B-pocket, suggesting a testable structural hypothesis for non-canonical P2 anchor compensation. **Conclusions**: Label quality, not architecture, defines the performance ceiling for peptide-MHC binding prediction; ESM-2 per-position embeddings offer modest gains over BLOSUM62; and docking-derived structural hypotheses warrant experimental validation.
+
+**Keywords**: peptide-MHC binding, epitope prediction, deep learning, HLA-A\*02:01, neoantigen, cancer immunotherapy, immunoinformatics
+
+---
+
+## Key Points
+
+- Six deep learning architectures were systematically benchmarked on a common HLA-A\*02:01 peptide-MHC binding dataset. Label quality, not model architecture, emerged as the dominant determinant of performance, with deterministic PSSM labels inflating accuracy by ~3 percentage points relative to machine-learning-derived labels.
+- The weak binder class (F1: 0.752-0.925) was the primary locus of both label-induced and architecture-induced performance variation, reflecting the inherently ambiguous boundary between weak binding and non-binding.
+- ESM-2 t6 per-position embeddings (2,880-dim, 93.3% accuracy) modestly outperformed BLOSUM62 encoding (91.9%), while mean-pooled embeddings collapsed to 65.9%, confirming that residue-position-specific features are essential for MHC-I binding prediction.
+- IEDB benchmarking achieved 93.9% sensitivity (46/49 validated epitopes, ROC AUC 0.947) with 75.0% specificity. All three false negatives carried non-canonical p9 anchor residues; domain-knowledge-informed filtering of homopolymeric false positives improved specificity to 100%.
+- Cancer hotspot mutation scanning identified neoepitope candidates in p53 R248W (`MNWRPILTI`) and KRAS G12V (`YKLVVVGAV`). Molecular docking predicts a potential K-E63 salt bridge that may compensate for the non-canonical lysine at P2 of the KRAS G12V neoepitope, presented as a testable structural hypothesis.
+- All code, trained models, feature matrices, and prediction results are provided as an open-source reproducible pipeline.
+
+---
+
+## 1. Introduction
+
+The adaptive immune system relies on the presentation of peptide antigens by major histocompatibility complex class I (MHC-I) molecules on the surface of nucleated cells. These peptide-MHC complexes (pMHC) are surveyed by CD8+ cytotoxic T lymphocytes, which eliminate cells displaying foreign or aberrant peptides arising from viral infection or somatic mutation [1, 2]. The molecular specificity of this surveillance system is governed largely by the physical interaction between the peptide and the MHC-I binding groove [3, 4]. For the most prevalent human MHC-I allele globally, HLA-A\*02:01, binding is dominated by two primary anchor positions -- position 2 (p2), which preferentially accommodates hydrophobic residues (leucine, methionine, isoleucine, valine), and position 9 (p9), the C-terminal anchor with an even stronger preference for valine and leucine [5, 6].
+
+The ability to computationally predict which peptides will bind to a given MHC allele has been a central challenge in immunoinformatics for over two decades [7, 8]. Early methods employed position-specific scoring matrices [9, 10], followed by machine learning approaches including artificial neural networks such as NetMHC [11] and NetMHCpan [12, 13]. Contemporary methods, including MHCflurry [14, 15], BigMHC [16], and MUNIS [17], increasingly use deep learning architectures and protein language model embeddings [18]; recent reviews document the rapid proliferation of AI-driven epitope prediction tools [19, 20].
+
+Several gaps remain. First, while systematic benchmarking efforts exist — including the IEDB automated benchmark (Trolle et al., 2015) and recent multi-predictor comparisons — head-to-head architecture comparisons under fully controlled conditions (identical training data, encoding, and evaluation protocols) are still uncommon [19]. Second, the impact of training label quality on downstream model performance is seldom quantified, despite emerging evidence that over 55% of IEDB entries are computationally rather than experimentally labelled (Preibisch et al., 2026). Third, the translation of binding prediction models to real-world epitope discovery tasks is often described in principle but rarely demonstrated in a unified, reproducible pipeline. Finally, the advent of protein language models such as ESM-2 (Evolutionary Scale Modeling) [18] offers new peptide encoding strategies, but systematic comparisons against established encodings such as BLOSUM62 under controlled conditions are needed to guide practical tool development.
+
+This study addresses these gaps through a systematic benchmark designed to isolate the effects of architecture choice, label quality, and peptide encoding on binding prediction performance. Building on Jessen's demonstration that a simple feed-forward neural network could classify peptides with approximately 95% accuracy using netMHCpan-derived labels [21], we contribute: (i) quantification of label quality effects across three labelling strategies (MHCflurry 2.2.0, PSSM, random synthetic), demonstrating that label provenance accounts for more performance variation than architecture choice; (ii) a controlled six-architecture comparison on a common dataset, confirming that simpler architectures with appropriate regularisation match or exceed more complex models for this task; (iii) evaluation of ESM-2 protein language model embeddings against BLOSUM62 encoding, including a mean-pooled ablation that confirms positional information is essential; (iv) external validation against 49 experimentally verified IEDB epitopes; (v) translational application through protein epitope scanning and cancer mutation analysis; and (vi) molecular docking-based structural hypotheses for neoepitope-MHC interactions. All analyses are implemented in a fully reproducible pipeline with open-source code and data.
+
+---
+
+## 2. Methods
+
+### 2.1 Training Data Generation
+
+A total of 100,000 random 9-mer peptides were generated by uniform sampling of the 20 standard amino acids. We note that uniform sampling produces amino acid frequencies that differ from natural proteomes (e.g., Trp and Cys are equally probable as Leu under uniform sampling, whereas in natural proteins, Leu ≈ 9.6% and Trp ≈ 1.3%). This choice ensures coverage of all amino acids at all positions for training a generalizable binding predictor, but means the training distribution differs from the evaluation distribution (natural protein sequences in epitope scanning); this distributional mismatch is unlikely to affect anchor position learning but could influence predictions for peptides with rare residues at non-anchor positions. Each peptide was submitted to MHCflurry 2.2.0 [15] for binding affinity prediction against HLA-A\*02:01. Peptides were assigned to three classes following the netMHCpan convention [13]: Strong Binder (SB, percentile rank < 0.5%), Weak Binder (WB, 0.5% <= rank < 2.0%), and Non-Binder (NB, rank >= 2.0%). The resulting class distribution (1.7% SB, 5.1% WB, 93.2% NB) was balanced by downsampling to 1,696 per class (total 5,088), then partitioned into training (90%, n = 4,579) and held-out test (10%, n = 509) sets with stratified sampling.
+
+Two comparison labelling strategies were implemented: a position-specific scoring matrix (PSSM) encoding crystallographically determined HLA-A\*02:01 anchor preferences, and random synthetic labels with weak anchor bias as a baseline control. Additionally, an external benchmark set of 69 peptides was curated from IEDB [22], comprising 49 experimentally validated HLA-A\*02:01 T-cell epitopes and 20 homopolymer negative controls.
+
+### 2.2 Peptide Encoding
+
+Each 9-mer was encoded using the BLOSUM62 amino acid substitution matrix [23] with min-max normalisation to [0, 1] applied across the full 20 × 20 BLOSUM62 matrix (i.e., normalisation by the global minimum and maximum substitution scores), producing a 9 × 20 matrix per peptide treated as a single-channel image for convolutional architectures or flattened to 180 dimensions for fully connected networks.
+
+Additionally, peptide embeddings were extracted from the ESM-2 (Evolutionary Scale Modeling) protein language model [18] at two depths: the 6-layer (t6) variant producing 320-dimensional per-position embeddings (2,880-dimensional when concatenated across the 9-mer) and the 12-layer (t12) variant producing 4,320-dimensional per-position embeddings. A mean-pooled t6 variant (320-dimensional, collapsing positional information) was also evaluated as an ablation control. Embeddings were generated using the official ESM-2 PyTorch implementation and stored as NumPy arrays for downstream classification.
+
+### 2.3 Model Architectures
+
+Six classifiers were implemented and compared. (i) **FFN** (Jessen 2018 [21]): 180 -> dropout(0.4) -> 90 -> dropout(0.3) -> 3 (softmax), 49,143 parameters. (ii) **Deep FFN**: 180 -> 360 -> BN -> dropout(0.5) -> 180 -> BN -> dropout(0.4) -> 90 -> dropout(0.3) -> 45 -> 3, 152,823 parameters. (iii) **CNN**: Conv2D(32, 3x3) -> dropout(0.25) -> FFN body, 1,053,863 parameters. (iv) **LSTM**: LSTM(64) -> dropout(0.3) -> dense(32) -> 3, 23,939 parameters. (v) **ResNet-style**: stem Conv(32) -> 3 residual blocks (32->64->128) with 1x1 projection shortcuts -> global average pooling -> dense(128) -> 3, 324,931 parameters. (vi) **Random Forest**: 100 trees on flattened BLOSUM62 features.
+
+For ESM-2 embeddings, an FFN classifier was trained with architecture: input (embedding_dim) -> dense(256) -> BN -> dropout(0.5) -> dense(128) -> BN -> dropout(0.4) -> dense(64) -> dropout(0.3) -> 3 (softmax). Training hyperparameters were identical to BLOSUM62 models.
+
+### 2.4 Training and Evaluation
+
+Neural networks were implemented in R v4.6.0 with Keras v2.16.1/TensorFlow v2.17.0. Training used categorical cross-entropy loss with RMSprop (FFN, CNN) or Adam (Deep FFN, LSTM, ResNet) at a learning rate of 0.001, 150 epochs, batch size 50, 20% internal validation split, early stopping (patience 10, monitoring validation loss), and learning rate reduction on plateau (factor 0.5, patience 5). Five-fold stratified cross-validation was performed with the FFN architecture. Performance was assessed using accuracy, per-class and macro-averaged F1 scores, and ROC AUC (pROC package [24]). The DeLong method provided AUC confidence intervals. The random seed for the train/test split was 42.
+
+### 2.5 Protein Epitope Scanning and Mutation Analysis
+
+Ten therapeutically relevant proteins were scanned using a sliding 9-mer window (stride 1): MART-1, gp100/PMEL, tyrosinase, NY-ESO-1, WT1, p53, KRAS, influenza M1, CMV pp65, and SARS-CoV-2 spike RBD. Sixteen recurrent cancer hotspot mutations (7 in p53, 9 in KRAS) were analysed by comparing wild-type and mutant binding scores across nine overlapping 9-mer windows centred on each mutation position. Mutations were classified as Created (NB -> SB/WB), Enhanced (binding score increase > 0.1), Destroyed (SB/WB -> NB), or Unchanged.
+
+### 2.6 Feature Extraction
+
+Learned features were extracted from the penultimate dense layer (90 units for FFN, 128 for ResNet) via truncated models. Hierarchical clustering (Ward's method, Euclidean distance) was applied to learned representations of top epitope candidates. Feature-binding score (the model's predicted strong binder probability) correlation was assessed by Pearson's r; Spearman's ρ is also reported given the bounded, potentially non-normal distribution of binding scores.
+
+### 2.7 Molecular Docking and Molecular Dynamics Simulation
+
+Molecular docking was performed using HDOCKlite v1.1 [44] — a knowledge-based docking tool developed and validated for protein-protein interactions — with the HLA-A\*02:01 crystal structure 1DUZ (chains A+B, 1.80 Å resolution, peptide LLFGYPVYV) as the receptor template. Water molecules and heteroatoms were removed; the co-crystallised peptide was excluded from the receptor. Peptide ligands (KRAS G12V neo YKLVVVGAV, KRAS G12V wt YKLVVVGAG, KRAS G12V enhanced LVVVGAVGV, p53 R248W neo MNWRPILTI, and p53 R248W wt MNRRPILTI) were constructed as linear peptides in PyMOL. Docking was performed using the default HDOCKlite knowledge-based scoring function with FFT-based global search. B-pocket geometry was analysed across eight HLA-A\*02:01 crystal structures (PDB: 1DUZ, 1AKJ, 1HHJ, 1JF1, 1QEW, 1QRN, 1S9W, 2GIT) to assess structural conservation of Glu63 positioning relative to peptide position 2.
+
+Molecular dynamics simulations were performed using OpenMM 7.7 [45] with the amber14-all.xml force field [46] and TIP3P explicit solvent. We note that TIP3P is a three-point water model with known limitations in reproducing water-mediated protein interactions [47]; for salt bridge analyses where water-mediated hydrogen bonding may be relevant, a four- or five-point water model (e.g., TIP4P-Ew, OPC) would provide more accurate solvent behaviour. Each complex was solvated in a cubic water box (10 Å padding), neutralised with 0.15 M NaCl, and treated with particle mesh Ewald (PME) electrostatics [47]. Systems were energy-minimised and equilibrated with light backbone restraints (10 kcal/mol/Å²) during a 1 ns heating phase. Production simulations ran for 10 ns under the NPT ensemble (Langevin integrator, 300 K, 2 fs timestep, 1 atm). However, subsequent analysis revealed temperature fluctuations (range ~300-670 K) indicating incomplete thermal equilibration; consequently, quantitative structural metrics from the MD trajectory are not reported herein. The K-E63 salt bridge hypothesis presented in this study is derived from the docking pose. The P2:Cα to E63:OE distance reachability criterion (defined as P2:Cα to E63:OE distance < 7.6 Å with Cα-to-Nζ ≈ 6.1 Å plus 1.5 Å flexibility margin) is provided for reference as a geometric feasibility check. We note that proper assessment of the salt bridge dynamic stability requires equilibrated MD simulations (≥ 100 ns) with verified temperature and pressure stability, which were not achieved in this preliminary attempt.
+
+---
+
+## 3. Results
+
+### 3.1 Training Data Characteristics
+
+MHCflurry labelling of 100,000 random 9-mers yielded 1.7% SB, 5.1% WB, and 93.2% NB peptides. After balancing, the training dataset comprised 5,088 peptides (1,696 per class). MHCflurry-derived labels showed greater complexity than PSSM labels, capturing non-linear inter-position interactions that produced a more diffuse WB/NB decision boundary.
+
+### 3.2 Model Performance Comparison
+
+The Deep FFN achieved the highest performance across all metrics (Table 1, Figure 1).
+
+**Table 1. Model performance on MHCflurry-labelled test set.**
+
+| Model | Accuracy (%) | Macro F1 | NB F1 | WB F1 | SB F1 | Parameters |
+|-------|:-----------:|:--------:|:-----:|:-----:|:-----:|:----------:|
+| Deep FFN | **91.9** | **0.921** | 0.969 | 0.880 | 0.913 | 152,823 |
+| FFN (Jessen) | 90.9 | 0.911 | 0.969 | 0.875 | 0.891 | 49,143 |
+| CNN | 90.0 | 0.901 | 0.963 | 0.860 | 0.882 | 1,053,863 |
+| ResNet | 84.3 | 0.847 | 0.907 | 0.792 | 0.843 | 324,931 |
+| LSTM | 83.3 | 0.836 | 0.935 | 0.752 | 0.822 | 23,939 |
+| Random Forest | 81.1 | 0.814 | 0.927 | 0.723 | 0.793 | -- |
+
+The Deep FFN outperformed the baseline FFN by 1.0 percentage point (91.9% vs. 90.9%). The CNN (90.0%) underperformed the simpler FFN; this is consistent with prior observations that 2D convolutions over BLOSUM62 encodings may not capture additional predictive signal beyond what fully connected layers extract from position-specific features [21], though 1D convolutions along the sequence dimension may offer complementary value for capturing adjacent-residue interactions not explored here. The ResNet (84.3%) and LSTM (83.3%) underperformed by a wider margin, reflecting the positional rather than hierarchical or sequential nature of peptide-MHC binding determinants [5]. The WB class was consistently the most difficult (F1 0.752-0.880), reflecting the inherently ambiguous boundary between weak binding and non-binding.
+
+### 3.3 Cross-Validation
+
+Five-fold stratified CV of the FFN architecture yielded per-fold accuracies of 90.9%, 89.4%, 89.9%, 89.3%, and 88.8% (mean 89.6% +/- 0.8%), confirming stable generalisation.
+
+### 3.4 Effect of Label Quality
+
+Label quality was the dominant determinant of model performance (Table 2, Figure 2).
+
+**Table 2. Deep FFN performance across labelling strategies.**
+
+| Label Source | Accuracy (%) | Macro F1 | WB F1 | CV Mean (%) |
+|-------------|:-----------:|:--------:|:-----:|:-----------:|
+| PSSM (biophysics) | 94.8 | 0.948 | 0.925 | 91.1 +/- 0.9 |
+| MHCflurry 2.2.0 | 91.9 | 0.921 | 0.880 | 89.6 +/- 0.8 |
+| Random synthetic | 65.8 | 0.558 | 0.000 | 65.4 +/- 0.4 |
+
+The 2.9 percentage point gap between PSSM and MHCflurry labels is concentrated in the WB class (F1: 0.925 vs. 0.880). PSSM labels are generated by a linear additive function that neural networks can approximate with high fidelity; MHCflurry labels capture non-linear inter-position interactions, creating a genuinely more complex classification problem. The random synthetic model's WB F1 of 0.000 reflects a model that never predicts the weak binder class — the 65.8% accuracy is driven primarily by correct non-binder classification, which dominates the balanced test set.
+
+### 3.5 IEDB Benchmarking
+
+The Deep FFN was evaluated against 49 validated T-cell epitopes and 20 negative controls, achieving 93.9% sensitivity (46/49) and 75.0% specificity (15/20), with an ROC AUC of 0.947 (Table 3, Figure 3).
+
+**Table 3. IEDB benchmark performance.**
+
+| Metric | Value |
+|--------|:-----:|
+| Sensitivity (Recall) | 93.9% (46/49) |
+| Specificity | 75.0% (15/20) |
+| Precision (PPV) | 90.2% |
+| F1 Score | 0.920 |
+| ROC AUC | 0.947 |
+
+The three false negatives (`ILRGSVAHK`, `QYDPVAALF`, `TLGIVCPIC`) all possess non-canonical p9 anchor residues (K, F, C respectively). Notably, `ILRGSVAHK` (influenza NP 265-273) is also reported to be HLA-B\*08:01-restricted, and its IEDB annotation as an HLA-A\*02:01 epitope may reflect multi-allele restriction or database annotation uncertainty. The five false positives were homopolymers with canonical anchors (poly-L, M, V, I, F). These peptides would be expected to bind MHC-I based on anchor residue content but are extremely unlikely to serve as T-cell epitopes due to the absence of TCR-facing residue diversity — reflecting the established binding-vs-immunogenicity distinction [25]. A domain-knowledge-informed post-hoc filter (peptides with ≤2 unique amino acids classified as non-binders) eliminates all five false positives, improving specificity to 100% (Table 3); we present this as a secondary sensitivity analysis rather than a primary result.
+
+### 3.6 Protein Epitope Scanning
+
+Systematic scanning of 10 proteins (3,536 total 9-mer windows) identified 96 strong binders (2.7%) and 293 weak binders (8.3%). Per-protein SB rates ranged from 1.6% (Spike RBD) to 3.7% (gp100). Validation against known epitopes confirmed 10 of 11 applicable epitopes (91%), including classical immunodominant epitopes `GILGFVFTL` (M1 58-66), `NLVPMVATV` (pp65 495-503), and `SLLMWITQC` (NY-ESO-1 157-165) (Table 4, Figure 4).
+
+**Table 4. Top-ranked epitope candidates across all proteins.**
+
+| Rank | Peptide | Protein | SB Score | Status |
+|:----:|---------|---------|:--------:|--------|
+| 1 | ALMDKSLHV | MART-1 56-64 | 1.000 | IEDB-unconfirmed |
+| 2 | RMFPNAPYL | WT1 126-134 | 1.000 | Validated |
+| 3 | RMPEAAPPV | p53 65-73 | 1.000 | Known region |
+| 4 | LLTEVETYV | M1 3-11 | 1.000 | IEDB-unconfirmed |
+| 5 | YMNGTMSQV | Tyrosinase 369-377 | 1.000 | Validated |
+| 6 | KIADYNYKL | Spike RBD 87-95 | 0.999 | IEDB-unconfirmed |
+| 7 | NLVPMVATV | CMV pp65 495-503 | 0.999 | Validated |
+| 8 | GILGFVFTL | M1 58-66 | 0.999 | Validated |
+| 9 | RLLQTGIHV | CMV pp65 40-48 | 1.000 | IEDB-unconfirmed |
+| 10 | FVDEYDPTI | KRAS 28-36 | 1.000 | IEDB-unconfirmed |
+
+Anchor analysis confirmed canonical L-V and M-V pairs in 17 of 20 (85%) top-scoring peptides. One notable exception is KIADYNYKL (Spike RBD 87-95, ranked 16th), which carries lysine — a charged, non-canonical residue — at P2 yet is predicted as a strong binder (score 0.999). This prediction warrants caution: the model may be extrapolating beyond its training distribution for non-canonical P2 residues, and experimental validation is particularly important for such candidates.
+
+### 3.7 Cancer Hotspot Mutation Scanning
+
+Analysis of 16 hotspot mutations (7 p53, 9 KRAS) identified 7 epitope-altering events using a classification threshold of SB score ≥ 0.5 (Table 5, Figure 5). The number of events classified as Created/Enhanced/Destroyed is sensitive to this threshold; at a more stringent threshold of 0.7, two of the seven events would be reclassified as Unchanged, and at a more permissive threshold of 0.3, one additional event would be classified as Enhanced. We report results at the 0.5 threshold for consistency with the binary classification framework.
+
+**Table 5. Epitope-altering cancer mutations.**
+
+| Mutation | WT Peptide | Mutant Peptide | Effect | Delta |
+|----------|-----------|----------------|--------|:-----:|
+| p53 R248W | MNRRPILTI | MNWRPILTI | CREATED | +0.41 |
+| KRAS G12V | YKLVVVGAG | YKLVVVGAV | CREATED | +0.48 |
+| KRAS G12V | LVVVGAGGV | LVVVGAVGV | ENHANCED | +0.31 |
+| KRAS G12C | LVVVGAGGV | LVVVGACGV | ENHANCED | +0.31 |
+| KRAS G13D | GVGKSALTI | DVDKSALTI | DESTROYED | -0.47 |
+| KRAS A146T | GIPFIETSA | GIPFIETST | DESTROYED | -0.42 |
+| p53 R249S | GMNRRPILT | GMNRSPILT | DESTROYED | -0.16 |
+
+p53 R248W, the most frequent p53 mutation across all cancers, created the neoepitope `MNWRPILTI` where R->W at p3 introduces a bulky hydrophobic residue improving groove fit. KRAS G12V created `YKLVVVGAV` via G->V at p9 creating a canonical C-terminal anchor. KRAS G12C, the druggable mutation targeted by sotorasib and adagrasib [26, 27], enhanced an existing epitope from WB to SB, suggesting synergy with pharmacological inhibition. Three mutations (KRAS G13D, KRAS A146T, p53 R249S) destroyed existing epitopes, representing potential immune evasion mechanisms.
+
+### 3.8 Learned Feature Representations
+
+Feature extraction from the penultimate dense layer revealed biologically meaningful representations. Hierarchical clustering separated validated epitopes into coherent clusters, with false negatives forming a distinct branch characterised by absent anchor-position activation. Five features showed Pearson r > 0.7 with binding score, all demonstrating activation patterns consistent with p2/p9 anchor detection. By permutation test (1,000 iterations), approximately 0.3 features would exceed this threshold by chance, suggesting these five features represent genuine binding-relevant representations rather than spurious correlations. BLOSUM62 encoding heatmaps visualised the anchor signal: SB peptides displayed bright intensity at p2 (L, M, I, V) and p9 (V, L), while negative controls showed uniformly low values (Figure 6).
+
+### 3.9 ESM-2 Embeddings Outperform BLOSUM62
+
+ESM-2 protein language model embeddings were evaluated as an alternative peptide encoding strategy (Table 6, Figure 7).
+
+**Table 6. Classification accuracy by peptide encoding strategy.**
+
+| Encoding | Dim | Accuracy (%) | Notes |
+|----------|:---:|:-----------:|--------|
+| BLOSUM62 (baseline) | 180 | 91.9 | Baseline; 5-fold CV performed |
+| ESM-2 t6 mean pool | 320 | 65.9 | Positional information destroyed |
+| ESM-2 t12 per-pos | 4,320 | 90.9 | Overfitting (4,320 dim vs. 4,579 samples) |
+| ESM-2 t12 per-pos + L2 | 4,320 | 91.5 | Overfitting partially mitigated |
+| ESM-2 t6 per-pos | 2,880 | **93.3** | Best; single train/test split (CV not performed) |
+
+The 6-layer per-position ESM-2 embeddings achieved the highest neural network accuracy (93.3%) on the held-out test set, exceeding the BLOSUM62 baseline by 1.4 percentage points. We note that this comparison is based on a single 90/10 train/test split for the ESM-2 models, whereas the BLOSUM62 models were evaluated with 5-fold cross-validation; statistical significance testing and replication across data partitions are needed before firm conclusions about the magnitude of ESM-2's advantage can be drawn. The mean-pooled t6 embeddings collapsed to 65.9%, showing that aggregate sequence-level representations destroy the positional anchor information needed for MHC-I binding prediction -- position p2 and p9 signals are inseparable in a mean-pooled vector. The 12-layer per-position embeddings suffered from overfitting due to high dimensionality (4,320 features vs. 4,579 training samples). We note that the relatively small training set (n = 4,579) may contribute to this overfitting independently of dimensionality: with a larger training corpus, deeper embeddings might recover their expected representational advantage, as has been observed in protein function prediction tasks, achieving only 90.9% accuracy. L2 regularisation modestly improved t12 to 91.5%, but this remained below BLOSUM62. The 6-layer per-position variant (2,880 dimensions) struck the optimal balance: sufficient representational capacity to capture inter-position dependencies while avoiding the overfitting that affected the deeper t12 embeddings.
+
+### 3.10 Structural Docking Identifies a K-E63 Salt Bridge in KRAS G12V Neoepitope Presentation
+
+To structurally evaluate the neoepitope candidates identified by the ML pipeline, molecular docking and MD simulation were performed for KRAS G12V and p53 R248W neoepitopes. Analysis of eight HLA-A\*02:01 crystal structures showed that Glu63 OE1/OE2 atoms are consistently positioned 4.5-4.9 Å from the P2 residue Cα across all structures, indicating a conserved B-pocket geometry.
+
+The KRAS G12V neoepitope YKLVVVGAV carries a lysine at P2 -- a non-canonical charged residue in a pocket that preferentially accommodates hydrophobic side chains (Leu, Met). Docking predicted that the lysine side chain (Cα-to-Nζ ≈ 6.1 Å) extends toward Glu63, positioning the Nζ atom within an estimated 2.5-3.5 Å of the Glu63 OE1/OE2 atoms -- within salt bridge range (< 4.0 Å). This predicted K-E63 salt bridge offers a testable structural hypothesis: electrostatic complementarity between a charged P2 residue and Glu63 could compensate for the absence of a canonical hydrophobic anchor. We emphasise that this hypothesis is derived from computational docking and requires experimental validation -- X-ray crystallography or cryo-EM of the YKLVVVGAV-HLA-A\*02:01 complex would be needed to confirm the predicted interaction. A preliminary 10 ns molecular dynamics simulation was performed (OpenMM, amber14 force field, TIP3P solvent, NPT ensemble) but exhibited incomplete thermal equilibration (temperature range ~300-670 K), likely reflecting insufficient pre-simulation relaxation of the docked complex. Distance measurements from this trajectory are not reported as they would be unreliable under these conditions; a properly equilibrated simulation with extended production sampling is needed to evaluate the dynamic stability of the predicted salt bridge.
+
+In contrast, the p53 R248W neoepitope MNWRPILTI carries asparagine at P2 — a non-canonical residue for the hydrophobic HLA-A\*02:01 B-pocket — and its improved predicted binding relative to wild-type (MNRRPILTI) is attributable to the P3 Arg→Trp substitution enhancing hydrophobic packing in the F-pocket rather than any P2-mediated mechanism. The KRAS G12V enhanced peptide LVVVGAVGV, with valine at P2, represents the canonical hydrophobic anchor configuration and served as a positive control.
+
+We note that the 10 ns MD simulation exhibited temperature fluctuations (range ~300-670 K) indicating incomplete thermal equilibration, which precludes reliable structural inference from the trajectory. The K-E63 salt bridge hypothesis presented here is derived from the docking pose, not from MD ensemble data. Definitive validation requires experimental structure determination by X-ray crystallography or cryo-EM of the YKLVVVGAV-HLA-A\*02:01 complex. Properly equilibrated MD simulations (≥ 100 ns with verified temperature and pressure stability) would complement such experimental data for evaluating the dynamic behaviour of the predicted interaction.
+
+---
+
+## 4. Discussion
+
+### 4.1 Architecture Selection: Depth Over Complexity
+
+The better performance of the Deep FFN over more complex architectures reflects fundamental properties of peptide-MHC interactions. Peptide BLOSUM62 encodings lack translational invariance and hierarchical features exploited by CNNs in natural images [28] -- in peptide binding, position p2 is always position p2, and mixing positional information through convolution degrades predictive signal. The LSTM's underperformance reflects the dominance of two discrete anchor positions (p2, p9) with relatively independent contributions [5]; sequential context contributes minimally to binding affinity. The ResNet's underperformance is consistent with residual connections providing benefit only in deeper networks than warranted by 9 × 20 input tensors [29]. These findings confirm that for well-characterised alleles with simple anchor motifs, architectural complexity beyond additional depth with batch normalisation provides diminishing returns. We note that a simple position-specific scoring matrix baseline achieved 94.8% accuracy (Table 2) -- higher than any neural architecture -- underscoring that biophysical knowledge should be included as a comparator in computational benchmarking and that deep learning adds relatively modest predictive value for alleles whose binding determinants are already well understood.
+
+Beyond architecture selection, ESM-2 t6 per-position embeddings achieved the highest neural network accuracy (93.3%), modestly exceeding BLOSUM62 (91.9%). The per-position format was essential: mean-pooled embeddings collapsed to 65.9%, confirming that residue-position-specific features are needed for MHC-I binding prediction. The shallower 6-layer model outperformed the deeper 12-layer variant, possibly because t12's additional transformer layers encode long-range protein-level interactions that introduce noise at the short 9-mer peptide scale. We caution that the 1.4 percentage point improvement was observed on a single test split (n = 509) without cross-validation of the ESM-2 models; statistical significance testing and replication across data partitions are needed before firm conclusions about the magnitude of ESM-2's advantage can be drawn.
+
+### 4.2 Label Quality Defines the Ceiling
+
+The 2.9 percentage point PSSM-MHCflurry gap quantifies a 'label complexity penalty' with implications for benchmarking. PSSM labels are generated by a linear additive function that neural networks approximate with high fidelity; MHCflurry labels capture non-linear inter-position dependencies (e.g., p9 preference modulated by p2 identity [30]), creating a genuinely harder problem. As Preibisch et al. recently showed, >55% of IEDB entries are computationally labelled rather than experimentally verified [31], creating systemic risks of inflated performance reporting. We recommend that future studies explicitly report label provenance and include external validation against experimentally verified epitopes.
+
+### 4.3 The Weak Binder Problem
+
+WB classification was the primary source of error across all architectures, reflecting the inherently ambiguous 50-500 nM affinity range where subtle conformational effects, solvent exposure, and peptide-MHC half-life kinetics determine presentation outcomes [32]. Improving WB classification may require integrating structural information from AlphaFold-predicted pMHC complexes [33] or training on peptide-MHC stability measurements [34].
+
+### 4.4 Binding Versus Immunogenicity
+
+The model's classification of homopolymeric anchor peptides as binders is correct behavior for a binding predictor [25]. The TESLA consortium found that only ~6% of top-predicted MHC-I binders were confirmed immunogenic [35], and recent benchmarks confirm high sensitivity for binding but lower precision for immunogenicity [36, 37]. Bridging this gap requires integrating proteasomal cleavage [38], TAP transport [39], and TCR-pMHC binding prediction [40] into end-to-end models.
+
+### 4.5 Translational and Structural Implications
+
+The p53 R248W neoepitope `MNWRPILTI` is of particular interest: R248W is the most frequent TP53 mutation across all human cancers, representing approximately 7% of all somatic TP53 mutations in the IARC database [41], and has documented gain-of-function oncogenic activity [42]. A vaccine targeting this neoepitope would be applicable across multiple tumor types, though experimental validation of immunogenicity (e.g., IFN-γ ELISpot using HLA-A\*02:01+ donor PBMCs) is required before clinical development. The KRAS G12C epitope enhancement, combined with pharmacological G12C inhibition [26, 27], suggests a rational combination immunotherapy strategy warranting preclinical investigation. The three epitope-destroying mutations represent potential immune evasion mechanisms; analysis of TCGA cohorts for associations between these specific mutations and T-cell infiltration or checkpoint blockade response would test this hypothesis.
+
+The docking-derived K-E63 salt bridge hypothesis for the KRAS G12V neoepitope proposes a testable structural mechanism for non-canonical P2 anchor compensation in HLA-A\*02:01. If experimentally confirmed, this would represent a structurally rationalised case of a charged P2 residue achieving B-pocket accommodation through electrostatic complementarity in this allele — though we note that experimental validation has not yet been performed. The principle of electrostatic anchor compensation may extend to other MHC alleles where acidic pocket residues are positioned near non-canonical binding registers, a hypothesis amenable to systematic computational screening. Given the preliminary nature of the structural analysis (docking without equilibrated MD), we present this as a hypothesis-generating finding that requires experimental confirmation by X-ray crystallography or cryo-EM.
+
+### 4.6 Limitations
+
+Several limitations warrant discussion. First, training data were generated using MHCflurry 2.2.0 predictions rather than experimental binding affinities. While MHCflurry achieves high concordance with experimental data [15], this creates a potential circularity concern: the model learns to approximate MHCflurry's decision boundary, and if MHCflurry was trained on IEDB data that includes the benchmark epitopes, the external validation is not fully independent. We have not verified overlap between the 49 IEDB benchmark epitopes and MHCflurry's training data; such verification should be performed in future work, and performance on non-overlapping epitopes should be reported separately.
+
+Second, the study focused exclusively on HLA-A\*02:01, the most prevalent class I allele globally. Pan-allelic extension is needed for clinical applicability, particularly given that HLA-A\*02:01 frequency varies from ~40-45% in most populations to as low as ~20% in some African populations, raising health equity considerations for any clinical application of allele-specific tools. The generalisability of the architecture and label quality findings to less well-characterised alleles remains to be determined.
+
+Third, all protein scanning and mutation predictions are purely computational and require experimental validation. The cancer neoepitope candidates identified here should be tested by IFN-γ ELISpot or tetramer staining using HLA-A\*02:01+ donor PBMCs before any translational claims can be substantiated. Fourth, antigen processing steps (proteasomal cleavage, TAP transport, tapasin loading [43]) are not modelled; integration of these steps is needed to move from binding prediction toward epitope identification. Fifth, the IEDB benchmark specificity assessment used homopolymer negative controls -- these assess the binding-vs-immunogenicity distinction rather than binding prediction specificity per se. A broader set of experimentally validated non-binders would strengthen future benchmarking efforts. Finally, the molecular docking analysis is hypothesis-generating only; experimental structure determination is required to confirm the predicted K-E63 salt bridge.
+
+### 4.7 Conclusions
+
+Label quality, not architecture, defines the performance ceiling for peptide-MHC binding prediction. Across three labelling strategies, label source accounted for ~29 percentage points of accuracy variation (PSSM 94.8% vs. random 65.8%), exceeding the maximum inter-architecture difference of 10.8 percentage points (Deep FFN 91.9% vs. Random Forest 81.1%). The weak binder class (F1 range 0.723-0.925) was the primary locus of both label-induced and architecture-induced variation, reflecting the inherently ambiguous boundary in the 50-500 nM affinity range. Given that over 55% of IEDB entries are computationally labelled (Preibisch et al., 2026), we recommend that future benchmarking studies explicitly report label provenance and include external validation against experimentally verified epitopes.
+
+ESM-2 t6 per-position embeddings (2,880 dim) modestly outperformed BLOSUM62 encoding (93.3% vs. 91.9%), while mean-pooled embeddings collapsed to 65.9%, confirming that positional information is essential for MHC-I binding prediction. Architectural complexity beyond additional depth with batch normalisation provided diminishing returns: the Deep FFN (152,823 parameters) outperformed the ResNet-style (324,931) and CNN (1,053,863) architectures, consistent with the positional rather than hierarchical nature of peptide-MHC binding determinants.
+
+The trained model achieved 93.9% sensitivity against 49 experimentally validated IEDB epitopes (ROC AUC 0.947, specificity 75.0%), and correctly identified 10 of 11 known HLA-A\*02:01 epitopes across 10 scanned proteins. Cancer hotspot mutation scanning identified neoepitope candidates in p53 R248W (`MNWRPILTI`) and KRAS G12V (`YKLVVVGAV`); molecular docking generates the testable hypothesis that a K-E63 salt bridge may compensate for the non-canonical P2 lysine in the KRAS G12V neoepitope. Experimental validation of both immunogenicity and structural mechanism is needed.
+
+All code, trained models, feature matrices, and prediction results are provided as an open-source reproducible pipeline. A position-specific scoring matrix baseline achieved 94.8% accuracy -- outperforming all neural network architectures -- underscoring that for well-characterised alleles with simple anchor motifs, biophysical knowledge may be sufficient and should be included as a comparator in computational benchmarking.
+
+---
+
+## Abbreviations
+
+AUC, area under the curve; BN, batch normalisation; CNN, convolutional neural network; CV, cross-validation; ESM-2, Evolutionary Scale Modeling (version 2); FFN, feed-forward neural network; IEDB, Immune Epitope Database; LSTM, long short-term memory; MHC-I, major histocompatibility complex class I; NB, non-binder; PSSM, position-specific scoring matrix; ROC, receiver operating characteristic; SB, strong binder; WB, weak binder.
+
+---
+
+## Declarations
+
+### Acknowledgments
+
+We thank colleagues in the Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, and the Center for Bionanoengineering, Zhejiang University, for their support and insightful discussions. We also acknowledge the developers and maintainers of MHCflurry, the Immune Epitope Database (IEDB), and the ESM-2 protein language model for making their tools and data publicly available.
+
+### Consent for Publication
+
+Not applicable.
+
+### Funding
+
+This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+
+### Data Availability
+
+The complete analysis pipeline, trained models, feature matrices, and all prediction results are provided in the accompanying data package (`manuscript_data_package.tar.gz`) and are additionally archived on Zenodo (DOI to be assigned upon acceptance). The primary analysis script (`peptide_mhc_binding_study.R`, 1,700+ lines) is documented and modular. MHCflurry 2.2.0 is available at https://github.com/openvax/mhcflurry.
+
+### Authors' Contributions
+
+Zhuha Zhou: Conceptualization, Methodology, Software, Formal Analysis, Investigation, Writing -- Original Draft, Writing -- Review & Editing. Yongyu Bai: Conceptualization, Methodology, Validation, Investigation, Writing -- Review & Editing. Qigang Xu: Investigation, Data Curation, Writing -- Review & Editing. Zhuxian Zhou: Methodology, Supervision, Writing -- Review & Editing. Shaoliang Han: Conceptualization, Supervision, Project Administration, Writing -- Review & Editing. Zhuha Zhou and Yongyu Bai contributed equally to this work. All authors read and approved the final manuscript.
+
+### Competing Interests
+
+The authors declare that they have no competing interests.
+
+### Ethics Approval and Consent to Participate
+
+Not applicable.
+
+---
+
+## Author Biographies
+
+**Zhuha Zhou** is a surgeon-researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on gastrointestinal cancer surgery and computational approaches to cancer immunotherapy.
+
+**Yongyu Bai** is a surgeon-researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research interests include gastrointestinal oncology and immunoinformatics.
+
+**Qigang Xu** is a surgeon in the Department of Hepatobiliary and Pancreatic Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on hepatobiliary and pancreatic cancer.
+
+**Zhuxian Zhou** is a researcher at the Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University. His research interests include nanomedicine and bioengineering approaches for drug delivery.
+
+**Shaoliang Han** is a professor and surgeon in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on gastrointestinal cancer surgery, translational oncology, and computational methods in surgical oncology.
+
+---
+
+## References
+
+1. Neefjes J, Jongsma MLM, Paul P, et al. Towards a systems understanding of MHC class I and MHC class II antigen presentation. Nat Rev Immunol 2011;11:823-836.
+2. Blum JS, Wearsch PA, Cresswell P. Pathways of antigen processing. Annu Rev Immunol 2013;31:443-473.
+3. Falk K, Rotzschke O, Stevanovic S, et al. Allele-specific motifs revealed by sequencing of self-peptides eluted from MHC molecules. Nature 1991;351:290-296.
+4. Madden DR. The three-dimensional structure of peptide-MHC complexes. Annu Rev Immunol 1995;13:587-622.
+5. Ruppert J, Sidney J, Celis E, et al. Prominent role of secondary anchor residues in peptide binding to HLA-A2.1 molecules. Cell 1993;74:929-937.
+6. Rammensee HG, Friede T, Stevanovic S. MHC ligands and peptide motifs: first listing. Immunogenetics 1995;41:178-228.
+7. Lundegaard C, Lund O, Nielsen M. State of the art and challenges in sequence based T-cell epitope prediction. Immunome Res 2011;6(Suppl 2):S3.
+8. Backert L, Kohlbacher O. Immunoinformatics and epitope prediction in the age of genomic medicine. Genome Med 2015;7:119.
+9. Parker KC, Bednarek MA, Coligan JE. Scheme for ranking potential HLA-A2 binding peptides based on independent binding of individual peptide side-chains. J Immunol 1994;152:163-175.
+10. Rammensee HG, Bachmann J, Emmerich NPN, et al. SYFPEITHI: database for MHC ligands and peptide motifs. Immunogenetics 1999;50:213-219.
+11. Nielsen M, Lundegaard C, Worning P, et al. Reliable prediction of T-cell epitopes using neural networks with novel sequence representations. Protein Sci 2003;12:1007-1017.
+12. Hoof I, Peters B, Sidney J, et al. NetMHCpan, a method for MHC class I binding prediction beyond humans. Immunogenetics 2009;61:1-13.
+13. Reynisson B, Alvarez B, Paul S, et al. NetMHCpan-4.1 and NetMHCIIpan-4.0: improved predictions of MHC antigen presentation by concurrent motif deconvolution and integration of MS MHC eluted ligand data. Nucleic Acids Res 2020;48:W449-W454.
+14. O'Donnell TJ, Rubinsteyn A, Bonsack M, et al. MHCflurry: open-source class I MHC binding affinity prediction. Cell Syst 2018;7:129-132.
+15. O'Donnell TJ, Rubinsteyn A, Laserson U. MHCflurry 2.0: improved pan-allele prediction of MHC class I-presented peptides by incorporating antigen processing. Cell Syst 2020;11:42-48.
+16. Albert BA, Yang Y, Shao XM, et al. BigMHC: deep learning-based prediction of MHC-I epitope presentation. bioRxiv 2023.
+17. Chen B, Khodadoust MS, Olsson N, et al. MUNIS: a deep learning model for predicting MHC-I epitope presentation. Nat Biotechnol 2025;43:123-132.
+18. Rives A, Meier J, Sercu T, et al. Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. Proc Natl Acad Sci USA 2021;118:e2016239118.
+19. Oluwagbemi O, Oladipo E, Dairo E, et al. AI-driven epitope prediction: a systematic review, comparative analysis, and practical guide for vaccine development. npj Vaccines 2025;10:258.
+20. Qi J, Zhang L, Chen K, et al. A roadmap for T cell receptor-peptide-bound major histocompatibility complex binding prediction by machine learning: glimpse and foresight. Brief Bioinform 2025;26:bbag032.
+21. Jessen LE. Deep learning for cancer immunotherapy. RStudio AI Blog 2018. [blog post; non-peer-reviewed]
+22. Vita R, Mahajan S, Overton JA, et al. The Immune Epitope Database (IEDB): 2018 update. Nucleic Acids Res 2019;47:D339-D343.
+23. Henikoff S, Henikoff JG. Amino acid substitution matrices from protein blocks. Proc Natl Acad Sci USA 1992;89:10915-10919.
+24. Robin X, Turck N, Hainard A, et al. pROC: an open-source package for R and S+ to analyze and compare ROC curves. BMC Bioinformatics 2011;12:77.
+25. Sette A, Vitiello A, Reherman B, et al. The relationship between class I binding affinity and immunogenicity of potential cytotoxic T cell epitopes. J Immunol 1994;153:5586-5592.
+26. Canon J, Rex K, Saiki AY, et al. The clinical KRAS(G12C) inhibitor AMG 510 drives anti-tumour immunity. Nature 2019;575:217-223.
+27. Hallin J, Engstrom LD, Hargis L, et al. The KRAS G12C inhibitor MRTX849 provides insight toward therapeutic susceptibility of KRAS-mutant cancers in mouse models and patients. Cancer Discov 2020;10:54-71.
+28. Krizhevsky A, Sutskever I, Hinton GE. ImageNet classification with deep convolutional neural networks. Adv Neural Inf Process Syst 2012;25:1097-1105.
+29. He K, Zhang X, Ren S, et al. Deep residual learning for image recognition. Proc IEEE Conf Comput Vis Pattern Recognit 2016:770-778.
+30. Chelvanayagam G. A roadmap for HLA-A, HLA-B, and HLA-C peptide binding specificities. Immunogenetics 1996;45:15-26.
+31. Preibisch J, Becker JP, Kohlbacher O. Resolution of recursive data corruption to transform T-cell epitope discovery. bioRxiv 2026. [preprint]
+32. Harndahl M, Rasmussen M, Roder G, et al. Peptide-MHC class I stability is a better predictor than peptide affinity of CTL immunogenicity. Eur J Immunol 2012;42:1405-1416.
+33. Jumper J, Evans R, Pritzel A, et al. Highly accurate protein structure prediction with AlphaFold. Nature 2021;596:583-589.
+34. Jorgensen KW, Rasmussen M, Buus S, et al. NetMHCstab -- predicting stability of peptide-MHC-I complexes; impacts for cytotoxic T lymphocyte epitope discovery. Immunology 2014;141:18-26.
+35. Wells DK, van Buuren MM, Dang KK, et al. Key parameters of tumor epitope immunogenicity revealed through a consortium approach improve neoantigen prediction. Cell 2020;183:818-834.
+36. Zaghla N, Loffler MW, Kowalewski DJ. Systematic evaluation of (neo)epitope predictions and their correlation with clinically observed T-cell responses and immune evasion mechanisms. PhD Thesis, FU Berlin 2025. [PhD thesis; verify public accessibility and provide persistent identifier if available]
+37. Zeng J, Li Y, Wang H, et al. Leveraging artificial intelligence for neoantigen prediction. Cancer Res 2025;85:2512-2525.
+38. Nielsen M, Lundegaard C, Lund O, et al. The role of the proteasome in generating cytotoxic T-cell epitopes: insights obtained from improved predictions of proteasomal cleavage. Immunogenetics 2005;57:33-41.
+39. Peters B, Bulik S, Tampe R, et al. Identifying MHC class I epitopes by predicting the TAP transport efficiency of epitope precursors. J Immunol 2003;171:1741-1749.
+40. Zhao H, Bhatt A, Cooper L, et al. UniPMT: a unified deep learning framework for peptide-MHC-TCR binding prediction. Nat Mach Intell 2025;7:234-243.
+41. Bouaoun L, Sonberath D, Ardin M, et al. TP53 variations in human cancers: new lessons from the IARC TP53 database and genomics data. Hum Mutat 2016;37:865-876.
+42. Muller PAJ, Vousden KH. Mutant p53 in cancer: new functions and therapeutic opportunities. Cancer Cell 2014;25:304-317.
+43. Stranzl T, Larsen MV, Lundegaard C, et al. NetCTLpan: pan-specific MHC class I pathway epitope predictions. Immunogenetics 2010;62:357-368.
+44. Yan Y, Tao H, He J, Huang SY. The HDOCK server for integrated protein-protein docking. Nat Protoc 2020;15:1829-1852.
+45. Eastman P, Swails J, Chodera JD, et al. OpenMM 7: Rapid development of high performance algorithms for molecular dynamics. PLoS Comput Biol 2017;13:e1005659.
+46. Maier JA, Martinez C, Kasavajhala K, et al. ff14SB: Improving the accuracy of protein side chain and backbone parameters from ff99SB. J Chem Theory Comput 2015;11:3696-3713.
+47. Darden T, York D, Pedersen L. Particle mesh Ewald: An N·log(N) method for Ewald sums in large systems. J Chem Phys 1993;98:10089-10092.
+48. Miller BR 3rd, McGee TD Jr, Swails JM, et al. MMPBSA.py: An efficient program for end-state free energy calculations. J Chem Theory Comput 2012;8:3314-3321.
+49. Onufriev A, Bashford D, Case DA. Exploring protein native states and large-scale conformational changes with a modified generalized Born model. Proteins 2004;55:383-394.
+
+---
+
+## Figure Legends
+
+**Figure 1.** Model performance comparison across six architectures. (A) Accuracy and Macro F1 scores on MHCflurry-labelled test set. (B) Per-class F1 breakdown for the best-performing Deep FFN model.
+
+![Figure 1](../03_Analysis/figures/Figure1_model_comparison.png)
+
+**Figure 2.** Effect of labelling strategy on model performance. PSSM labels (94.8%), MHCflurry labels (91.9%), and random synthetic labels (65.8%). Note the concentration of performance degradation in the WB class.
+
+![Figure 2](../03_Analysis/figures/Figure2_label_comparison.png)
+
+**Figure 3.** IEDB benchmark results. (A) ROC curve showing AUC 0.947. (B) Confusion matrix with counts and row percentages. (C) Per-epitope binding scores colour-coded by prediction outcome.
+
+![Figure 3](../03_Analysis/figures/Figure3_iedb_benchmark.png)
+
+**Figure 4.** Protein epitope scanning summary. (A) SB/WB/NB distribution across 10 proteins. (B) Top 10 epitope candidates ranked by binding score.
+
+![Figure 4](../03_Analysis/figures/Figure4_protein_scan.png)
+
+**Figure 5.** Cancer hotspot mutation analysis. (A) Delta score bar chart for 7 epitope-altering mutations. (B) Wild-type vs. mutant paired binding scores. (C) Mutation map of p53 and KRAS showing epitope-altering positions.
+
+![Figure 5](../03_Analysis/figures/Figure5_mutation_delta.png)
+
+**Figure 6.** Learned feature representations. (A) BLOSUM62 encoding heatmaps (HOT colormap) for top 20 epitopes. (B) Clustered heatmap of 90-dimensional learned features. (C) Feature-binding score correlation.
+
+![Figure 6](../03_Analysis/figures/Figure6_blosum62_heatmap.png)
+
+**Figure 7.** ESM-2 embedding comparison. (A) Accuracy of five encoding strategies: BLOSUM62 baseline (91.9%, with 5-fold CV), ESM-2 t6 mean-pooled (65.9%), t12 per-position (90.9%), t12 per-position + L2 (91.5%), and t6 per-position (93.3%). Dashed line indicates BLOSUM62 baseline. Note that t12 per-position accuracy (90.9%) is coincidentally identical to the baseline FFN accuracy reported in Table 1 (90.9%); these represent separate models evaluated on the same test split. (B) Encoding dimensionality vs. accuracy, showing the optimal balance achieved by t6 per-position embeddings (2,880 dim). ESM-2 results are from a single train/test split and have not been cross-validated; error bars are not shown due to the single-split evaluation.
+
+![Figure 7](../03_Analysis/figures/Figure7_esm2_comparison.png)
+
+**Figure 8.** Structural docking analysis of KRAS G12V neoepitope presentation by HLA-A\*02:01. (A) Overview of the HLA-A\*02:01 peptide-binding groove (PDB 1DUZ, molecular surface) with the docked KRAS G12V neoepitope YKLVVVGAV (sticks). (B) B-pocket detail showing the predicted K-E63 interaction. The estimated distance between the P2 lysine Nζ atom and Glu63 OE1/OE2 atoms (2.5-3.5 Å, from the docking pose) falls within salt bridge range (< 4.0 Å). This represents a docking-derived structural hypothesis; experimental validation is required. (C) Schematic of the P2:Cα to E63:OE geometric feasibility assessment (reference threshold: 7.6 Å). The preliminary 10 ns MD simulation exhibited incomplete thermal equilibration and quantitative trajectory-derived distances are not reported.
+
+![Figure 8](../03_Analysis/figures/Figure8_mutation_map.png)
+
+**Figure S1.** 5-fold cross-validation fold-by-fold accuracy comparison.
+
+![Figure S1](../03_Analysis/figures/FigureS1_per_class_f1.png)
+
+**Figure S2.** Full IEDB benchmark per-epitope prediction table.
+
+![Figure S2](../03_Analysis/figures/FigureS2_cv_folds.png)
+
+**Figure S3.** Per-protein epitope scan results for all 10 proteins.
+
+![Figure S3](../03_Analysis/figures/FigureS3_confusion_matrix.png)
+
+**Figure S4.** Training history (loss and accuracy) for all neural network models.
+
+![Figure S4](../03_Analysis/figures/FigureS4_mutation_paired.png)
+
+**Figure S5.** BLOSUM62 encoding images for all 20 benchmark epitopes.
+
+![Figure S5](../03_Analysis/figures/FigureS5_negative_benchmark.png)
+
+---
+
+## Supplementary Material
+
+The complete data package (`manuscript_data_package.tar.gz`) contains: (1) all trained model files (HDF5/RDS format); (2) feature matrices in CSV format (`feature.csv`, 5,088 x 282; `feature_resnet.csv`, 5,088 x 315); (3) comprehensive prediction results for 10-protein epitope scan (3,536 peptides), IEDB benchmark (69 peptides), cancer mutation scan (144 windows), and new peptide predictions; (4) reproducible R and Python source code; (5) all publication-quality figures in PNG format.
+
+---
+
+*Manuscript prepared for Briefings in Bioinformatics. Date: June 15, 2026.*

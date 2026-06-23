@@ -1,0 +1,1 @@
+{"iteration":2,"approach":"class_weighted_training","nb_weight":6.0,"pass":false,"specificity":0.80,"sensitivity":0.939,"f1":0.929,"accuracy":0.899,"tp":46,"fp":4,"tn":16,"fn":3,"model":"models/ffn_cw_nb6.h5","note":"Same specificity as iteration 1 — class weight approach saturated"}

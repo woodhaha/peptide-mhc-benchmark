@@ -1,0 +1,33 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+.quarto/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+*.sage.py
+
+# Data — raw is read-only, cleaned/models are tracked
+02_Data/data.tar.gz
+
+# Model files — large H5 files, consider Git LFS
+*.h5
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp / logs (keep decisions.md + change_log.md)
+06_Logs/*.pdf
+
+# State directories
+.claude/state/
+.claude/sessions/
+.omc/state/

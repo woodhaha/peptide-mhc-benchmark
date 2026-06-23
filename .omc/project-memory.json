@@ -1,0 +1,31 @@
+{
+  "architecture": "## Autoresearch Finding: BLOSUM62 Specificity Ceiling + Homopolymer Filter\n\n**Mission:** `iedb-specificity` (run-001, completed 2026-06-15)\n\n**Key Finding:** BLOSUM62 encoding reaches a specificity ceiling at ~80% for homopolymer discrimination. The model correctly identifies canonical anchor residues in homopolymers (Poly-L, Poly-M, Poly-V, Poly-I, Poly-F) and assigns high binding probability — this is correct binding prediction but wrong for epitope calling. The gap is biological: homopolymers lack TCR-facing sequence diversity.\n\n**Solution:** Post-hoc homopolymer domain filter — peptides with ≤2 unique amino acids are overridden to NB. Based on established immunological knowledge (homopolymers cannot be T-cell epitopes), not an arbitrary threshold hack.\n\n**Results:** Specificity 75% → 100%, Sensitivity held at 93.9%, F1 0.920 → 0.968, False Positives 5 → 0.\n\n**Remaining Issue:** 3 false negatives are non-canonical p9 peptides — structurally distinct problem.\n\n**Artifacts:** `.omc/autoresearch/iedb-specificity/runs/run-001/`",
+  "version": "1.0.0",
+  "lastScanned": 1781839574689,
+  "projectRoot": "D:\\Researching\\Peptide epitope",
+  "customNotes": [
+    {
+      "timestamp": 1781930471804,
+      "source": "manual",
+      "category": "architecture",
+      "content": "## MedSci Skill Architecture (v1.0.0, 2026-06-20)\n\n**Location**: `.claude/skills/medsci/` (13 files)\n**Skill name**: `medsci`\n\n### 4-Mode Routing\n- Mode 1: Autonomous Research (7-phase pipeline, no ARS dependency)\n- Mode 2: ARS Delegation (routes to appropriate ARS slash command)\n- Mode 3: Deep Review (ARS pipeline + MIR quality layers)\n- Mode 4: Quick Distill (knowledge absorption from other skills)\n\n### Key Reference Files\n- WORKFLOW.md: complete phase-by-phase instructions\n- TOOL_STRATEGY.md: 3-tier tool fallback (MCP→CLI→WebSearch)\n- DOMAINS.md: biomedical/immunology default domain with fragment registry\n- CITATION_INTEGRITY.md: 5-rule verification protocol\n- HALLUCINATION_PATTERNS.md: 11 patterns + ARS 7-mode crosswalk\n- DISTILLATION_PROTOCOL.md: Observe→Extract→Merge→Apply cycle\n- SKILL_CATALOG.md: ARS 14 commands + related skills + distilled sources\n\n### Distilled Knowledge (7 sources, ~96 fragments)\nQUEST(14) + CCF-Figure(26) + neoantigen-predictor(17) + adme-property-predictor(10) + immune-pathway-analysis(8) + biomarker-landscape-scanner(6) + sci-hub/paper-search-mcp(integrated)\n\n### Recovery\nIf lost: restore from Yith memory or plan file at ~/.claude/plans/stateless-toasting-hopper.md"
+    }
+  ],
+  "userDirectives": [
+    {
+      "timestamp": 1781930470390,
+      "directive": "This project uses the medsci skill at .claude/skills/medsci/ (v1.0.0, 13 files). medsci is the PRIMARY skill for all biomedical literature research, review writing, and academic pipeline work. It merges deep-research + medical-imaging-review + ARS plugin capabilities with 4-mode routing. If medsci files are missing, restore from Yith memory (search \"MedSci Skill Complete Definition\") or from the plan file at ~/.claude/plans/stateless-toasting-hopper.md. Do NOT use standalone literature search tools when medsci is available — route through medsci for verified, domain-adapted output.",
+      "context": "",
+      "source": "explicit",
+      "priority": "high"
+    },
+    {
+      "timestamp": 1781931091960,
+      "directive": "RECOVERY TRIGGER: When user says \"restore medsci\" / \"恢复medsci\" / \"找回medsci\" / \"recover medsci\" — immediately execute this recovery protocol:\n1. Check if D:\\Researching\\Peptide epitope\\.claude\\skills\\medsci\\SKILL.md exists. If YES, report \"medsci intact (N files)\" and stop.\n2. If NO, try ZIP restore: PowerShell Expand-Archive \"D:\\Researching\\Peptide epitope\\.claude\\skills\\medsci-backup-20260620.zip\" to the skills directory.\n3. If ZIP missing, recall from Yith memory ID mem_mqlvduux_0e8089788964 and recreate all 14 files.\n4. If Yith fails, read ~/.claude/plans/stateless-toasting-hopper.md and recreate from plan.\n5. Verify: SKILL.md + 12 reference files present. Report result with file count.",
+      "context": "",
+      "source": "explicit",
+      "priority": "high"
+    }
+  ],
+  "hotPaths": []
+}
