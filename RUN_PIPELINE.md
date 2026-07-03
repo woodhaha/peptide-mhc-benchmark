@@ -34,8 +34,7 @@ Peptide epitope/
 ├── 02_Data/                     # Data layer (READ-ONLY raw/)
 │   ├── raw/
 │   │   ├── feature.csv          # 5,088 × 282 BLOSUM62 features
-│   │   ├── real_peptides.csv    # Protein epitope scan input
-│   │   └── real_peptides_test500.csv
+│   │   └── real_peptides.csv    # 5,190 labeled peptides (train/test split)
 │   ├── cleaned/                 # 11 processed CSVs + model outputs
 │   └── data_dictionary.md       # Variable definitions
 │

@@ -23,13 +23,16 @@ import openmm.unit as unit
 DOCK_DIR = Path(__file__).parent
 K_SIDECHAIN = 7.6          # Å, CA→NZ for lysine
 SALT_BRIDGE_MAX = 4.0      # Å, ideal N-O salt bridge
-MD_LENGTH_NS = 5           # ns production
+MD_LENGTH_NS = 1           # ns production (practical for CPU: ~8h)
 TIMESTEP = 2.0             # fs
+N_THREADS = 15             # CPU threads for OpenMM
+GPU_OPENCL = False          # CPU-only (OpenCL NaN on RTX 2000 Ada)
 REPORT_INTERVAL = 5000     # steps (10 ps)
 N_SAMPLES = int(MD_LENGTH_NS * 1e6 / TIMESTEP / REPORT_INTERVAL)
 
 print("=" * 70)
 print(f"  KRAS G12V — K-E63 SALT BRIDGE MD ({MD_LENGTH_NS}ns)")
+print(f"  Platform: {'OpenCL GPU (NVIDIA RTX 2000 Ada)' if GPU_OPENCL else f'CPU x {N_THREADS} threads'} | {TIMESTEP}fs | ~30K atoms")
 print(f"  Template: 1DUZ (LLFGYPVYV) — CA-based K reachability")
 print("=" * 70)
 
@@ -127,7 +130,18 @@ print("[3/5] Minimizing + equilibrating (gradual restraint release)...")
 integrator = mm.LangevinMiddleIntegrator(
     300 * unit.kelvin, 1.0 / unit.picosecond, TIMESTEP * unit.femtosecond
 )
-sim = app.Simulation(modeller.topology, system, integrator)
+if GPU_OPENCL:
+    sim = app.Simulation(
+        modeller.topology, system, integrator,
+        mm.Platform.getPlatformByName('OpenCL'),
+        {'OpenCLPlatformIndex': '0', 'OpenCLDeviceIndex': '0', 'Precision': 'single'},
+    )
+else:
+    sim = app.Simulation(
+        modeller.topology, system, integrator,
+        mm.Platform.getPlatformByName('CPU'),
+        {'Threads': str(N_THREADS)},
+    )
 sim.context.setPositions(modeller.positions)
 
 # Energy minimization (with restraints at k=20)

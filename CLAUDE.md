@@ -75,7 +75,7 @@ Peptide epitope/
 │   ├── notes/                 # Detailed paper notes
 │   └── literature_matrix.md   # 590-line comprehensive review
 ├── 02_Data/                   # MedSci standard
-│   ├── raw/                   # feature.csv, real_peptides.csv, real_peptides_test500.csv
+│   ├── raw/                   # feature.csv (5,088 × 282), real_peptides.csv (5,190 labeled)
 │   ├── cleaned/               # 11 processed CSVs + model outputs
 │   ├── data_dictionary.md     # Variable dictionary
 │   └── data.tar.gz            # Backup archive

@@ -203,7 +203,7 @@ verdict_box = FancyBboxPatch((0.02, 0.02), 0.96, 0.14, boxstyle="round,pad=0.1",
 ax_d.add_patch(verdict_box)
 ax_d.text(0.5, 0.09, '✅ K-E63 SALT BRIDGE: STRUCTURALLY & ENERGETICALLY FAVORABLE',
           transform=ax_d.transAxes, ha='center', va='center', fontsize=10,
-          fontweight='bold', color=C['salt_bridge']).replace('✅','[+]')
+          fontweight='bold', color=C['salt_bridge'])
 
 # Save
 fig.savefig(FIG_DIR / "Figure_K63_salt_bridge.png", dpi=300, bbox_inches='tight',
