@@ -11,6 +11,7 @@ suppressMessages({
   library(pROC)
   library(gridExtra)
   library(grid)
+  library(ggrepel)
 })
 
 setwd('D:/Researching/Peptide epitope')
@@ -561,7 +562,8 @@ p_s4 <- ggplot(map_df, aes(x = pos, y = protein, color = has_effect)) +
                aes(x = start, xend = end, y = protein, yend = protein),
                color = "gray70", linewidth = 3, inherit.aes = FALSE) +
   geom_point(size = 5) +
-  geom_text(aes(label = label), hjust = -0.15, vjust = -0.8, size = 3.2, fontface = "bold") +
+  geom_text_repel(aes(label = label), size = 3.2, fontface = "bold", min.segment.length = 0,
+                  box.padding = 0.8, point.padding = 0.3, max.overlaps = 20) +
   scale_color_manual(values = c("TRUE" = npg_red, "FALSE" = "gray60"),
                      labels = c("TRUE" = "Epitope-altering", "FALSE" = "Silent")) +
   scale_x_continuous(limits = c(-10, 370)) +

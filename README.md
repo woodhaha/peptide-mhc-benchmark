@@ -8,7 +8,7 @@
 
 Systematic benchmarking of six deep learning architectures for HLA-A\*02:01 peptide-MHC binding prediction, with external validation against 49 experimentally verified IEDB epitopes, cancer hotspot mutation analysis (p53 R248W, KRAS G12V), and molecular docking-based structural hypotheses for neoepitope-MHC interactions.
 
-**Manuscript**: `04_Manuscript/manuscript.md` (52 references, ~9,000 words, 8 figures, 6 tables)
+**Manuscript**: `04_Manuscript/manuscript.md` (54 references, ~9,000 words, 8 figures, 6 tables)
 
 ---
 

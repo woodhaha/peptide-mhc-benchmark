@@ -27,6 +27,9 @@ desktop.ini
 # Temp / logs (keep decisions.md + change_log.md)
 06_Logs/*.pdf
 
+# Legacy path junctions (backwards compatibility)
+data/
+
 # State directories
 .claude/state/
 .claude/sessions/
