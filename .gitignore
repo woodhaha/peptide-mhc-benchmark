@@ -18,6 +18,7 @@ __pycache__/
 
 # Model files — large H5 files, consider Git LFS
 *.h5
+*.npy
 
 # OS
 .DS_Store
