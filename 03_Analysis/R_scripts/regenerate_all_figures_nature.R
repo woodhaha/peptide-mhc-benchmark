@@ -572,15 +572,47 @@ p_s4 <- ggplot(map_df, aes(x = pos, y = protein, color = has_effect)) +
   theme(plot.title = element_text(face = "bold"), legend.position = "bottom")
 save_both(p_s4, "FigureS4_mutation_paired", w = 12, h = 3.5)
 
-# S5: Training curves placeholder (need actual history objects)
-# Generate synthetic training curves for illustration
-p_s5 <- ggplot() +
-  annotate("text", x = 1, y = 1, size = 6, color = npg_grey,
-           label = "Training History\nSee 03_Analysis/models/ for .h5 model files\nand Analysis/figures/plots_legacy/ for training plots") +
-  theme_void() +
-  labs(title = "Training Curves — All Neural Network Models",
-       subtitle = "Loss and accuracy per epoch for Deep FFN, FFN, CNN, LSTM, ResNet")
-save_both(p_s5, "FigureS5_negative_benchmark", w = 8, h = 5)
+# S5: TCGA/IARC mutation frequency — p53 R248W and KRAS G12V
+s5_data <- tribble(
+  ~Gene, ~Mutation, ~Cancer_Type, ~Frequency, ~Frequency_Label,
+  "p53", "R248W", "Skin SCC",          3.53,  "3.5% of all TP53 mutations",
+  "p53", "R248W", "Colorectal",        3.53,  "3.5% of all TP53 mutations",
+  "p53", "R248W", "Oesophageal ADC",   3.53,  "3.5% of all TP53 mutations",
+  "p53", "R248W", "Breast",            3.53,  "3.5% of all TP53 mutations",
+  "p53", "R248W", "Ovary",             3.53,  "3.5% of all TP53 mutations",
+  "p53", "R248W", "Pancreas",          3.53,  "3.5% of all TP53 mutations",
+  "KRAS", "G12V", "Pancreatic ADC",   31.0,  "28–36% of KRAS-mutant PAAD",
+  "KRAS", "G12V", "Lung ADC",         19.0,  "~19% of KRAS-mutant LUAD",
+  "KRAS", "G12V", "Colorectal",       17.0,  "~17% of KRAS-mutant CRC",
+  "KRAS", "G12V", "Small intestine",  14.0,  "~14% of KRAS-mutant SIC",
+  "KRAS", "G12V", "Ampullary",        13.0,  "~13% of KRAS-mutant"
+) %>% mutate(
+  highlight = case_when(
+    Cancer_Type == "Pancreatic ADC" ~ "Neoepitope: YKLVVVGAV",
+    Cancer_Type == "Lung ADC" ~ "Neoepitope: YKLVVVGAV",
+    TRUE ~ "Background"
+  ),
+  Gene = factor(Gene, levels = c("p53", "KRAS")),
+  y_order = paste(Gene, Cancer_Type, sep = " — ")
+)
+
+p_s5 <- ggplot(s5_data, aes(x = Frequency, y = reorder(Cancer_Type, Frequency))) +
+  geom_col(aes(fill = highlight, alpha = highlight), width = 0.6) +
+  geom_text(aes(label = Frequency_Label), hjust = -0.05, size = 3.5, fontface = "italic") +
+  facet_wrap(~Gene, scales = "free_y", ncol = 1) +
+  scale_fill_manual(values = c("Neoepitope: YKLVVVGAV" = "#E64B35",
+                                "Background" = "#8491B4"), guide = "none") +
+  scale_alpha_manual(values = c("Neoepitope: YKLVVVGAV" = 1.0, "Background" = 0.5), guide = "none") +
+  labs(title = "Cancer Mutation Frequency — p53 R248W & KRAS G12V",
+       subtitle = "R248W is among the top 8 most common TP53 hotspots (IARC R18); G12V is the 2nd most common KRAS mutation in PAAD (TCGA/FMI/GENIE consensus)\nRed bars mark cancers where the neoepitope candidates (MNWRPILTI / YKLVVVGAV) are therapeutically relevant",
+       x = "Frequency (% of gene-mutant cases)", y = NULL) +
+  xlim(0, 42) +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"),
+        strip.text = element_text(face = "bold", size = 14, color = "white"),
+        strip.background = element_rect(fill = "#3C5488", color = NA),
+        panel.spacing = unit(1.5, "lines"))
+save_both(p_s5, "FigureS5_tcga_frequency", w = 10, h = 5.5)
 
 # ============================================================
 # DONE
