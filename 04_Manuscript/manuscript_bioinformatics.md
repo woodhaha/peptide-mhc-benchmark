@@ -263,9 +263,6 @@ AUC, area under the curve; BN, batch normalisation; CNN, convolutional neural ne
 
 We thank colleagues in the Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, and the Center for Bionanoengineering, Zhejiang University, for their support and insightful discussions. We also acknowledge the developers and maintainers of MHCflurry, the Immune Epitope Database (IEDB), and the ESM-2 protein language model for making their tools and data publicly available.
 
-
-
-
 ## Funding
 
 This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
@@ -284,7 +281,7 @@ The authors declare that they have no competing interests.
 
 ## Ethics approval
 
-
+This study is purely computational, uses only publicly available data and synthetic peptide sequences, and does not involve human subjects, animal experiments, or patient data. Ethics approval was not required.
 ## Author biographies
 
 
@@ -397,7 +394,7 @@ Wells DK, van Buuren MM, Dang KK, et al. Key parameters of tumor epitope immunog
 
 Yan Y, Tao H, He J, Huang SY. The HDOCK server for integrated protein-protein docking. Nat Protoc 2020;15:1829-1852.
 
-Zaghla N, Loffler MW, Kowalewski DJ. Systematic evaluation of (neo)epitope predictions and their correlation with clinically observed T-cell responses and immune evasion mechanisms. PhD Thesis, FU Berlin 2025. [PhD thesis; verify public accessibility and provide persistent identifier if available]
+Zaghla N, Loffler MW, Kowalewski DJ. Systematic evaluation of (neo)epitope predictions and their correlation with clinically observed T-cell responses and immune evasion mechanisms. PhD Thesis, Freie Universität Berlin, 2025.
 
 Zeng J, Li Y, Wang H, et al. Leveraging artificial intelligence for neoantigen prediction. Cancer Res 2025;85:2512-2525.
 

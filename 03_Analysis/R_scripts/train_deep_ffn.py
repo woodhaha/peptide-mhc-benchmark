@@ -6,49 +6,19 @@ import pandas as pd
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
+# Shared BLOSUM62 encoder
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from blosum_utils import AA, AA2IDX, BLOSUM_NORM, encode_blosum
+
 # ── Load labeled data ──
 df = pd.read_csv("02_Data/raw/real_peptides.csv")
 print(f"Loaded: {len(df):,} peptides ({sum(df.data_type=='train'):,} train, {sum(df.data_type=='test'):,} test)")
 
-# ── BLOSUM62 encoding (vectorized numpy) ──
-AA = list("ARNDCQEGHILKMFPSTWYV")
-AA2IDX = {aa: i for i, aa in enumerate(AA)}
-BLOSUM62 = np.array([
-    [4,-1,-2,-2,0,-1,-1,0,-2,-1,-1,-1,-1,-2,-1,1,0,-3,-2,0],
-    [-1,5,0,-2,-3,1,0,-2,0,-3,-2,2,-1,-3,-2,-1,-1,-3,-2,-3],
-    [-2,0,6,1,-3,0,0,0,1,-3,-3,0,-2,-3,-2,1,0,-4,-2,-3],
-    [-2,-2,1,6,-3,0,2,-1,-1,-3,-4,-1,-3,-3,-1,0,-1,-4,-3,-3],
-    [0,-3,-3,-3,9,-3,-4,-3,-3,-1,-1,-3,-1,-2,-3,-1,-1,-2,-2,-1],
-    [-1,1,0,0,-3,5,2,-2,0,-3,-2,1,0,-3,-1,0,-1,-2,-1,-2],
-    [-1,0,0,2,-4,2,5,-2,0,-3,-3,1,-2,-3,-1,0,-1,-3,-2,-2],
-    [0,-2,0,-1,-3,-2,-2,6,-2,-4,-4,-2,-3,-3,-2,0,-2,-2,-3,-3],
-    [-2,0,1,-1,-3,0,0,-2,8,-3,-3,-1,-2,-1,-2,-1,-2,-2,2,-3],
-    [-1,-3,-3,-3,-1,-3,-3,-4,-3,4,2,-3,1,0,-3,-2,-1,-3,-1,3],
-    [-1,-2,-3,-4,-1,-2,-3,-4,-3,2,4,-2,2,0,-3,-2,-1,-2,-1,1],
-    [-1,2,0,-1,-3,1,1,-2,-1,-3,-2,5,-1,-3,-1,0,-1,-3,-2,-2],
-    [-2,-1,-2,-3,-1,0,-2,-3,-2,1,2,-1,5,0,-2,-1,-1,-1,-1,1],
-    [-2,-3,-3,-3,-2,-3,-3,-3,-1,0,0,-3,0,6,-4,-2,-2,1,3,-1],
-    [-1,-2,-2,-1,-3,-1,-1,-2,-2,-3,-3,-1,-2,-4,7,-1,-1,-4,-3,-2],
-    [1,-1,1,0,-1,0,0,0,-1,-2,-2,0,-1,-2,-1,4,1,-3,-2,-2],
-    [0,-1,0,-1,-1,-1,-1,-2,-2,-1,-1,-1,-1,-2,-1,1,5,-2,-2,0],
-    [-3,-3,-4,-4,-2,-2,-3,-2,-2,-3,-2,-3,-1,1,-4,-3,-2,11,2,-3],
-    [-2,-2,-2,-3,-2,-1,-2,-3,2,-1,-1,-2,-1,3,-3,-2,-2,2,7,-1],
-    [0,-3,-3,-3,-1,-2,-2,-3,-3,3,1,-2,1,-1,-2,-2,0,-3,-1,4]
-], dtype=np.float32)
-
-# Row-normalize
-row_min = BLOSUM62.min(axis=1, keepdims=True)
-row_max = BLOSUM62.max(axis=1, keepdims=True)
-BLOSUM_NORM = (BLOSUM62 - row_min) / (row_max - row_min + 1e-8)
-
+# ── BLOSUM62 encoding (vectorized, shared module) ──
 t0 = time.perf_counter()
 peptides = df["peptide"].values
 n = len(peptides)
-X = np.zeros((n, 180), dtype=np.float32)
-for j in range(9):
-    aa_chars = [p[j] for p in peptides]
-    aa_idx = [AA2IDX[c] for c in aa_chars]
-    X[:, j*20:(j+1)*20] = BLOSUM_NORM[aa_idx]
+X = encode_blosum(peptides)
 print(f"Encoded {n:,} peptides in {time.perf_counter()-t0:.1f}s")
 
 # Split

@@ -31,3 +31,6 @@ desktop.ini
 .claude/state/
 .claude/sessions/
 .omc/state/
+.venv_mhcflurry/
+.venv_*/
+*.log

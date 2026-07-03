@@ -6,36 +6,13 @@ import pandas as pd
 warnings.filterwarnings("ignore")
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
-# ===========================================================================
-# 0. Setup
-# ===========================================================================
-AA = list("ARNDCQEGHILKMFPSTWYV")
-AA2IDX = {aa: i for i, aa in enumerate(AA)}
-BLOSUM62 = np.array([
-    [4,-1,-2,-2,0,-1,-1,0,-2,-1,-1,-1,-1,-2,-1,1,0,-3,-2,0],
-    [-1,5,0,-2,-3,1,0,-2,0,-3,-2,2,-1,-3,-2,-1,-1,-3,-2,-3],
-    [-2,0,6,1,-3,0,0,0,1,-3,-3,0,-2,-3,-2,1,0,-4,-2,-3],
-    [-2,-2,1,6,-3,0,2,-1,-1,-3,-4,-1,-3,-3,-1,0,-1,-4,-3,-3],
-    [0,-3,-3,-3,9,-3,-4,-3,-3,-1,-1,-3,-1,-2,-3,-1,-1,-2,-2,-1],
-    [-1,1,0,0,-3,5,2,-2,0,-3,-2,1,0,-3,-1,0,-1,-2,-1,-2],
-    [-1,0,0,2,-4,2,5,-2,0,-3,-3,1,-2,-3,-1,0,-1,-3,-2,-2],
-    [0,-2,0,-1,-3,-2,-2,6,-2,-4,-4,-2,-3,-3,-2,0,-2,-2,-3,-3],
-    [-2,0,1,-1,-3,0,0,-2,8,-3,-3,-1,-2,-1,-2,-1,-2,-2,2,-3],
-    [-1,-3,-3,-3,-1,-3,-3,-4,-3,4,2,-3,1,0,-3,-2,-1,-3,-1,3],
-    [-1,-2,-3,-4,-1,-2,-3,-4,-3,2,4,-2,2,0,-3,-2,-1,-2,-1,1],
-    [-1,2,0,-1,-3,1,1,-2,-1,-3,-2,5,-1,-3,-1,0,-1,-3,-2,-2],
-    [-2,-1,-2,-3,-1,0,-2,-3,-2,1,2,-1,5,0,-2,-1,-1,-1,-1,1],
-    [-2,-3,-3,-3,-2,-3,-3,-3,-1,0,0,-3,0,6,-4,-2,-2,1,3,-1],
-    [-1,-2,-2,-1,-3,-1,-1,-2,-2,-3,-3,-1,-2,-4,7,-1,-1,-4,-3,-2],
-    [1,-1,1,0,-1,0,0,0,-1,-2,-2,0,-1,-2,-1,4,1,-3,-2,-2],
-    [0,-1,0,-1,-1,-1,-1,-2,-2,-1,-1,-1,-1,-2,-1,1,5,-2,-2,0],
-    [-3,-3,-4,-4,-2,-2,-3,-2,-2,-3,-2,-3,-1,1,-4,-3,-2,11,2,-3],
-    [-2,-2,-2,-3,-2,-1,-2,-3,2,-1,-1,-2,-1,3,-3,-2,-2,2,7,-1],
-    [0,-3,-3,-3,-1,-2,-2,-3,-3,3,1,-2,1,-1,-2,-2,0,-3,-1,4]
-], dtype=np.float32)
-row_min = BLOSUM62.min(axis=1, keepdims=True)
-row_max = BLOSUM62.max(axis=1, keepdims=True)
-BLOSUM_NORM = (BLOSUM62 - row_min) / (row_max - row_min + 1e-8)
+# Shared BLOSUM62 encoder — single source of truth
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from blosum_utils import (
+    AA, AA2IDX, BLOSUM_NORM, PSSM_A0201,
+    encode_blosum, encode_blosum_image, encode_blosum_lstm,
+    score_pssm_vectorized,
+)
 
 import keras
 from keras import layers
@@ -43,6 +20,20 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, classification_report
 
 rng = np.random.default_rng(42)
+
+# ── Helpers ──
+def clear_session():
+    """Reset Keras session (safe no-op if backend doesn't support it)."""
+    try:
+        keras.backend.clear_session()
+    except Exception:
+        pass
+
+def reshape_test(X, mode):
+    """Reshape test data for model input mode."""
+    if mode == "cnn":   return X.reshape(-1, 9, 20, 1)
+    elif mode == "lstm": return X.reshape(-1, 9, 20)
+    else:                return X
 
 # ===========================================================================
 # 1. Data Loading & Encoding
@@ -54,13 +45,10 @@ print("=" * 70)
 df = pd.read_csv("02_Data/raw/real_peptides.csv")
 print(f"\n1. Data: {len(df):,} peptides ({sum(df.data_type=='train'):,} train, {sum(df.data_type=='test'):,} test)")
 
-# Encode BLOSUM62
+# Encode BLOSUM62 (vectorized via shared module)
 peptides = df["peptide"].values
 n = len(peptides)
-X = np.zeros((n, 180), dtype=np.float32)
-for j in range(9):
-    aa_idx = [AA2IDX[p[j]] for p in peptides]
-    X[:, j*20:(j+1)*20] = BLOSUM_NORM[aa_idx]
+X = encode_blosum(peptides)
 print(f"   Encoding: {X.shape} — instant")
 
 train_mask = (df["data_type"] == "train").values
@@ -148,14 +136,15 @@ models = {
     "ResNet":          (build_resnet, X_train,          "ffn"),
 }
 
+trained_models = {}  # collect for saving
+
 for name, (builder, X_tr, mode) in models.items():
     print(f"\n  {name}...")
     t0 = time.perf_counter()
-    k_clear_session = keras.backend.clear_session
-    try: k_clear_session()
-    except: pass
+    clear_session()
 
     model = builder()
+    trained_models[name] = model
     model.compile(loss="sparse_categorical_crossentropy",
                   optimizer=keras.optimizers.Adam(0.001),
                   metrics=["accuracy"])
@@ -166,8 +155,7 @@ for name, (builder, X_tr, mode) in models.items():
         keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=5),
     ]
 
-    X_te = X_test.reshape(-1, 9, 20, 1) if mode == "cnn" else \
-           X_test.reshape(-1, 9, 20) if mode == "lstm" else X_test
+    X_te = reshape_test(X_test, mode)
 
     history = model.fit(X_tr, y_train, epochs=150, batch_size=50,
                         validation_split=0.2, callbacks=cb, verbose=0)
@@ -212,34 +200,29 @@ for name, r in results.items():
 pd.DataFrame(results).T.round(4).to_csv("02_Data/cleaned/model_comparison.csv")
 print(f"\n  ✓ Saved: 02_Data/cleaned/model_comparison.csv")
 
+# Save all trained Keras models
+os.makedirs("03_Analysis/models", exist_ok=True)
+for name, m in trained_models.items():
+    fname = f"03_Analysis/models/{name.replace(' ', '_').replace('(', '').replace(')', '')}.keras"
+    m.save(fname)
+    print(f"  ✓ {fname}")
+# Save RF
+import joblib
+joblib.dump(rf, "03_Analysis/models/Random_Forest.joblib")
+print(f"  ✓ 03_Analysis/models/Random_Forest.joblib")
+
 # ===========================================================================
 # 3. PSSM Labeling Comparison
 # ===========================================================================
 print(f"\n3. PSSM labeling comparison...")
 print("-" * 70)
 
-# Generate PSSM-labeled peptides
-pssm_scores = {
-    "p1": dict(A=0.1, R=0.0, N=0.0, D=0.0, C=0.0, Q=0.0, E=0.0, G=0.2, H=0.0, I=0.2, L=0.1, K=0.0, M=0.1, F=0.4, P=0.0, S=0.2, T=0.2, W=0.3, Y=0.5, V=0.1),
-    "p2": dict(A=0.5, R=-1, N=-1, D=-1, C=-1, Q=0.3, E=-1, G=0.0, H=-1, I=0.7, L=1.0, K=-1, M=0.9, F=0.0, P=-1, S=0.0, T=0.3, W=-1, Y=0.0, V=0.7),
-    "p3": dict(A=0.0, R=0.0, N=0.0, D=0.3, E=0.3, Q=0.0, G=0.0, H=0.0, I=0.0, L=0.0, K=0.0, M=0.0, F=0.0, P=0.0, S=0.0, T=0.0, C=-0.2, W=0.0, Y=0.0, V=0.0),
-    "p4": dict(A=0.1, R=0.1, N=0.0, D=0.0, E=0.0, Q=0.1, G=0.0, H=0.1, I=0.1, L=0.1, K=0.1, M=0.0, F=0.0, P=-0.2, S=0.1, T=0.1, C=-0.1, W=0.0, Y=0.0, V=0.1),
-    "p5": dict(A=0.0, R=0.1, N=0.0, D=0.0, E=0.0, Q=0.0, G=0.0, H=0.1, I=0.0, L=0.1, K=0.0, M=0.0, F=0.0, P=-0.1, S=0.0, T=0.0, C=-0.1, W=0.0, Y=0.0, V=0.0),
-    "p6": dict(A=0.0, R=0.0, N=0.0, D=0.0, E=0.1, Q=0.0, G=0.0, H=0.0, I=0.1, L=0.1, K=0.0, M=0.0, F=0.0, P=-0.1, S=0.0, T=0.0, C=0.0, W=0.0, Y=0.0, V=0.0),
-    "p7": dict(A=0.0, R=0.0, N=0.0, D=0.0, E=0.0, Q=0.0, G=0.0, H=0.0, I=0.0, L=0.1, K=0.0, M=0.0, F=0.1, P=-0.1, S=0.0, T=0.0, C=0.0, W=0.0, Y=0.0, V=0.0),
-    "p8": dict(A=0.0, R=0.0, N=0.0, D=0.0, E=0.0, Q=0.0, G=0.0, H=0.0, I=0.1, L=0.2, K=0.0, M=0.0, F=0.0, P=-0.1, S=0.0, T=0.0, C=0.0, W=0.0, Y=0.0, V=0.1),
-    "p9": dict(A=0.4, R=-1, N=-1, D=-1, C=-1, Q=0.2, E=-1, G=0.0, H=-1, I=0.7, L=0.8, K=-1, M=0.5, F=0.0, P=-1, S=0.1, T=0.3, W=-1, Y=0.0, V=1.0),
-}
-
-# Generate PSSM-scored candidates
+# Generate PSSM-scored candidates (vectorized, no Python loops)
+rng = np.random.default_rng(42)
 n_cand = 15000
 gen_chars = rng.integers(0, 20, size=(n_cand, 9))
 gen_peps = ["".join(AA[i] for i in row) for row in gen_chars]
-scores = np.zeros(n_cand)
-for pos in range(9):
-    pssm_dict = pssm_scores[f"p{pos+1}"]
-    for i, pep in enumerate(gen_peps):
-        scores[i] += pssm_dict.get(pep[pos], 0)
+scores = score_pssm_vectorized(gen_peps)
 
 sb_thresh = np.quantile(scores, 0.98)
 wb_thresh = np.quantile(scores, 0.93)
@@ -256,11 +239,8 @@ sel = np.concatenate([rng.choice(np.where(pssm_label_num==i)[0], min_c, replace=
 sel_peps = [gen_peps[s] for s in sel]
 sel_labels = pssm_label_num[sel]
 
-# Encode + train/test split
-X_pssm = np.zeros((len(sel_peps), 180), dtype=np.float32)
-for j in range(9):
-    aa_idx = [AA2IDX[p[j]] for p in sel_peps]
-    X_pssm[:, j*20:(j+1)*20] = BLOSUM_NORM[aa_idx]
+# Encode + train/test split (vectorized)
+X_pssm = encode_blosum(sel_peps)
 
 n_test_pssm = len(sel) // 10
 idx_pssm = rng.permutation(len(sel))
@@ -283,15 +263,10 @@ for name, builder, mode in pssm_configs:
         rf2.fit(Xp_tr, yp_tr)
         yp_pred = rf2.predict(Xp_te)
     else:
-        try: keras.backend.clear_session()
-        except: pass
-        if mode == "cnn":
-            m = builder(); X_tr2, X_te2 = Xp_tr.reshape(-1,9,20,1), Xp_te.reshape(-1,9,20,1)
-        elif mode == "lstm":
-            m = builder(); X_tr2, X_te2 = Xp_tr.reshape(-1,9,20), Xp_te.reshape(-1,9,20)
-        else:
-            m = builder()
-            X_tr2, X_te2 = Xp_tr, Xp_te
+        clear_session()
+        m = builder()
+        X_tr2 = reshape_test(Xp_tr, mode)
+        X_te2 = reshape_test(Xp_te, mode)
         m.compile(loss="sparse_categorical_crossentropy", optimizer=keras.optimizers.Adam(0.001), metrics=["accuracy"])
         m.fit(X_tr2, yp_tr, epochs=150, batch_size=50, validation_split=0.2,
               callbacks=[keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, restore_best_weights=True),
@@ -324,8 +299,7 @@ from sklearn.model_selection import StratifiedKFold
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 cv_accs = []
 for fold, (tr_idx, val_idx) in enumerate(skf.split(X_train, y_train)):
-    try: keras.backend.clear_session()
-    except: pass
+    clear_session()
     m = build_deep_ffn()
     m.compile(loss="sparse_categorical_crossentropy", optimizer=keras.optimizers.Adam(0.001), metrics=["accuracy"])
     m.fit(X_train[tr_idx], y_train[tr_idx], epochs=150, batch_size=50,
@@ -348,16 +322,14 @@ print("-" * 70)
 iedb_file = "02_Data/cleaned/iedb_benchmark_results.csv"
 if os.path.exists(iedb_file):
     iedb = pd.read_csv(iedb_file)
-    # Re-score with current model
+    # Re-score with current model (vectorized)
     iedb_peps = iedb["peptide"].values
-    X_iedb = np.zeros((len(iedb_peps), 180), dtype=np.float32)
-    for j in range(9):
-        aa_idx = [AA2IDX.get(p[j], 0) if len(p) >= 9 else 0 for p in iedb_peps]
-        X_iedb[:, j*20:(j+1)*20] = BLOSUM_NORM[aa_idx]
+    # pad short peptides to 9-mer
+    iedb_peps_padded = [p.ljust(9, 'A')[:9] for p in iedb_peps]
+    X_iedb = encode_blosum(iedb_peps_padded)
 
     # Use best model (Deep FFN)
-    try: keras.backend.clear_session()
-    except: pass
+    clear_session()
     best = build_deep_ffn()
     best.compile(loss="sparse_categorical_crossentropy", optimizer=keras.optimizers.Adam(0.001), metrics=["accuracy"])
     best.fit(X_train, y_train, epochs=150, batch_size=50, validation_split=0.2,

@@ -1,14 +1,13 @@
 """Continue from saved model_comparison.csv — run PSSM, CV, IEDB."""
-import os, time, numpy as np, pandas as pd, warnings
+import os, sys, time, numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from blosum_utils import (
+    AA, AA2IDX, BLOSUM_NORM, encode_blosum, encode_blosum_image, encode_blosum_lstm,
+    score_pssm_vectorized,
+)
 rng = np.random.default_rng(42)
-
-AA = list("ARNDCQEGHILKMFPSTWYV")
-AA2IDX = {aa: i for i, aa in enumerate(AA)}
-BLOSUM62 = np.array([[4,-1,-2,-2,0,-1,-1,0,-2,-1,-1,-1,-1,-2,-1,1,0,-3,-2,0],[-1,5,0,-2,-3,1,0,-2,0,-3,-2,2,-1,-3,-2,-1,-1,-3,-2,-3],[-2,0,6,1,-3,0,0,0,1,-3,-3,0,-2,-3,-2,1,0,-4,-2,-3],[-2,-2,1,6,-3,0,2,-1,-1,-3,-4,-1,-3,-3,-1,0,-1,-4,-3,-3],[0,-3,-3,-3,9,-3,-4,-3,-3,-1,-1,-3,-1,-2,-3,-1,-1,-2,-2,-1],[-1,1,0,0,-3,5,2,-2,0,-3,-2,1,0,-3,-1,0,-1,-2,-1,-2],[-1,0,0,2,-4,2,5,-2,0,-3,-3,1,-2,-3,-1,0,-1,-3,-2,-2],[0,-2,0,-1,-3,-2,-2,6,-2,-4,-4,-2,-3,-3,-2,0,-2,-2,-3,-3],[-2,0,1,-1,-3,0,0,-2,8,-3,-3,-1,-2,-1,-2,-1,-2,-2,2,-3],[-1,-3,-3,-3,-1,-3,-3,-4,-3,4,2,-3,1,0,-3,-2,-1,-3,-1,3],[-1,-2,-3,-4,-1,-2,-3,-4,-3,2,4,-2,2,0,-3,-2,-1,-2,-1,1],[-1,2,0,-1,-3,1,1,-2,-1,-3,-2,5,-1,-3,-1,0,-1,-3,-2,-2],[-2,-1,-2,-3,-1,0,-2,-3,-2,1,2,-1,5,0,-2,-1,-1,-1,-1,1],[-2,-3,-3,-3,-2,-3,-3,-3,-1,0,0,-3,0,6,-4,-2,-2,1,3,-1],[-1,-2,-2,-1,-3,-1,-1,-2,-2,-3,-3,-1,-2,-4,7,-1,-1,-4,-3,-2],[1,-1,1,0,-1,0,0,0,-1,-2,-2,0,-1,-2,-1,4,1,-3,-2,-2],[0,-1,0,-1,-1,-1,-1,-2,-2,-1,-1,-1,-1,-2,-1,1,5,-2,-2,0],[-3,-3,-4,-4,-2,-2,-3,-2,-2,-3,-2,-3,-1,1,-4,-3,-2,11,2,-3],[-2,-2,-2,-3,-2,-1,-2,-3,2,-1,-1,-2,-1,3,-3,-2,-2,2,7,-1],[0,-3,-3,-3,-1,-2,-2,-3,-3,3,1,-2,1,-1,-2,-2,0,-3,-1,4]], dtype=np.float32)
-row_min = BLOSUM62.min(1, keepdims=True); row_max = BLOSUM62.max(1, keepdims=True)
-BLOSUM_NORM = (BLOSUM62 - row_min) / (row_max - row_min + 1e-8)
 
 import keras; from keras import layers
 from sklearn.ensemble import RandomForestClassifier
@@ -17,10 +16,7 @@ from sklearn.model_selection import StratifiedKFold
 
 df = pd.read_csv("02_Data/raw/real_peptides.csv")
 peps = df["peptide"].values; n = len(peps)
-X = np.zeros((n, 180), dtype=np.float32)
-for j in range(9):
-    idx = [AA2IDX[p[j]] for p in peps]
-    X[:, j*20:(j+1)*20] = BLOSUM_NORM[idx]
+X = encode_blosum(peps)
 tm = (df.data_type == "train").values
 Xtr, Xte = X[tm], X[~tm]
 ytr = df.label_num.values[tm].astype(np.int32)
@@ -41,34 +37,17 @@ t0 = time.perf_counter()
 
 # ===== PSSM =====
 print("=== PSSM Labeling Comparison ===")
-pssm = {f"p{i}": d for i, d in enumerate([
-    dict(A=0.1,R=0.0,N=0.0,D=0.0,C=0.0,Q=0.0,E=0.0,G=0.2,H=0.0,I=0.2,L=0.1,K=0.0,M=0.1,F=0.4,P=0.0,S=0.2,T=0.2,W=0.3,Y=0.5,V=0.1),
-    dict(A=0.5,R=-1,N=-1,D=-1,C=-1,Q=0.3,E=-1,G=0,H=-1,I=0.7,L=1,K=-1,M=0.9,F=0,P=-1,S=0,T=0.3,W=-1,Y=0,V=0.7),
-    dict(A=0,R=0,N=0,D=0.3,E=0.3,Q=0,G=0,H=0,I=0,L=0,K=0,M=0,F=0,P=0,S=0,T=0,C=-0.2,W=0,Y=0,V=0),
-    dict(A=0.1,R=0.1,N=0,D=0,E=0,Q=0.1,G=0,H=0.1,I=0.1,L=0.1,K=0.1,M=0,F=0,P=-0.2,S=0.1,T=0.1,C=-0.1,W=0,Y=0,V=0.1),
-    dict(A=0,R=0.1,N=0,D=0,E=0,Q=0,G=0,H=0.1,I=0,L=0.1,K=0,M=0,F=0,P=-0.1,S=0,T=0,C=-0.1,W=0,Y=0,V=0),
-    dict(A=0,R=0,N=0,D=0,E=0.1,Q=0,G=0,H=0,I=0.1,L=0.1,K=0,M=0,F=0,P=-0.1,S=0,T=0,C=0,W=0,Y=0,V=0),
-    dict(A=0,R=0,N=0,D=0,E=0,Q=0,G=0,H=0,I=0,L=0.1,K=0,M=0,F=0.1,P=-0.1,S=0,T=0,C=0,W=0,Y=0,V=0),
-    dict(A=0,R=0,N=0,D=0,E=0,Q=0,G=0,H=0,I=0.1,L=0.2,K=0,M=0,F=0,P=-0.1,S=0,T=0,C=0,W=0,Y=0,V=0.1),
-    dict(A=0.4,R=-1,N=-1,D=-1,C=-1,Q=0.2,E=-1,G=0,H=-1,I=0.7,L=0.8,K=-1,M=0.5,F=0,P=-1,S=0.1,T=0.3,W=-1,Y=0,V=1.0),
-], 1)}
 
 nc = 15000; gc = rng.integers(0, 20, (nc, 9))
 gp = ["".join(AA[i] for i in r) for r in gc]
-sc = np.zeros(nc)
-for pos in range(9):
-    pssm_d = pssm[f"p{pos+1}"]
-    for i, p in enumerate(gp): sc[i] += pssm_d.get(p[pos], 0)
+sc = score_pssm_vectorized(gp)
 sbq = np.quantile(sc, 0.98); wbq = np.quantile(sc, 0.93)
 pl = np.full(nc, "NB", dtype="<U2"); pl[sc >= wbq] = "WB"; pl[sc >= sbq] = "SB"
 pln = np.zeros(nc, dtype=np.int32); pln[pl == "WB"] = 1; pln[pl == "SB"] = 2
 mc = min((pln == i).sum() for i in range(3))
 sel = np.concatenate([rng.choice(np.where(pln == i)[0], mc, replace=False) for i in range(3)])
 sp = [gp[s] for s in sel]; sl = pln[sel]
-Xp = np.zeros((len(sp), 180), dtype=np.float32)
-for j in range(9):
-    idx2 = [AA2IDX[p[j]] for p in sp]
-    Xp[:, j*20:(j+1)*20] = BLOSUM_NORM[idx2]
+Xp = encode_blosum(sp)
 nt = len(sel) // 10; ip = rng.permutation(len(sel))
 Xpt, Xpe = Xp[ip[nt:]], Xp[ip[:nt]]; ypt, ype = sl[ip[nt:]], sl[ip[:nt]]
 print(f"PSSM data: {len(sel):,} balanced ({nt} test)")

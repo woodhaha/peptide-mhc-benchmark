@@ -54,6 +54,7 @@ cat("\n── Figure 1: Model Comparison ──\n")
 
 mhcflurry <- tribble(
   ~Model, ~Accuracy, ~Macro_F1, ~NB_F1, ~WB_F1, ~SB_F1,
+  "MHCflurry 2.2.0†", 100.0, 1.000, 1.000, 1.000, 1.000,
   "Deep FFN",        91.9, 0.921, 0.969, 0.880, 0.913,
   "FFN (Jessen)",    90.9, 0.911, 0.969, 0.875, 0.891,
   "CNN",             90.0, 0.901, 0.963, 0.860, 0.882,
@@ -61,19 +62,25 @@ mhcflurry <- tribble(
   "LSTM",            83.3, 0.836, 0.935, 0.752, 0.822,
   "Random Forest",   81.1, 0.814, 0.927, 0.723, 0.793
 ) %>% mutate(Model = factor(Model, levels = rev(c(
-  "Deep FFN", "FFN (Jessen)", "CNN", "ResNet", "LSTM", "Random Forest"
+  "MHCflurry 2.2.0†", "Deep FFN", "FFN (Jessen)", "CNN", "ResNet", "LSTM", "Random Forest"
 ))))
 
 # Panel A: Accuracy bar chart
+# MHCflurry bar in grey with dashed border; neural models in nature_7 colors
+nature_7 <- c("grey60", nature_6)  # grey for MHCflurry, then 6 nature colors
+mhcflurry_flag <- mhcflurry$Model == "MHCflurry 2.2.0†"
+
 p1a <- ggplot(mhcflurry, aes(x = Accuracy, y = Model, fill = Model)) +
   geom_col(width = 0.6, alpha = 0.9) +
-  geom_text(aes(label = sprintf("%.1f%%", Accuracy)),
+  geom_text(aes(label = ifelse(Model == "MHCflurry 2.2.0†",
+                               sprintf("%.1f%%†", Accuracy),
+                               sprintf("%.1f%%", Accuracy))),
             hjust = -0.15, size = 3.8, fontface = "bold") +
-  scale_fill_manual(values = nature_6, guide = "none") +
+  scale_fill_manual(values = setNames(nature_7, levels(mhcflurry$Model)), guide = "none") +
   labs(title = "Model Accuracy — HLA-A*02:01 Peptide-MHC Binding",
-       subtitle = "MHCflurry 2.2.0 labels, BLOSUM62 encoding, 5,088 balanced 9-mers",
+       subtitle = "MHCflurry 2.2.0 labels, BLOSUM62 encoding, 5,088 balanced 9-mers\n†MHCflurry evaluated on its own training distribution (label circularity — see Section 4.6)",
        x = "Accuracy (%)", y = NULL) +
-  xlim(0, 100) +
+  xlim(0, 105) +
   theme_minimal(base_size = 13) +
   theme(plot.title = element_text(face = "bold"),
         panel.grid.major.y = element_blank())
@@ -222,17 +229,24 @@ p_dots <- res %>%
       true_label == "POS" & pred_class == "NB" ~ "FN",
       true_label == "NEG" & pred_class == "NB" ~ "TN",
       TRUE ~ "FP"
-    )
+    ),
+    p9 = str_sub(peptide, 9, 9)
   ) %>% arrange(desc(binding_score)) %>% mutate(idx = 1:n())
+
+  fn_annotate <- p_dots %>% filter(outcome == "FN") %>% slice_head(n = 3)
+  p_dots_sub <- "Sensitivity: 93.9% | AUC: 0.947 | 49 POS + 20 NEG | FN labelled with non-canonical p9 anchor"
 
 p3_dots <- ggplot(p_dots, aes(x = binding_score, y = reorder(peptide, binding_score))) +
   geom_point(aes(color = outcome), size = 2.5) +
   geom_vline(xintercept = 0.5, linetype = "dashed", color = "gray50", alpha = 0.5) +
+  geom_text(data = fn_annotate, aes(label = paste0("p9=", p9)),
+            hjust = -0.3, size = 3.2, color = "#E64B35", fontface = "italic") +
   scale_color_manual(values = c("TP" = npg_green, "FN" = npg_red,
                                  "TN" = npg_navy, "FP" = npg_orange)) +
   labs(title = "IEDB Benchmark — Per-Epitope Binding Scores",
-       subtitle = "Sensitivity: 93.9% | AUC: 0.947 | 49 POS + 20 NEG",
-       x = "Binding Score (SB×1.0 + WB×0.5)", y = NULL, color = "Outcome") +
+       subtitle = p_dots_sub,
+       x = "Binding Score (SB x 1.0 + WB x 0.5)", y = NULL, color = "Outcome") +
+  xlim(0, 1.15) +
   theme_minimal(base_size = 12) +
   theme(plot.title = element_text(face = "bold"),
         axis.text.y = element_text(size = 6, family = "mono"),

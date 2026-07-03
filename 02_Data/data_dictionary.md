@@ -6,7 +6,6 @@
 |------|-------------|--------|
 | `feature.csv` | Original peptide features (BLOSUM encoding, physicochemical properties) | Custom feature engineering |
 | `real_peptides.csv` | Real peptide dataset for prediction | Project dataset |
-| `real_peptides_test500.csv` | 500-peptide test set | Project dataset subset |
 
 ## Cleaned/Processed Data (`02_Data/cleaned/`)
 
