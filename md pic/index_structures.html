@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8"><title>K-E63 Salt Bridge — Structural Snapshots</title>
+<style>
+body { font-family: sans-serif; max-width: 1200px; margin: auto; padding: 20px; background: #f5f5f5; }
+h1 { color: #2c3e50; border-bottom: 2px solid #e74c3c; padding-bottom: 10px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+.card iframe { width: 100%; height: 500px; border: none; }
+.card h3 { margin: 10px; color: #2c3e50; }
+.card p { margin: 5px 10px 10px; color: #666; font-size: 0.9em; }
+</style></head><body>
+<h1>K-E63 Salt Bridge — 6 Snapshots from 100ns MD</h1>
+<p>5 KMeans centroids + representative frame (main cluster middle).<br>
+Chain A (MHC &alpha;) = blue cartoon, Chain B (&beta;<sub>2</sub>M) = green cartoon, Chain C (peptide) = red stick.<br>
+<b>K2</b> (P2, orange) and <b>E63</b> (dark red) highlighted. <i>Drag to rotate, scroll to zoom.</i></p>
+<div class="grid"><div class="card"><h3>Rep (78.3ns, main)</h3><iframe src="view_representative_f783.html"></iframe></div><div class="card"><h3>C0 (37.8ns, C1)</h3><iframe src="view_centroid_0_f378.html"></iframe></div><div class="card"><h3>C1 (50.3ns, C2)</h3><iframe src="view_centroid_1_f503.html"></iframe></div><div class="card"><h3>C2 (92.4ns, C3 main)</h3><iframe src="view_centroid_2_f924.html"></iframe></div><div class="card"><h3>C3 (10.0ns, C4 early)</h3><iframe src="view_centroid_3_f100.html"></iframe></div><div class="card"><h3>C4 (15.6ns, C5)</h3><iframe src="view_centroid_4_f156.html"></iframe></div></div>
+<h2>Superposition (aligned on MHC C&alpha;)</h2>
+<div class="card" style="max-width:100%"><iframe src="view_superposition.html" style="height:600px"></iframe>
+<p>Grey=rep &middot; Red=C0 &middot; Blue=C1 &middot; Green=C2 &middot; Orange=C3 &middot; Purple=C4</p></div>
+<p><i>Generated with py3Dmol. Rotate with mouse, zoom with scroll wheel.</i></p>
+</body></html>

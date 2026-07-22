@@ -1,223 +1,137 @@
 #!/usr/bin/env python3
-"""
-MD simulation: K-E63 salt bridge — CUDA/RTX 5090 + HMR + 4fs.
-Template: 1DUZ (LLFGYPVYV) — CA-based K reachability.
-100ns production for statistically meaningful salt bridge occupancy.
-
-ponytail: v13 SMVT protocol adapted for docking — HMR + mixed precision + barostat from start.
-"""
-import numpy as np
-import json
-import time
+"""K-E63 salt bridge: CPU eq (proven) + CUDA prod 100ns 4fs HMR."""
+import numpy as np, json, time
 from pathlib import Path
 import pdbfixer
-import openmm as mm
-import openmm.app as app
-import openmm.unit as unit
+import openmm as mm, openmm.app as app, openmm.unit as unit
 
-DATA_DIR = Path("/root/autodl-tmp/docking")
-MD_LENGTH_NS = 100
-TIMESTEP = 4.0             # fs (HMR-safe)
-DT_EQ = 2.0                # fs equilibration
-K_SIDECHAIN = 7.6          # Å, CA→NZ for lysine
-SALT_BRIDGE_MAX = 4.0      # Å
-REPORT_INTERVAL = 25000    # steps (100 ps at 4fs)
-N_SAMPLES = int(MD_LENGTH_NS * 1e6 / TIMESTEP / REPORT_INTERVAL)
-
+D = Path("/root/autodl-tmp/docking")
+TSTEP, K_SB, SB_MAX, RINT = 4.0, 7.6, 4.0, 25000
+N_SAMP = int(100 * 1e6 / TSTEP / RINT)
 t0 = time.perf_counter()
-print(f"  K-E63 SALT BRIDGE MD — {MD_LENGTH_NS}ns CUDA + HMR")
-print(f"  Template: 1DUZ (LLFGYPVYV)")
+print("K-E63 SALT BRIDGE -- CPU eq + CUDA prod 100ns", flush=True)
 
-# 1. Build system
-print("[1/5] Building system...")
-fixer = pdbfixer.PDBFixer(str(DATA_DIR / "1DUZ.pdb"))
-fixer.findMissingResidues(); fixer.findMissingAtoms()
-fixer.addMissingAtoms(); fixer.addMissingHydrogens(7.0)
-
-modeller = app.Modeller(fixer.topology, fixer.positions)
-to_delete = []
-for chain in modeller.topology.chains():
-    if chain.id not in ("A", "B", "C"):
-        to_delete.extend(list(chain.residues()))
-for chain in modeller.topology.chains():
-    if chain.id in ("A", "B", "C"):
-        to_delete.extend([r for r in chain.residues() if r.name == "HOH"])
-modeller.delete(to_delete)
-
+# ── 1. Build ──
+print("[1] Build...", flush=True)
+fix = pdbfixer.PDBFixer(str(D / "1DUZ.pdb"))
+fix.findMissingResidues(); fix.findMissingAtoms()
+fix.addMissingAtoms(); fix.addMissingHydrogens(7.0)
+for r in fix.topology.residues():
+    if r.name == "CYS": r.name = "CYM"
+mod = app.Modeller(fix.topology, fix.positions)
+rem = []
+for c in mod.topology.chains():
+    if c.id not in ("A","B","C"): rem.extend(c.residues())
+for c in mod.topology.chains():
+    if c.id in ("A","B","C"): rem.extend(x for x in c.residues() if x.name == "HOH")
+mod.delete(rem)
 ff = app.ForceField("amber14-all.xml", "amber14/tip3pfb.xml")
-modeller.addSolvent(ff, model="tip3p", padding=1.0 * unit.nanometer,
-                    ionicStrength=0.15 * unit.molar)
-
-system = ff.createSystem(modeller.topology, nonbondedMethod=app.PME,
-                         nonbondedCutoff=1.0 * unit.nanometer,
-                         constraints=app.HBonds, ignoreExternalBonds=True)
-# barostat from start (ponytail: v13 fix)
-system.addForce(mm.MonteCarloBarostat(1.0 * unit.atmosphere, 300.0 * unit.kelvin))
+mod.addSolvent(ff, padding=1.0*unit.nanometer, ionicStrength=0.15*unit.molar)
+sys = ff.createSystem(mod.topology, nonbondedMethod=app.PME,
+    nonbondedCutoff=1.0*unit.nanometer, constraints=app.HBonds, ignoreExternalBonds=False)
+sys.addForce(mm.MonteCarloBarostat(1.0*unit.atmosphere, 300.0*unit.kelvin))
 
 # HMR
-atom_list = list(modeller.topology.atoms())
-adj = [[] for _ in range(modeller.topology.getNumAtoms())]
-for bond in modeller.topology.bonds():
-    adj[bond[0].index].append(bond[1].index)
-    adj[bond[1].index].append(bond[0].index)
-n_hmr = 0
-for atom in atom_list:
-    if atom.element is not None and atom.element.symbol == 'H':
-        h_idx = atom.index
-        heavy = next((nbr for nbr in adj[h_idx]
-                      if atom_list[nbr].element is not None
-                      and atom_list[nbr].element.symbol != 'H'), None)
-        if heavy is None: continue
-        h_mass = system.getParticleMass(h_idx)
-        heavy_mass = system.getParticleMass(heavy)
-        new_h_mass = 3.0 * unit.amu
-        system.setParticleMass(h_idx, new_h_mass)
-        system.setParticleMass(heavy, heavy_mass - (new_h_mass - h_mass))
-        n_hmr += 1
-print(f"  {n_hmr} H repartitioned, {system.getNumParticles()} particles")
+al = list(mod.topology.atoms()); ad = [[] for _ in range(mod.topology.getNumAtoms())]
+for b in mod.topology.bonds(): ad[b[0].index].append(b[1].index); ad[b[1].index].append(b[0].index)
+n_h = 0
+for a in al:
+    if not a.element or a.element.symbol != "H": continue
+    hv = next((n for n in ad[a.index] if al[n].element and al[n].element.symbol != "H"), None)
+    if hv is None: continue
+    hm = sys.getParticleMass(hv)
+    sys.setParticleMass(a.index, 3.0*unit.amu)
+    sys.setParticleMass(hv, hm - (3.0*unit.amu - sys.getParticleMass(a.index)))
+    n_h += 1
+print(f"  {n_h}H repartitioned, {sys.getNumParticles()} particles", flush=True)
 
-# 2. Index atoms
-print("[2/5] Indexing...")
-p2_ca_idx = e63_oe1_idx = e63_oe2_idx = e63_cd_idx = None
-bb_indices = []
-for i, atom in enumerate(modeller.topology.atoms()):
-    res = atom.residue
-    if res.chain.id == "C" and str(res.id) == "2" and atom.name == "CA":
-        p2_ca_idx = i
-    if res.chain.id == "A" and str(res.id) == "63":
-        if atom.name == "OE1": e63_oe1_idx = i
-        elif atom.name == "OE2": e63_oe2_idx = i
-        elif atom.name == "CD": e63_cd_idx = i
-    if res.chain.id in ("A", "B", "C") and atom.name in ("N", "CA", "C", "O"):
-        bb_indices.append(i)
-print(f"  P2:CA={p2_ca_idx}  E63:OE1={e63_oe1_idx} OE2={e63_oe2_idx}")
-assert p2_ca_idx and e63_cd_idx, "Key atoms not found"
+# ── 2. Index ──
+print("[2] Index...", flush=True)
+p2 = e1 = e2 = eCD = None; bb = []
+for i, a in enumerate(mod.topology.atoms()):
+    r = a.residue
+    if r.chain.id == "C" and str(r.id) == "2" and a.name == "CA": p2 = i
+    if r.chain.id == "A" and str(r.id) == "63":
+        if a.name == "OE1": e1 = i
+        elif a.name == "OE2": e2 = i
+        elif a.name == "CD": eCD = i
+    if r.chain.id in ("A","B","C") and a.name in ("N","CA","C","O"): bb.append(i)
+print(f"  P2:CA={p2} E63:OE1={e1} OE2={e2}", flush=True)
+assert p2 and eCD
 
-# Backbone restraints
-k_rest = 20.0 * unit.kilocalories_per_mole / (unit.angstroms ** 2)
-bb_force = mm.CustomExternalForce("k*((x-x0)^2+(y-y0)^2+(z-z0)^2)")
-bb_force.addGlobalParameter("k", k_rest)
-bb_force.addPerParticleParameter("x0"); bb_force.addPerParticleParameter("y0")
-bb_force.addPerParticleParameter("z0")
-for i in bb_indices:
-    p = modeller.positions[i]
-    bb_force.addParticle(i, [p.x, p.y, p.z])
-bb_idx = system.addForce(bb_force)
+k0 = 20.0 * unit.kilocalories_per_mole / (unit.angstroms**2)
+bf = mm.CustomExternalForce("k*((x-x0)^2+(y-y0)^2+(z-z0)^2)")
+bf.addGlobalParameter("k", k0)
+bf.addPerParticleParameter("x0"); bf.addPerParticleParameter("y0"); bf.addPerParticleParameter("z0")
+for i in bb: p = mod.positions[i]; bf.addParticle(i, [p.x, p.y, p.z])
+sys.addForce(bf)
 
-# 3. Minimize + equilibrate
-print("[3/5] Minimize + equilibrate...")
-plat = mm.Platform.getPlatformByName("CUDA")
-integrator = mm.LangevinMiddleIntegrator(300.0 * unit.kelvin,
-                                         1.0 / unit.picosecond, DT_EQ * unit.femtosecond)
-sim = app.Simulation(modeller.topology, system, integrator, plat,
-                     {"CudaPrecision": "mixed"})
-sim.context.setPositions(modeller.positions)
+def chk(s, lbl):
+    e = s.context.getState(getEnergy=True).getPotentialEnergy().value_in_unit(unit.kilocalories_per_mole)
+    ok = not (np.isnan(e) or np.isinf(e))
+    print(f"  {lbl}: PE={e:.0f} {'OK' if ok else 'NaN!'}", flush=True)
 
-def check(label):
-    pe = sim.context.getState(getEnergy=True).getPotentialEnergy()
-    v = pe.value_in_unit(unit.kilocalories_per_mole)
-    ok = not (np.isnan(v) or np.isinf(v))
-    print(f"  {label}: PE={v:.0f} {'OK' if ok else 'NaN!'}")
-    return ok
-
-sim.minimizeEnergy(maxIterations=5000)
-check("minimize")
-
-# NVT heating
+# ── 3. CPU eq (proven stable) ──
+print("[3] CPU eq...", flush=True)
+cpu = mm.Platform.getPlatformByName("CPU")
+intg = mm.LangevinMiddleIntegrator(300.0*unit.kelvin, 1.0/unit.picosecond, 2.0*unit.femtosecond)
+sim = app.Simulation(mod.topology, sys, intg, cpu, {"Threads": "15"})
+sim.context.setPositions(mod.positions)
+sim.minimizeEnergy(maxIterations=5000); chk(sim, "minimize")
 for t in [50, 100, 150, 200, 250, 300]:
-    sim.integrator.setTemperature(t * unit.kelvin)
-    sim.step(10_000)
-    check(f"NVT {t}K")
+    sim.integrator.setTemperature(t*unit.kelvin); sim.step(10000); chk(sim, f"NVT {t}K")
+sim.integrator.setTemperature(300.0*unit.kelvin); sim.step(50000); chk(sim, "NVT eq")
+# faster annealing than original
+for kv, st in [(20,10000),(10,10000),(5,20000),(2,20000),(1,20000),(0,10000)]:
+    bf.setGlobalParameterDefaultValue(0, kv*unit.kilocalories_per_mole/(unit.angstroms**2))
+    bf.updateParametersInContext(sim.context); sim.step(st); chk(sim, f"rst k={kv}")
+bf.setGlobalParameterDefaultValue(0, 0.0*unit.kilocalories_per_mole/(unit.angstroms**2))
+bf.updateParametersInContext(sim.context); sim.step(100000); chk(sim, "NPT free")
+print(f"  Eq done [{(time.perf_counter()-t0)/60:.0f}min]", flush=True)
 
-sim.integrator.setTemperature(300.0 * unit.kelvin)
-sim.step(50_000)
-check("NVT eq")
-
-# NPT equil with restraint annealing
-anneal = [(20, 25000), (10, 25000), (5, 50000), (2, 50000), (1, 50000), (0, 25000)]
-for k_val, steps in anneal:
-    bb_force.setGlobalParameterDefaultValue(0, k_val * unit.kilocalories_per_mole / (unit.angstroms ** 2))
-    bb_force.updateParametersInContext(sim.context)
-    sim.step(steps)
-    check(f"restraint k={k_val}")
-
-system.removeForce(bb_idx)
-sim.context.reinitialize(preserveState=True)
-sim.step(100_000)
-check("NPT unrestrained")
-
-# 4. Production
-print(f"[4/5] Production {MD_LENGTH_NS}ns (4fs)...")
-sim.integrator.setStepSize(TIMESTEP * unit.femtosecond)
-sim.reporters.append(app.StateDataReporter(
-    str(DATA_DIR / "md_log.csv"), REPORT_INTERVAL,
+# ── 4. CUDA production ──
+print(f"[4] CUDA prod {100}ns 4fs...", flush=True)
+st = sim.context.getState(getPositions=True, getVelocities=True, getEnergy=True, getParameters=False)
+plat = mm.Platform.getPlatformByName("CUDA")
+pint = mm.LangevinMiddleIntegrator(300.0*unit.kelvin, 1.0/unit.picosecond, TSTEP*unit.femtosecond)
+prod = app.Simulation(mod.topology, sys, pint, plat, {"CudaPrecision": "mixed"})
+prod.context.setState(st)
+prod.reporters.append(app.StateDataReporter(str(D/"md_log.csv"), RINT,
     step=True, time=True, potentialEnergy=True, temperature=True, density=True))
 
-prod_steps = int(MD_LENGTH_NS * 1_000_000 / TIMESTEP)
-save_freq = REPORT_INTERVAL
+PROD = int(100 * 1_000_000 / TSTEP)
+dt = np.dtype([("step","i4"),("t_ns","f4"),("d1","f4"),("d2","f4"),("dCD","f4"),
+    ("minOE","f4"),("k_reach","?"),("nz","f4"),("sb","?"),("T","f4"),("Ep","f4")])
+buf = np.zeros(N_SAMP, dtype=dt); ix = 0
 
-dtype = np.dtype([
-    ("step", "i4"), ("time_ns", "f4"),
-    ("d_ca_oe1", "f4"), ("d_ca_oe2", "f4"), ("d_ca_cd", "f4"),
-    ("min_oe", "f4"), ("k_ca_reach", "?"),
-    ("est_nz_dist", "f4"), ("salt_bridge", "?"),
-    ("T", "f4"), ("E_pot", "f4"),
-])
-dist_data = np.zeros(N_SAMPLES, dtype=dtype)
-sample_idx = 0
+for step in range(0, PROD, RINT):
+    prod.step(RINT)
+    s = prod.context.getState(getPositions=True, getEnergy=True)
+    posA = s.getPositions(asNumpy=True).value_in_unit(unit.nanometer)*10
+    # T from KE (LangevinMiddle has no computeSystemTemperature)
+    ke = s.getKineticEnergy().value_in_unit(unit.kilojoules_per_mole)
+    ndof = sys.getNumParticles() * 3 - 3
+    Tk = 2.0 * ke / (ndof * 0.008314462618)
+    pv = posA[p2]; d1 = float(np.linalg.norm(pv-posA[e1])); d2 = float(np.linalg.norm(pv-posA[e2]))
+    dCD = float(np.linalg.norm(pv-posA[eCD]))
+    mo = min(d1,d2); kr = mo < K_SB; nz = max(0.0, mo-K_SB+1.5); sb = nz < SB_MAX
+    buf[ix] = (step+RINT, (step+RINT)*TSTEP/1000, d1, d2, dCD, mo, kr, nz, sb, Tk,
+               s.getPotentialEnergy().value_in_unit(unit.kilocalories_per_mole))
+    ix += 1
+    if ix % 25 == 0:
+        r = buf[ix-1]; el = time.perf_counter()-t0
+        print(f"  {(step+RINT)/PROD*100:.0f}% t={r['t_ns']:.1f}ns CA-E63={r['minOE']:.1f}A "
+              f"K={'Y' if r['k_reach'] else 'N'} NZ={r['nz']:.1f}A T={r['T']:.0f}K [{el/60:.0f}min]", flush=True)
 
-for step in range(0, prod_steps, save_freq):
-    sim.step(save_freq)
-    state = sim.context.getState(getPositions=True, getEnergy=True)
-    pos_a = state.getPositions(asNumpy=True).value_in_unit(unit.nanometer) * 10
-    T_k = integrator.computeSystemTemperature(sim.context)
-
-    p2_ca = pos_a[p2_ca_idx]
-    d_oe1 = float(np.linalg.norm(p2_ca - pos_a[e63_oe1_idx]))
-    d_oe2 = float(np.linalg.norm(p2_ca - pos_a[e63_oe2_idx]))
-    d_cd = float(np.linalg.norm(p2_ca - pos_a[e63_cd_idx]))
-    min_oe = min(d_oe1, d_oe2)
-    k_ca_reach = min_oe < K_SIDECHAIN
-    est_nz = max(0.0, min_oe - K_SIDECHAIN + 1.5)
-    salt_bridge = est_nz < SALT_BRIDGE_MAX
-
-    dist_data[sample_idx] = (
-        step + save_freq, (step + save_freq) * TIMESTEP / 1000,
-        d_oe1, d_oe2, d_cd, min_oe, k_ca_reach, est_nz, salt_bridge,
-        T_k, state.getPotentialEnergy().value_in_unit(unit.kilocalories_per_mole),
-    )
-    sample_idx += 1
-
-    if sample_idx % 25 == 0:
-        pct = (step + save_freq) / prod_steps * 100
-        elapsed = time.perf_counter() - t0
-        r = dist_data[sample_idx - 1]
-        print(f"  {pct:.0f}%  t={r['time_ns']:.1f}ns  "
-              f"P2CA-E63={r['min_oe']:.1f}Å  "
-              f"K_reach={'Y' if r['k_ca_reach'] else 'N'}  "
-              f"est_NZ={r['est_nz_dist']:.1f}Å  T={r['T']:.0f}K  [{elapsed/60:.0f}min]")
-
-# 5. Results
-valid = dist_data[:sample_idx]
-ca_dists = valid["min_oe"]
-sb = valid["salt_bridge"]
-T_max = valid["T"].max()
-E_var = valid["E_pot"].std() / abs(valid["E_pot"].mean())
-
-print(f"\n{'='*60}")
-print(f"  MD {valid['time_ns'][-1]:.1f}ns RESULTS")
-print(f"  P2:CA→E63: {ca_dists.mean():.1f}±{ca_dists.std():.1f}Å  min={ca_dists.min():.1f}Å")
-print(f"  Salt bridge: {sb.mean()*100:.1f}%  Tmax={T_max:.0f}K  E_CV={E_var:.1%}")
-print(f"  {'STABLE' if T_max < 400 and E_var < 0.1 else 'UNSTABLE — need rerun'}")
-
-np.savez(DATA_DIR / "md_distances.npz",
-         step=valid["step"], time_ns=valid["time_ns"],
-         d_ca_oe1=valid["d_ca_oe1"], d_ca_oe2=valid["d_ca_oe2"],
-         min_oe=valid["min_oe"], k_ca_reach=valid["k_ca_reach"],
-         salt_bridge=valid["salt_bridge"], T=valid["T"], E_pot=valid["E_pot"])
-json.dump({"duration_ns": float(valid["time_ns"][-1]),
-           "salt_bridge_pct": float(sb.mean() * 100),
-           "ca_mean": float(ca_dists.mean()), "ca_min": float(ca_dists.min()),
-           "stable": T_max < 400 and E_var < 0.1},
-          open(DATA_DIR / "salt_bridge_summary.json", "w"), indent=2)
-print(f"  Saved. Total: {(time.perf_counter()-t0)/60:.0f}min")
+# ── 5. Results ──
+v = buf[:ix]; cd = v["minOE"]
+print(f"\n  {v['t_ns'][-1]:.1f}ns: CA-E63 {cd.mean():.1f}+/-{cd.std():.1f}A min={cd.min():.1f}A")
+print(f"  Salt bridge: {v['sb'].mean()*100:.1f}%")
+stable = v["T"].max() < 400 and v["Ep"].std()/abs(v["Ep"].mean()) < 0.1
+print(f"  {'STABLE' if stable else 'UNSTABLE'}")
+np.savez(D/"md_dist.npz", step=v["step"], t_ns=v["t_ns"], d1=v["d1"], mo=v["minOE"],
+         sb=v["sb"], T=v["T"], Ep=v["Ep"])
+json.dump({"ns":float(v["t_ns"][-1]),"sb_pct":float(v["sb"].mean()*100),
+    "ca_mean":float(cd.mean()),"ca_min":float(cd.min()),"stable":bool(stable)},
+    open(D/"sb_summary.json","w"), indent=2)
+print(f"  Total: {(time.perf_counter()-t0)/60:.0f}min")

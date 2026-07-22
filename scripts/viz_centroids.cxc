@@ -1,0 +1,139 @@
+# ChimeraX viz: 5 centroids + representative
+# Run: "C:\Program Files\ChimeraX\bin\ChimeraX.exe" --offscreen --script viz_centroids.cxc
+
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/representative_f783_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_0_f378_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_1_f503_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_2_f924_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_3_f100_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_4_f156_clean.pdb
+
+close #2-6
+color #1/A #3498db target c
+color #1/B #2ecc71 target c
+color #1/C #e74c3c target c
+surface #1/C
+transparency #1/C 50
+color #1/C #e74c3c target s
+cartoon #1/A,B
+transparency #1/A,B 40
+
+# K2 + E63
+select #1/C:2; color sel #ff7f0e target c; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728 target c; show sel target a; style sel sphere radius 0.6
+~select; label #1/C:2 text "K2-P2"; label #1/A:63 text "E63"
+
+# E63 sidechain
+show #1/A:63 target a
+style #1/A:63 stick
+
+view #1/A:55-70 #1/C:1-9
+turn y -35; turn x -15; turn z 5
+lighting soft; lighting shadows true
+set bgColor white
+
+save D:/Researching/Peptide\ epitope/md\ pic/structural_representative.png width 2400 height 1800 dpi 300 transparency false supersample 3
+save D:/Researching/Peptide\ epitope/md\ pic/structural_representative.pdf width 2400 height 1800 dpi 300 transparency false supersample 3
+
+close #1
+
+# Centroid 0: 37.8ns
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_0_f378_clean.pdb
+color #1/A #3498db target c; color #1/B #2ecc71 target c; color #1/C #e74c3c target c
+surface #1/C; transparency #1/C 50; color #1/C #e74c3c target s
+cartoon #1/A,B; transparency #1/A,B 40
+select #1/C:2; color sel #ff7f0e; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728; show sel target a; style sel sphere radius 0.6
+~select; show #1/A:63 target a; style #1/A:63 stick
+view #1/A:55-70 #1/C:1-9; turn y -35; turn x -15; turn z 5
+lighting soft; lighting shadows true; set bgColor white
+save D:/Researching/Peptide\ epitope/md\ pic/structural_centroid_37.8ns.png width 2400 height 1800 dpi 300 transparency false
+close #1
+
+# Centroid 1: 50.3ns
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_1_f503_clean.pdb
+color #1/A #3498db; color #1/B #2ecc71; color #1/C #e74c3c
+surface #1/C; transparency #1/C 50; color #1/C #e74c3c target s
+cartoon #1/A,B; transparency #1/A,B 40
+select #1/C:2; color sel #ff7f0e; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728; show sel target a; style sel sphere radius 0.6
+~select; show #1/A:63 target a; style #1/A:63 stick
+view #1/A:55-70 #1/C:1-9; turn y -35; turn x -15; turn z 5
+save D:/Researching/Peptide\ epitope/md\ pic/structural_centroid_50.3ns.png width 2400 height 1800 dpi 300 transparency false
+close #1
+
+# Centroid 2: 92.4ns (main cluster)
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_2_f924_clean.pdb
+color #1/A #3498db; color #1/B #2ecc71; color #1/C #e74c3c
+surface #1/C; transparency #1/C 50; color #1/C #e74c3c target s
+cartoon #1/A,B; transparency #1/A,B 40
+select #1/C:2; color sel #ff7f0e; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728; show sel target a; style sel sphere radius 0.6
+~select; show #1/A:63 target a; style #1/A:63 stick
+view #1/A:55-70 #1/C:1-9; turn y -35; turn x -15; turn z 5
+save D:/Researching/Peptide\ epitope/md\ pic/structural_centroid_92.4ns.png width 2400 height 1800 dpi 300 transparency false
+close #1
+
+# Centroid 3: 10.0ns (early)
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_3_f100_clean.pdb
+color #1/A #3498db; color #1/B #2ecc71; color #1/C #e74c3c
+surface #1/C; transparency #1/C 50; color #1/C #e74c3c target s
+cartoon #1/A,B; transparency #1/A,B 40
+select #1/C:2; color sel #ff7f0e; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728; show sel target a; style sel sphere radius 0.6
+~select; show #1/A:63 target a; style #1/A:63 stick
+view #1/A:55-70 #1/C:1-9; turn y -35; turn x -15; turn z 5
+save D:/Researching/Peptide\ epitope/md\ pic/structural_centroid_10.0ns.png width 2400 height 1800 dpi 300 transparency false
+close #1
+
+# Centroid 4: 15.6ns
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_4_f156_clean.pdb
+color #1/A #3498db; color #1/B #2ecc71; color #1/C #e74c3c
+surface #1/C; transparency #1/C 50; color #1/C #e74c3c target s
+cartoon #1/A,B; transparency #1/A,B 40
+select #1/C:2; color sel #ff7f0e; show sel target a; style sel sphere radius 0.6
+select #1/A:63; color sel #d62728; show sel target a; style sel sphere radius 0.6
+~select; show #1/A:63 target a; style #1/A:63 stick
+view #1/A:55-70 #1/C:1-9; turn y -35; turn x -15; turn z 5
+save D:/Researching/Peptide\ epitope/md\ pic/structural_centroid_15.6ns.png width 2400 height 1800 dpi 300 transparency false
+close #1
+
+# ===== Superposition: peptide only, all centroids aligned =====
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/representative_f783_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_0_f378_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_1_f503_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_2_f924_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_3_f100_clean.pdb
+open D:/Researching/Peptide\ epitope/md\ results/salt_bridge/clean/centroid_4_f156_clean.pdb
+
+matchmaker #2/A:1-275 #1/A:1-275
+matchmaker #3/A:1-275 #1/A:1-275
+matchmaker #4/A:1-275 #1/A:1-275
+matchmaker #5/A:1-275 #1/A:1-275
+matchmaker #6/A:1-275 #1/A:1-275
+
+hide #1-6/A,B target a; hide #1-6/C target a
+show #1-6/C target a; style #1-6/C stick
+color #1/C #7f7f7f target c  # representative = grey
+color #2/C #e74c3c target c  # centroid 0
+color #3/C #3498db target c  # centroid 1
+color #4/C #2ecc71 target c  # centroid 2 (main)
+color #5/C #f39c12 target c  # centroid 3
+color #6/C #9b59b6 target c  # centroid 4
+
+# Label K2 positions
+label #1/C:2 text "K2"; label #2/C:2 text "K2"
+label #3/C:2 text "K2"; label #4/C:2 text "K2"
+label #5/C:2 text "K2"; label #6/C:2 text "K2"
+label #1/C:1-9 text "{residue.name}{residue.number}"
+
+view #1/C:1-9
+turn y -30; turn x -10
+
+lighting soft; lighting shadows true; set bgColor white
+
+save D:/Researching/Peptide\ epitope/md\ pic/structural_superposition.png width 2400 height 1800 dpi 300 transparency false supersample 3
+save D:/Researching/Peptide\ epitope/md\ pic/structural_superposition.pdf width 2400 height 1800 dpi 300 transparency false supersample 3
+
+close all
+exit
