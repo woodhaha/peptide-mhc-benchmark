@@ -105,3 +105,23 @@ This makes the manuscript's K-E63 salt-bridge structural hypothesis substantiall
 stronger: if sequence models systematically fail and structure says it binds, the
 structural compensation story is credible. The Type A/B distinction is the novel,
 cross-predictor-validated contribution of the multi-allele work.
+
+## LARGE-SAMPLE Type A/B TEST — REVISED STORY (n=14,488)
+
+Collected ALL IEDB positives for 5 alleles (14,488), scored with BOTH predictors.
+The earlier n=25 "Type A easy / Type B hard" dichotomy is NOT supported at scale:
+
+| Type | n | Deep FFN | MHCflurry |
+|------|--:|:--------:|:---------:|
+| canonical | 11,225 | 0.979 | 0.986 |
+| Type A (tolerated) | 151 | 0.477 | 0.669 |
+| Type B (non-canonical) | 3,112 | 0.607 | 0.668 |
+
+![Type A/B large-sample](type_ab_largesample.png)
+
+**Robust facts:** (1) canonical ~0.98 both predictors; (2) motif-failing peptides ~0.6
+(moderate penalty, not catastrophic); (3) Type A actually harder for our model (0.48)
+because training was narrow-biased (P9-K/R), so P9-Y/H out-of-distribution; (4) the
+manuscript's specific FNs (KRAS G12V P2-K etc.) are the HARD TAIL even MHCflurry misses
+(3.8-13.8 uM) — genuinely prediction-resistant, cross-predictor. Manuscript framing
+should be "extreme non-canonical tail prediction-resistant," not "systematically missed."
