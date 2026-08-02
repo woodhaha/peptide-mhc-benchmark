@@ -122,6 +122,7 @@ ax.text(0.05, 0.95, txt, transform=ax.transAxes, fontsize=8.5,
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_block_error.png')
+plt.savefig(OUT / 'sb_block_error.pdf')
 plt.close()
 print('3. sb_block_error.png done')
 

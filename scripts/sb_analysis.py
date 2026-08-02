@@ -78,6 +78,7 @@ ax.text(0.99, 0.9, f'Mean={Ep.mean():.0f}+-{Ep.std():.0f} kcal/mol',
         bbox=dict(boxstyle='round', fc='white', alpha=0.7))
 
 plt.savefig(OUT / 'sb_distance_timeseries.png')
+plt.savefig(OUT / 'sb_distance_timeseries.pdf')
 plt.close()
 print('1. sb_distance_timeseries.png done')
 
@@ -152,6 +153,7 @@ ax.text(0.05, 0.95, metrics_text, transform=ax.transAxes, fontsize=8.5,
         bbox=dict(boxstyle='round', fc='#f8f9fa', ec='#dee2e6'))
 
 plt.savefig(OUT / 'sb_distance_distribution.png')
+plt.savefig(OUT / 'sb_distance_distribution.pdf')
 plt.close()
 print('2. sb_distance_distribution.png done')
 
@@ -204,6 +206,7 @@ ax.text(0.97, 0.1, f'Final: {cum_avg[-1]:.3f}A\nStable after ~30ns',
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_head_tail_comparison.png')
+plt.savefig(OUT / 'sb_head_tail_comparison.pdf')
 plt.close()
 print('3. sb_head_tail_comparison.png done')
 

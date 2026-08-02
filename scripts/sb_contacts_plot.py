@@ -101,6 +101,7 @@ ax.text(0.05, 0.95, txt2, transform=ax.transAxes, fontsize=8, va='top',
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_interface_analysis.png')
+plt.savefig(OUT / 'sb_interface_analysis.pdf')
 plt.close()
 print('1. sb_interface_analysis.png done')
 print(f'\nOutput: {OUT}')

@@ -122,6 +122,7 @@ ax.text(0.05, 0.95, summary, transform=ax.transAxes, fontsize=8.5,
         bbox=dict(boxstyle='round', fc='#f8f9fa', ec='#dee2e6'))
 
 plt.savefig(OUT / 'sb_mmgbsa_analysis.png')
+plt.savefig(OUT / 'sb_mmgbsa_analysis.pdf')
 plt.close()
 print('1. sb_mmgbsa_analysis.png done')
 
@@ -194,6 +195,7 @@ ax.grid(alpha=0.15)
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_mmgbsa_correlation.png')
+plt.savefig(OUT / 'sb_mmgbsa_correlation.pdf')
 plt.close()
 print('2. sb_mmgbsa_correlation.png done')
 
@@ -262,6 +264,7 @@ ax.set_title(f'Mean {sb_Ep.mean():.0f}+-{sb_Ep.std():.0f}')
 ax.grid(alpha=0.15)
 
 plt.savefig(OUT / 'sb_comprehensive_dashboard.png')
+plt.savefig(OUT / 'sb_comprehensive_dashboard.pdf')
 plt.close()
 print('3. sb_comprehensive_dashboard.png done')
 

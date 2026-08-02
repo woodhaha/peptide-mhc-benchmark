@@ -98,6 +98,7 @@ ax.set_ylim(0, 1)
 ax.set_xlabel('Residue Index (sequential)', fontsize=9)
 
 plt.savefig(OUT / 'sb_rmsf.png')
+plt.savefig(OUT / 'sb_rmsf.pdf')
 plt.close()
 print('1. sb_rmsf.png done')
 
@@ -155,6 +156,7 @@ for label, ch, seq_id in [
             break
 
 plt.savefig(OUT / 'sb_rmsf_detailed.png')
+plt.savefig(OUT / 'sb_rmsf_detailed.pdf')
 plt.close()
 print('2. sb_rmsf_detailed.png done')
 

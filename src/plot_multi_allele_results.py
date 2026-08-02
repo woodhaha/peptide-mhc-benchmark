@@ -58,4 +58,5 @@ fig.suptitle("Multi-Allele Deep FFN: canonical pass 5/5; per-allele > pan for no
 fig.tight_layout()
 os.makedirs("to_human", exist_ok=True)
 fig.savefig("to_human/multi_allele_results.png", dpi=150)
+fig.savefig("to_human/multi_allele_results.pdf")
 print("saved to_human/multi_allele_results.png")

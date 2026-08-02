@@ -84,6 +84,7 @@ ax.text(0.05, 0.95, txt, transform=ax.transAxes, fontsize=7.5,
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_pocket_analysis.png')
+plt.savefig(OUT / 'sb_pocket_analysis.pdf')
 plt.close()
 print('4. sb_pocket_analysis.png done')
 
@@ -119,6 +120,7 @@ ax.grid(alpha=0.15)
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_stable_pocket.png')
+plt.savefig(OUT / 'sb_stable_pocket.pdf')
 plt.close()
 print('5. sb_stable_pocket.png done')
 

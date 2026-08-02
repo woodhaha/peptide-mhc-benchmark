@@ -100,5 +100,6 @@ fig.text(0.5, 0.01,
     ha='center', va='center', fontsize=5.5, color='#555')
 
 plt.savefig(OUT, dpi=300)
+plt.savefig(OUT.replace('.png', '.pdf'))
 plt.close()
 print('Figure saved:', OUT)

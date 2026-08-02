@@ -94,6 +94,7 @@ ax.grid(alpha=0.15)
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_fel.png')
+plt.savefig(OUT / 'sb_fel.pdf')
 plt.close()
 print('1. sb_fel.png done')
 
@@ -121,6 +122,7 @@ ax.grid(alpha=0.15)
 
 plt.tight_layout()
 plt.savefig(OUT / 'sb_fel_head_tail.png')
+plt.savefig(OUT / 'sb_fel_head_tail.pdf')
 plt.close()
 print('2. sb_fel_head_tail.png done')
 
