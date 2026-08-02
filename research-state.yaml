@@ -84,8 +84,17 @@ next_direction:
   seed_robustness (2026-08-02): 5 seeds (0,1,42,123,2024) — rebalanced pan non-canonical
     sens mean±SD: A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05,
     B*44:03 1.00±0.00. Test acc 0.952-0.956 (SD~0.002). Single-seed concern CLOSED.
-  Options:
-    - Write up as honest benchmarking note / companion to the submitted manuscript
-    - External-label validation (unseen by MHCflurry) remains the last gap
-    - Return to the submitted manuscript (K-E63 salt bridge) — NOT tested by this work
+  literature_reframe (2026-08-02): pan-specific is the FIELD CONSENSUS (NetMHCpan
+    paradigm, RPEMHC, MHCBind, ESM). Our corrected finding (rebalanced pan = per-allele
+    on 5 alleles) CONFIRMS the consensus — it is replication, not novel. The would-be
+    novel "per-allele > pan" was falsified. Honest value: negative-result + methods
+    hygiene (naive "per-allele wins" = benchmark artifact) + simple rebalanced Deep FFN
+    pan is competitive.
+
+  Options (revised):
+    - Write up as an HONEST replication/benchmarking note (acknowledge field consensus;
+      value = methods hygiene + negative result). Moderate publishability.
+    - PIVOT: the main manuscript (K-E63 salt bridge, submitted) is the stronger story.
+      Consider whether multi-allele adds anything to it or is a distraction.
+    - External-label validation would confirm-but-not-novel; low marginal value.
   Do NOT repeat the falsified claims (per-allele>pan everywhere, shared-params-limit, PSSM-dilution).
