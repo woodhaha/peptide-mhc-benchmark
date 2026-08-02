@@ -54,9 +54,15 @@ weak conditioning; the shared pathway compromises to an "average MHC-I" motif.
 **Design guidance: per-allele models for neoantigen/non-canonical discovery; pan
 model only for canonical screening at scale.**
 
+**Negative result — PSSM conditioning makes it worse:** Replacing the one-hot with a
+20-dim anchor-preference PSSM drops non-canonical sens in 4/5 alleles (A*03:01 0.48 →
+0.36). The PSSM encodes the canonical-motif bias the shared model over-relies on.
+**Mechanism settled: the limitation is shared parameters, not conditioning strength.**
+Any pan architecture learns the average MHC-I motif; per-allele models are required
+for non-canonical capacity.
+
 ## Open Questions
 
-- Could a richer allele embedding (PSSM of the allele's motif, or learned allele
-  embedding) recover pan-model non-canonical robustness? (Candidate next experiment)
-- Non-canonical precision lowest for A*02:01 (0.81) — structural/PSSM hybrid?
+- Non-canonical precision lowest for A*02:01 (0.81) — structural/PSSM hybrid per-allele?
 - Thresholds: A*03:01 optimal 0.95, others 0.97-0.99. Allele-agnostic calibration?
+- Does a fine-tuned-pan (per-allele heads) recover non-canonical? (Candidate, lower priority)
