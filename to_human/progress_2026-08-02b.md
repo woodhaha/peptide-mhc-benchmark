@@ -147,3 +147,21 @@ support for the manuscript's three-tier claim.
 
 Setup cost: MUNIS = 428MB weights (5 x 89.5MB no-flanks) + ESM-2 t6; ~30 min to
 install + run on the 85GB GPU server. All files in 05_Submission/munis_results/.
+
+## MUNIS FULL-POPULATION — STRUCTURE DOES NOT RESCUE (decisive negative)
+
+Scored all 3,112 Type B + 3,112 canonical with MUNIS (structure-based pMHC predictor)
+on AutoDL RTX 6000D (7s):
+
+| Predictor | Type B sens |
+|-----------|:-----------:|
+| Deep FFN (sequence) | 0.607 |
+| MHCflurry (sequence) | 0.668 |
+| MUNIS (structure) | 0.647 |
+
+**The three-tier pipeline claim is NOT supported.** Structure catches Type B at the
+same rate as sequence models. The n=1 QYDPVAALF rescue was not representative.
+
+**Honest scientific value:** challenges the field's assumption that "structure will
+solve what sequence misses." Non-canonical binding is hard for ALL predictor classes.
+Manuscript should re-frame three-tier as hypothesis needing experimental validation.
