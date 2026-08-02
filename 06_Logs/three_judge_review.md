@@ -87,3 +87,38 @@ The multi-allele extension, as currently written, is NOT publishable. The falsif
 claims must be removed or reframed. The single surviving kernel (pan-full = per-allele
 parity on non-canonical) is a negative-result benchmarking finding, contingent on the
 fixes above.
+
+## Corrected re-evaluation of surviving kernel (2026-08-02)
+
+Under the judges' fixes — protein-background negatives (not uniform-random),
+broadened supertype motifs (A*03:01 P9 KRYH, B*07:02 P9 LIMFV), Wilson CIs,
+fixed thresholds — the per-allele vs pan-full comparison on non-canonical binders:
+
+| Allele | Per-allele sens@0.95 | Pan-full sens@0.95 | CI (per) | CI (pan) |
+|--------|:--------------------:|:------------------:|:--------:|:--------:|
+| A*02:01 | 0.84 | 0.84 | [0.65,0.94] | [0.65,0.94] |
+| A*01:01 | 0.88 | 0.88 | [0.70,0.96] | [0.70,0.96] |
+| A*03:01 | 1.00 | 1.00 | [0.87,1.0] | [0.87,1.0] |
+| B*07:02 | 0.96 | **0.60** | [0.81,0.99] | [0.41,0.77] |
+| B*44:03 | 0.96 | 1.00 | [0.81,0.99] | [0.87,1.0] |
+
+### Findings
+1. **3/5 alleles: exact per-allele = pan-full parity** (A*02:01, A*01:01, A*03:01).
+   The earlier A*03:01 "collapse" (0.48) was indeed a data-size artifact — confirmed
+   dead under corrected methodology.
+2. **B*07:02 is the real exception**: pan-full drops to 0.60 (CI [0.41,0.77], non-
+   overlapping with per-allele [0.81,0.99]). This is now a defensible, specific
+   finding — but opposite the original claim (per-allele WINS here, not loses).
+3. Per-allele model NEVER beats pan-full by a significant margin anywhere except
+   B*07:02; pan-full never beats per-allele significantly either.
+4. With n=25, all sensitivities carry wide CIs (lower bounds 0.65-0.87); "100%"
+   reads as ">=86.7%".
+
+### Honest takeaway
+The original story ("per-allele > pan; shared params limit pan; PSSM worse") is
+dead. The corrected kernel: **pan-full matches per-allele on non-canonical binders in
+3/5 alleles, but degrades significantly on B*07:02 (0.60 vs 0.96).** The interesting
+open question is WHY B*07:02 — its training set is the smallest (606) and its motif
+the most distinctive (P2-proline), so the pan model's shared pathway may dilute the
+proline anchor specifically. This is a candidate for a focused follow-up, not a
+headline.
