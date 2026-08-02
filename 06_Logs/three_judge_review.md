@@ -320,3 +320,35 @@ penalty); (3) the manuscript's specific non-canonical FNs are the hardest cases 
 remain prediction-resistant even for MHCflurry. The manuscript's claim should be framed
 as "the extreme non-canonical tail is prediction-resistant," not "non-canonical binders
 are systematically missed."
+
+## MUNIS structure-based test on the hard tail (2026-08-02)
+
+Ran MUNIS (AlphaFold-Multimer-based pMHC structure predictor, 5-model no-flanks
+ensemble, ESM-2 t6 embeddings) on the 4 hard-tail Type B epitopes + 3 canonical
+controls, HLA-A*02:01, on AutoDL RTX 6000D.
+
+### MUNIS scores (presentation score, GGGGG flanks; controls calibrate ~0.92-0.99 = binder)
+| Peptide | Type | MUNIS | Deep FFN | MHCflurry |
+|---------|------|:-----:|:--------:|:---------:|
+| ILRGSVAHK | B | 0.114 | 0.002 | 13,778 nM |
+| **QYDPVAALF** | B | **0.972** | 0.000 | 6,199 nM |
+| TLGIVCPIC | B | 0.098 | 0.000 | 3,782 nM |
+| YKLVVVGAV (KRAS P2-K) | B | 0.131 | 0.254 | 10,039 nM |
+| LLFGYPVYV | canonical | 0.994 | (binder) | (binder) |
+| GILGFVFTL | canonical | 0.917 | (binder) | (binder) |
+| NLVPMVATV | canonical | 0.982 | (binder) | (binder) |
+
+### Finding (n=1, preliminary)
+- MUNIS ALSO fails on 3/4 hard-tail (0.10-0.13), consistent with sequence models —
+  the P2-K salt-bridge neoepitope YKLVVVGAV scores LOW in all three predictors.
+- **BUT QYDPVAALF (0.972) is captured by the structure-based method where BOTH
+  sequence models failed** (Deep FFN 0.000, MHCflurry 6,199 nM). First evidence the
+  three-tier pipeline's structure tier can rescue a sequence-invisible binder.
+- The manuscript's three-tier claim (sequence -> AlphaFold -> structure) is PARTIALLY
+  supported: the structure tier adds value on some hard-tail cases but does not rescue
+  all (esp. the P2-K salt bridge, which is genuinely structure-resistant too).
+
+### Caveats
+- n=1 rescued case; GGGGG flanks (not natural flanks); single 5-model ensemble.
+- To strengthen: score the FULL Type B population (n=3,112) and measure whether MUNIS
+  lifts the 0.61-0.67 sensitivity ceiling. That would be a stronger claim.
