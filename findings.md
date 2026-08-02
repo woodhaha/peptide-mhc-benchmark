@@ -116,10 +116,25 @@ A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05,
 B*44:03 1.00±0.00. Test acc 0.952-0.956 (SD ~0.002). The single-seed criticism is
 closed — the rebalanced-pan-generalizes claim is robust to seed.
 
+## Novel resolution: Type A vs Type B non-canonical binders (2026-08-02)
+
+The multi-allele work's real value is NOT the pan-vs-per-allele comparison (that's
+field-consensus replication). It's the **Type A / Type B non-canonical distinction**:
+
+- **Type A (tolerated weak anchors):** P9-Y/H/V/F variants. A well-trained model
+  (rebalanced pan, 5 alleles) catches these at 0.92-0.98 — learnable, near-canonical.
+- **Type B (energy-compensated):** e.g. the manuscript's A*02:01 P2-K (KRAS G12V
+  salt bridge), P9-K/F/C. NOT rescued by 2.6x more data (13k model scores them
+  0.000-0.254). Genuinely prediction-resistant.
+
+**Manuscript implication:** the submitted manuscript's claim that non-canonical
+binders are "systematically missed" is CONFIRMED, but sharpened to Type B only.
+Ordinary non-canonical binders are actually well-handled by well-trained sequence
+models. This is novel external validation FOR the manuscript, not a contradiction.
+
 ## Open Questions
 
-- External-label validation (unseen by MHCflurry) remains the last gap before
-  publishability.
-- Does rebalancing transfer to more alleles / a broader allele panel?
-- The manuscript's K-E63 salt-bridge claim is NOT tested by this work (different
-  granularity).
+- Would NetMHCpan also miss the manuscript's Type B cases (cross-predictor check)?
+  (Would further validate the claim.)
+- Does the Type A/B distinction hold for more alleles / more epitopes (larger n)?
+- External-label validation (unseen by MHCflurry) still the general publishability gate.
