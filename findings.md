@@ -179,10 +179,17 @@ P2-K salt-bridge class) is genuinely hard for ALL predictor classes tested. The
 manuscript should re-frame its three-tier pipeline as a hypothesis needing experimental
 validation.
 
-## Open Questions
+## Final consolidated state (2026-08-02)
 
-- Does a broader-motif-trained model (include Type A residues in training data) recover
-  the type_a 0.48?
-- Would a *fine-tuned-on-pMHC* structure model (not generic AF2-multimer) do better?
-  (MUNIS is trained on pMHC, so this is a probe of current limits.)
-- External-label validation (unseen by MHCflurry) still the general publishability gate.
+**For the clean, current-state summary see `06_Logs/FINDINGS_SYNTHESIS.md`** — it
+supersedes the chronological entries above (which are kept as history). 10 validated
+findings (F1-F10). Research CONCLUDED; manuscript conclusions updated.
+
+## Open Questions (genuinely unresolved)
+
+- Would a *fine-tuned-on-pMHC* structure model (not generic AF2-multimer) lift Type B
+  above the ~0.65 plateau? (MUNIS is pMHC-trained, so this is a probe of current limits.)
+- Does the extreme energy-compensated tail resistance extend to more alleles /
+  experimental (non-IEDB) validation?
+- Type A low sensitivity (0.48): partly IEDB label noise (weak, multi-allele epitopes)?
+  (Confirmed mass-spec + allele-specific; not a training-data gap — broad retrain failed.)
