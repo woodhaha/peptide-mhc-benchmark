@@ -16,6 +16,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Match R figure font (redraw_all_nature.R uses family='sans' = Arial on Windows)
+plt.rcParams["font.family"] = "Arial"
+
 os.makedirs("03_Analysis/figures", exist_ok=True)
 
 # Verified from multiseed_results.json (rebalanced pan, B*07:02 x4)

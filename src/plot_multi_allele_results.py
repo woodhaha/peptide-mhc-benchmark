@@ -6,6 +6,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Match R figure font (redraw_all_nature.R uses family='sans' = Arial on Windows)
+plt.rcParams["font.family"] = "Arial"
+
 CANON = {
     "HLA-A*02:01": (1.0, 0.97, 0.943),
     "HLA-A*01:01": (1.0, 0.99, 0.980),

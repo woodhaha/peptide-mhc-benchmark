@@ -15,6 +15,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Match R figure font (redraw_all_nature.R uses family='sans' = Arial on Windows)
+plt.rcParams["font.family"] = "Arial"
+
 os.makedirs("to_human", exist_ok=True)
 
 fig, axes = plt.subplots(2, 2, figsize=(13, 9))
