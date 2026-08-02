@@ -56,3 +56,14 @@ with no regression elsewhere. Final table (non-canonical sens@0.95):
 5 alleles on canonical AND non-canonical binders (0.84-0.96), matching or beating
 per-allele models.** The three-judge review + falsification + rebalancing turned a
 falsified over-claim into a strong, honest positive result.
+
+## SEED-ROBUSTNESS CONFIRMED (later)
+
+5-seed rebalanced pan (0,1,42,123,2024), non-canonical sens mean±SD:
+- A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05, B*44:03 1.00±0.00
+- Test acc 0.952-0.956 (SD ~0.002)
+
+The single-seed criticism from the three-judge review is now closed. The claim "a
+single rebalanced pan model generalizes across 5 alleles on canonical + non-canonical
+binders" is robust to seed. Remaining gap before publishable: external labels unseen
+by MHCflurry.

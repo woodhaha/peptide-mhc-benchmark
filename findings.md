@@ -109,10 +109,17 @@ falsification + honest re-measurement produced a narrower but far stronger claim
 one model, properly fed, generalizes across 5 alleles on canonical AND non-canonical
 binders.
 
+## Seed-robustness confirmed (2026-08-02)
+
+5-seed rebalanced pan (0,1,42,123,2024), non-canonical sens mean±SD:
+A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05,
+B*44:03 1.00±0.00. Test acc 0.952-0.956 (SD ~0.002). The single-seed criticism is
+closed — the rebalanced-pan-generalizes claim is robust to seed.
+
 ## Open Questions
 
-- Multi-seed (>=5) + external labels (unseen by MHCflurry) needed before this is
-  publishable as-is.
+- External-label validation (unseen by MHCflurry) remains the last gap before
+  publishability.
 - Does rebalancing transfer to more alleles / a broader allele panel?
 - The manuscript's K-E63 salt-bridge claim is NOT tested by this work (different
   granularity).
