@@ -29,6 +29,9 @@ metrics:
   primary: per-allele sensitivity, specificity_raw, F1 (src/evaluate_allele.py)
   pass: sens>=0.90 and spec_raw>=0.80 and F1>=0.85
 
+phase: Step B — pan-specific model (in progress)
 next_direction:
-  Candidate Step B: pan-specific model with allele encoded in input, benchmarked
-  against the 5 per-allele models. Also: per-allele threshold characterization.
+  CURRENT: Step B — pan-specific Deep FFN (BLOSUM62 180 + 5-dim allele one-hot),
+  benchmarked against the 5 per-allele models on curated IEDB benchmarks + non-canonical test.
+  Question: does one allele-aware model match N per-allele models? (practical + scientific value)
+  After: per-allele threshold characterization; consider paper section if Step B strong.

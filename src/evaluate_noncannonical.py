@@ -40,6 +40,7 @@ MOTIFS = {
     "HLA-B*07:02": {"p2": "P", "p9": "LIMF"},
     "HLA-B*44:03": {"p2": "ED", "p9": "FWYL"},
 }
+ALLELES = ["HLA-A*02:01", "HLA-A*01:01", "HLA-A*03:01", "HLA-B*07:02", "HLA-B*44:03"]
 BASE = "https://query-api.iedb.org/mhc_export"
 
 def is_canonical(pep, motif):
@@ -93,6 +94,10 @@ def main():
     all_p = pos + neg
     true = [1]*len(pos) + [0]*len(neg)
     X = np.array([encode(p) for p in all_p], dtype=np.float32)
+    if "--pan" in sys.argv:
+        o = np.zeros(len(ALLELES), dtype=np.float32)
+        o[ALLELES.index(allele)] = 1.0
+        X = np.concatenate([X, np.repeat(o[None, :], len(X), axis=0)], axis=1)
     m = keras.models.load_model(model_path, compile=False)
     probs = m.predict(X, verbose=0)
     scores = probs[:, 1] + probs[:, 2]

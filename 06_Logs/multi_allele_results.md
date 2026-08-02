@@ -68,3 +68,36 @@ Tested all 5 models against IEDB positives that FAIL the allele's canonical anch
 **Finding:** models retain 0.88-1.0 sensitivity on non-canonical validated binders —
 they do NOT simply memorize canonical anchors. Precision 0.81-0.96 (lower for A*02:01,
 consistent with that allele's established difficulty). Robust generalization confirmed.
+
+## Step B: Pan-specific model vs per-allele models (2026-08-02)
+
+Pan-specific Deep FFN: input = BLOSUM62 180-dim + 5-dim allele one-hot (185-dim),
+trained on all 5 alleles balanced to min allele count (1,188/allele, 5,940 total).
+
+### Canonical benchmark — BOTH pass all 5 alleles
+
+| Allele | Per-allele sens | Pan sens |
+|--------|:---------------:|:--------:|
+| HLA-A*02:01 | 1.0 | 0.92 |
+| HLA-A*01:01 | 1.0 | 1.0 |
+| HLA-A*03:01 | 1.0 | 0.96 |
+| HLA-B*07:02 | 1.0 | 1.0 |
+| HLA-B*44:03 | 1.0 | 1.0 |
+
+### Non-canonical robustness @0.95 — per-allele WINS
+
+| Allele | Per-allele | Pan | Delta |
+|--------|:----------:|:---:|:-----:|
+| HLA-A*02:01 | 1.0 | 0.80 | -0.20 |
+| HLA-A*01:01 | 0.88 | 0.76 | -0.12 |
+| HLA-A*03:01 | 1.0 | 0.48 | **-0.52** |
+| HLA-B*07:02 | 1.0 | 0.96 | -0.04 |
+| HLA-B*44:03 | 0.96 | 1.0 | +0.04 |
+
+### Finding
+A single allele-aware model matches per-allele models on CANONICAL binders but
+sacrifices NON-canonical robustness — worst for A*03:01 (1.0 → 0.48, half the
+non-canonical epitopes missed). The allele one-hot encoding dilutes the
+allele-specific structural signal that carries non-canonical binders (the
+manuscript's P2-K / salt-bridge class). **Per-allele models remain the better
+choice when non-canonical binders matter** (neoantigen discovery).

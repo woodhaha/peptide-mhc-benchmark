@@ -47,8 +47,11 @@ the genuine hard case, not a failure of cross-allele generalization.
 
 ## Open Questions
 
-- Does a pan-specific model (allele encoded in input) match or beat per-allele
-  models? (Step B)
+- **Pan-specific model (Step B):** A single allele-aware model (BLOSUM62 + 5-dim
+  allele one-hot) passes all 5 canonical benchmarks BUT loses non-canonical
+  robustness — worst for A*03:01 (non-canonical sens 1.0 → 0.48). The allele
+  one-hot dilutes allele-specific structural signal. Per-allele models remain
+  better for non-canonical (neoantigen) discovery. **Resolved: per-allele wins.**
 - Non-canonical precision is lowest for A*02:01 (0.81) — does a structural/PSSM
   hybrid recover it?
 - Thresholds: A*03:01 optimal 0.95, others 0.97-0.99. Is there an allele-agnostic

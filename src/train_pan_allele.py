@@ -28,7 +28,8 @@ def load_balanced():
     sets = []
     min_allele_n = None
     for allele in ALLELES:
-        d = np.load(f"data/train_{SAFE(allele)}.npz", allow_pickle=True)
+        f = f"data/train_{SAFE(allele)}_big.npz" if allele == "HLA-B*07:02" and os.path.exists("data/train_HLA-B_0702_big.npz") else f"data/train_{SAFE(allele)}.npz"
+        d = np.load(f, allow_pickle=True)
         X, y = d["X"], d["y"]
         sets.append((allele, X, y))
         if min_allele_n is None or len(X) < min_allele_n:
