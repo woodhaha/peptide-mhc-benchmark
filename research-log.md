@@ -121,3 +121,14 @@
 - NOTE: this regenerated version is NOT what the journal currently has (submitted June 30
   without multi-allele). It represents the revision-ready version if the manuscript is
   accepted with revisions. The originally-submitted content is preserved in git history.
+
+### Phase 11e: FIGURE STYLE UNIFICATION (2026-08-02)
+- Unified python-generated figure colors from Tailwind palette to Nature palette
+  matching R figures (commit fa74606): blue #377EB8, red #E41A1C, orange #FF7F00,
+  green #4DAF4A, gray #999999. Applied to plot_pan_vs_perallele (Figure 9),
+  plot_findings_panel, plot_multi_allele_results, plot_type_ab. Verified Figure 9
+  bar RGB~(48,112,176) ~ #377EB8.
+- Unified fonts to Arial (commit 261f1d6): R figures use family='sans' = Arial on
+  Windows; python figures had DejaVu Sans. Added plt.rcParams["font.family"]="Arial".
+  Verified PDFs embed Arial, no DejaVu.
+- All manuscript figures now consistent: Nature palette + Arial font.
