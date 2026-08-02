@@ -98,3 +98,15 @@
   suptitle "per-allele > pan" + A*03:01 0.48 -> corrected to 5-seed means
   (0.984/0.920/0.976/0.920/1.000) and "parity" framing. Historical falsification
   records (falsify_pan_equalfull.py, to_human/progress_*) intentionally kept.
+
+### Phase 11c: MERGE DECISION — companion note folded into main manuscript (2026-08-02)
+- User decision: "不要创建姐妹篇，合并在一起" — do NOT split into a separate paper; merge the multi-allele extension into the main manuscript.
+- Main manuscript already referenced the multi-allele findings in Discussion/Conclusions (4.3 MUNIS plateau, 4.6 Sixth, 4.7 pan16) but Results lacked the supporting evidence — a structural gap.
+- Merge performed on 04_Manuscript/manuscript.md:
+  - Methods: +2.8 Multi-Allele Data Curation, 2.9 Pan Model & Comparators, 2.10 Temporal Holdout
+  - Results: +3.11 pan parity (5-seed), 3.12 canonical ~0.98, 3.13 Type B plateau (Table 7), 3.14 Type A inherent, 3.15 temporal, 3.16 pan16
+  - +Table 7 (predictor plateau), +Figure 9 (rebalanced pan 5-seed) legend + image
+  - Abstract conclusions + multi-allele sentence; Data/Code + pan models & type_ab dataset
+  - Metadata: ~8,500 -> ~11,000 words, 6 -> 7 tables, 8 -> 9 figures
+- Standalone companion note archived to 06_Logs/archived/companion_note_draft_superseded.md (content now in main manuscript).
+- Verified: Tables 1-7 and Figures 1-9 + S1-S6 numbered continuously.

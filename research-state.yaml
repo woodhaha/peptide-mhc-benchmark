@@ -73,13 +73,13 @@ phase: CONCLUDED — research complete, 10 validated findings, write-up ready
   Next (authoring, not research): apply corrections to main manuscript OR write
   companion benchmarking note. Invoke ml-paper-writing when starting the write-up.
   Do NOT run more experiments — claims are settled.
-companion_note_status: 2026-08-02, FIRST DRAFT DONE + REVISED.
-  - Draft: 04_Manuscript/companion_multi_allele/companion_note_draft.md (~2,240 words, IMRaD, target Bioinformatics).
-  - 15 numeric claims verified; citations from verified main-manuscript list; [10] CrossRef-verified; [15] = companion self-ref.
-  - Figures 1-2 with vector PDFs. All matplotlib figures project-wide vectorized (md pic/ 15, to_human/ 2).
-  - Falsified-claim figure fixed (plot_multi_allele_results.py: "per-allele > pan" + A*03:01 0.48 removed).
-  - Still needs: human review of framing; publication-grade per-finding figures; convert to DOCX.
-  - Historical falsification records intentionally kept (falsify_pan_equalfull.py, to_human/progress_*).
+merge_decision: 2026-08-02, USER CHOSE TO MERGE (not split).
+  - Standalone companion note SUPERSEDED: content merged into 04_Manuscript/manuscript.md.
+  - Main manuscript now: Methods 2.8-2.10 (multi-allele data/pan model/temporal), Results 3.11-3.16
+    (pan parity, canonical ~0.98, Type B plateau Table 7, Type A, temporal, pan16), Figure 9, Table 7.
+  - Metadata: ~11,000 words, 7 tables, 9 figures. All numbers verified against source data.
+  - Archived draft: 06_Logs/archived/companion_note_draft_superseded.md.
+  - Still needs: human review of merged framing; convert to DOCX; regenerate submission package.
 corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
   pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
   A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs

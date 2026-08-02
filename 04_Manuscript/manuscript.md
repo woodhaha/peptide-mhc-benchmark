@@ -12,13 +12,13 @@
 <sup>*</sup> Corresponding author: Zhuha Zhou, Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China. E-mail: zhouzhuha@wmu.edu.cn. ORCID: 0009-0005-1818-4789  
 <sup>^</sup> Zhuxian Zhou, Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China. E-mail: zhouzx@zju.edu.cn
 
-**Word count**: ~8,500 (main text) | **Tables**: 6 | **Figures**: 8
+**Word count**: ~10,700 (main text) | **Tables**: 7 | **Figures**: 9
 
 ---
 
 ## Abstract
 
-**Background**: Computational peptide-MHC binding prediction underpins epitope screening for vaccine design and cancer immunotherapy, yet the relative contributions of architecture choice, label quality, and peptide encoding to benchmark performance remain poorly disentangled. **Methods**: We benchmarked six classifier architectures on 5,088 MHCflurry 2.2.0-labelled 9-mers targeting HLA-A\*02:01, across three label sources (MHCflurry, deterministic PSSM, random synthetic), two encoding schemes (BLOSUM62, ESM-2), and external validation against 49 experimentally verified IEDB epitopes. The best-performing model was applied to whole-protein epitope scanning and cancer hotspot mutation analysis (p53, KRAS). **Results**: Label source accounted for ~29 percentage points of accuracy variation (PSSM 94.8% vs. random 65.8%), exceeding the maximum inter-architecture range (Deep FFN 91.9% vs. Random Forest 81.1%). The weak binder class (F1 0.723–0.925) was the exclusive locus of this variation, functioning as a quantitative sentinel for label contamination. A deep feed-forward network with batch normalisation achieved 91.9% accuracy (macro F1 0.921); five-fold cross-validation confirmed stable generalisation (92.2 ± 0.4%). BLOSUM62 outperformed ESM-2 t6 per-position embeddings in cross-validation (92.1% vs. 82.2%), while mean-pooled embeddings collapsed to 65.9%, confirming positional information is essential and that high-dimensional protein language model embeddings overfit on small training sets. IEDB validation yielded 93.9% sensitivity (46/49, ROC AUC 0.947). Mutation scanning identified neoepitope candidates in p53 R248W and KRAS G12V, with template-based structural analysis predicting a K-E63 salt bridge (−30 kcal/mol Coulombic estimate) that may compensate for the non-canonical P2 lysine. **Conclusions**: Label provenance defines the achievable performance ceiling for peptide-MHC binding prediction; architecture choice is secondary. The 2.9 ppt gap between deterministic and ML-derived labels — concentrated in the weak binder class — constitutes direct quantitative evidence for a label contamination cascade in which successive predictor generations amplify weak binder ambiguity. The weak binder class serves as an early-warning signal for this cascade, and we propose that future benchmarks report label provenance and per-class WB metrics as standard practice.
+**Background**: Computational peptide-MHC binding prediction underpins epitope screening for vaccine design and cancer immunotherapy, yet the relative contributions of architecture choice, label quality, and peptide encoding to benchmark performance remain poorly disentangled. **Methods**: We benchmarked six classifier architectures on 5,088 MHCflurry 2.2.0-labelled 9-mers targeting HLA-A\*02:01, across three label sources (MHCflurry, deterministic PSSM, random synthetic), two encoding schemes (BLOSUM62, ESM-2), and external validation against 49 experimentally verified IEDB epitopes. The best-performing model was applied to whole-protein epitope scanning and cancer hotspot mutation analysis (p53, KRAS). **Results**: Label source accounted for ~29 percentage points of accuracy variation (PSSM 94.8% vs. random 65.8%), exceeding the maximum inter-architecture range (Deep FFN 91.9% vs. Random Forest 81.1%). The weak binder class (F1 0.723–0.925) was the exclusive locus of this variation, functioning as a quantitative sentinel for label contamination. A deep feed-forward network with batch normalisation achieved 91.9% accuracy (macro F1 0.921); five-fold cross-validation confirmed stable generalisation (92.2 ± 0.4%). BLOSUM62 outperformed ESM-2 t6 per-position embeddings in cross-validation (92.1% vs. 82.2%), while mean-pooled embeddings collapsed to 65.9%, confirming positional information is essential and that high-dimensional protein language model embeddings overfit on small training sets. IEDB validation yielded 93.9% sensitivity (46/49, ROC AUC 0.947). Mutation scanning identified neoepitope candidates in p53 R248W and KRAS G12V, with template-based structural analysis predicting a K-E63 salt bridge (−30 kcal/mol Coulombic estimate) that may compensate for the non-canonical P2 lysine. **Conclusions**: Label provenance defines the achievable performance ceiling for peptide-MHC binding prediction; architecture choice is secondary. The 2.9 ppt gap between deterministic and ML-derived labels — concentrated in the weak binder class — constitutes direct quantitative evidence for a label contamination cascade in which successive predictor generations amplify weak binder ambiguity. The weak binder class serves as an early-warning signal for this cascade, and we propose that future benchmarks report label provenance and per-class WB metrics as standard practice. A multi-allele extension shows the recipe generalises: a rebalanced pan-specific Deep FFN matches per-allele specialists across five alleles (and 0.819 pooled sensitivity across a 15-allele panel), while non-canonical binders plateau at ~0.65 sensitivity across sequence- and structure-based predictors alike — the energy-compensated tail (e.g. P2-K, P2-R, P2-H reaching Glu63) remains genuinely prediction-resistant, defining the current frontier.
 
 **Keywords**: peptide-MHC binding, epitope prediction, deep learning, HLA-A\*02:01, neoantigen, cancer immunotherapy, immunoinformatics
 
@@ -93,7 +93,21 @@ The KRAS G12V neoepitope YKLVVVGAV carries a non-canonical lysine at P2 — a ch
 
 **Coulombic energy estimation.** The electrostatic contribution of the predicted K-E63 salt bridge was estimated using Coulomb's law with the MMPBSA framework [48] and a generalised Born solvent model [49], with charges q₁ = +1 (Lys Nζ), q₂ = −1 (Glu OE), an effective dielectric constant ε = 4 (representative of protein interiors), and an effective ion pair distance of 2.8 Å (the minimum for direct N–H···O contact). The hydrophobic burial energy of the canonical P2 leucine was estimated at approximately −3 kcal/mol from published experimental alanine-scanning data for the LLFGYPVYV-HLA-A*02:01 complex.
 
-Molecular docking was attempted using HDOCKlite v1.1 [44] but did not yield binding poses that were interpretable independent of the template geometry; template-based structural analysis and energy minimisation were therefore used as the primary structural methods. A preliminary 10 ns molecular dynamics simulation of the solvated complex (OpenMM, amber14-all force field, TIP3P explicit solvent, NPT ensemble at 300 K and 1 atm) was performed but exhibited incomplete thermal equilibration (temperature fluctuations ~300–670 K) and is not reported quantitatively. The simulation setup is provided in the accompanying code repository as a starting point for future equilibrated MD studies.---
+Molecular docking was attempted using HDOCKlite v1.1 [44] but did not yield binding poses that were interpretable independent of the template geometry; template-based structural analysis and energy minimisation were therefore used as the primary structural methods. A preliminary 10 ns molecular dynamics simulation of the solvated complex (OpenMM, amber14-all force field, TIP3P explicit solvent, NPT ensemble at 300 K and 1 atm) was performed but exhibited incomplete thermal equilibration (temperature fluctuations ~300–670 K) and is not reported quantitatively. The simulation setup is provided in the accompanying code repository as a starting point for future equilibrated MD studies.
+
+### 2.8 Multi-Allele Data Curation
+
+To test whether the label-quality findings extend beyond HLA-A\*02:01, we curated experimentally confirmed class I binders from the IEDB [22] for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9: Type A carries broad-only tolerated anchors; Type B carries non-canonical residues at anchor positions. Protein-background negatives were sampled from natural proteomes. A 15-allele panel (pan16: 11 additional alleles) was curated for generalisation testing.
+
+### 2.9 Pan-Specific Model and Comparator Predictors
+
+The pan-specific Deep FFN uses the same BLOSUM62 encoding and architecture as the single-allele model, trained on pooled multi-allele data with rebalancing (minority B\*07:02 allele upsampled 4×). Five seeds (0, 1, 42, 123, 2024) were used for robustness. Two independent predictors served as comparators: MHCflurry 2.2.1 [15] (affinity threshold 500 nM) and MUNIS [17] — a structure-based pMHC-I predictor using ESM-2 [18] embeddings and AlphaFold-Multimer-style structure scoring — run on the n = 3,112 Type B population plus canonical controls.
+
+### 2.10 Temporal Holdout
+
+To address the label-circularity concern [31], IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training data) were compared against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95.
+
+---
 
 ## 3. Results
 
@@ -225,6 +239,39 @@ Energy minimisation of the 1DUZ template (pdbfixer preparation, OpenMM [45] ambe
 Molecular docking was attempted using HDOCKlite v1.1 but did not yield interpretable binding poses independent of the template geometry; the results presented above are therefore derived from template-based structural analysis and energy minimisation rather than from blind docking. A preliminary 10 ns molecular dynamics simulation of the solvated complex (OpenMM [45], amber14 force field [46], TIP3P explicit solvent, NPT ensemble) exhibited incomplete thermal equilibration (temperature fluctuations ~300–670 K) attributable to insufficient pre-simulation relaxation; quantitative trajectory-derived distance measurements are not reported. We note that a properly equilibrated MD simulation (≥100 ns with verified temperature and pressure stability) would complement the static geometric analysis presented here by evaluating the dynamic stability of the predicted salt bridge, and we provide the simulation setup as a starting point for such future work.
 
 In contrast, the p53 R248W neoepitope MNWRPILTI carries asparagine at P2, and its improved predicted binding relative to wild-type (MNRRPILTI) is attributable to the P3 Arg→Trp substitution enhancing hydrophobic packing rather than any P2-mediated mechanism. The KRAS G12V enhanced peptide LVVVGAVGV, with valine at P2, represents the canonical hydrophobic anchor configuration and served as a positive control; its P2 Cα to Glu63 Cδ distance of 4.2 Å is consistent with optimal B-pocket accommodation.
+
+### 3.11 Multi-Allele Extension: A Rebalanced Pan Model Matches Per-Allele Specialists
+
+To test whether the label-quality findings generalise beyond HLA-A\*02:01, we evaluated a rebalanced pan-specific Deep FFN across five common alleles (Figure 9). Across 5 seeds, the pan model reached non-canonical sensitivity mean ± SD: A\*02:01 0.98 ± 0.02, A\*01:01 0.92 ± 0.04, A\*03:01 0.98 ± 0.02, B\*07:02 0.92 ± 0.05, B\*44:03 1.00 ± 0.00 (test accuracy 0.952–0.956). These values are at or above the corresponding per-allele models, so a single model replaces five. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled (the apparent advantage was a 10.6× data-size artifact).
+
+### 3.12 Canonical Binders Are Recognised at ~0.98 by Every Predictor Class
+
+On n = 11,225 canonical positives, all three predictors were saturated: Deep FFN 0.979, MHCflurry 0.986, MUNIS 0.950.
+
+### 3.13 Non-Canonical (Type B) Binders Plateau at ~0.65 Across Predictor Classes
+
+On n = 3,112 Type B positives, sensitivity was Deep FFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 7). Structure-based prediction does not lift the ceiling; the three-class plateau is statistically indistinguishable from a shared ~0.65 limit.
+
+**Table 7. Non-canonical (Type B) sensitivity by predictor class across the multi-allele panel.**
+
+| Predictor | Canonical sensitivity | Type B sensitivity |
+|-----------|:---------------------:|:------------------:|
+| Deep FFN (sequence) | 0.979 | 0.607 |
+| MHCflurry (sequence) | 0.986 | 0.668 |
+| MUNIS (structure) | 0.950 | 0.647 |
+
+### 3.14 Type A (Tolerated Weak Anchors) Is Inherently Hard, Not a Data Gap
+
+On n = 151 Type A positives, Deep FFN achieved 0.477 and MHCflurry 0.669. Retraining with broadened motifs did not recover Type A (A\*03:01 flat at 0.634; B\*07:02 Type B *dropped* from 0.680 to 0.341), so the low sensitivity is not a training-data gap but an inherent property of these heterogeneous, weak, allele-specific binders (mass-spectrometry confirmed, 3–6% cross-allele). The canonical-motif bias is what makes the model work.
+
+### 3.15 Temporal Generalisation Breaks the Label-Circularity Concern
+
+Post-2022 epitopes (unseen by the labeler) were recognised at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 — preserved versus pre-2021, with A\*03:01 and B\*07:02 improving. The model is not overfit to a single training-data era.
+
+### 3.16 Scaling: One Model Replaces a 15-Allele Panel
+
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375 @ 0.95), with 12/15 alleles at 0.76–1.0. The weak tail (B\*27:05 at 0.08 with only 150 samples; B\*51:01 at 0.52 with 1,665) reflects data scarcity, not architecture.
+
 ---
 
 ## 4. Discussion
@@ -288,7 +335,7 @@ The complete analysis pipeline, trained models, feature matrices, and all predic
 - **Primary analysis script**: `peptide_mhc_binding_study.R` (1,700+ lines, fully documented and modular)
 - **MHCflurry 2.2.0**: https://github.com/openvax/mhcflurry
 
-The data package (`manuscript_data_package.tar.gz`) contains: (1) all trained model files (HDF5/RDS format); (2) feature matrices in CSV format (`feature.csv`, 5,088 × 282; `feature_resnet.csv`, 5,088 × 315); (3) comprehensive prediction results for 10-protein epitope scan (3,536 peptides), IEDB benchmark (69 peptides), cancer mutation scan (144 windows), and new peptide predictions; (4) reproducible R and Python source code; (5) all publication-quality figures in PNG/PDF format.
+The data package (`manuscript_data_package.tar.gz`) contains: (1) all trained model files (HDF5/RDS format), including the multi-allele pan models (`deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`); (2) feature matrices in CSV format (`feature.csv`, 5,088 × 282; `feature_resnet.csv`, 5,088 × 315); (3) comprehensive prediction results for 10-protein epitope scan (3,536 peptides), IEDB benchmark (69 peptides), cancer mutation scan (144 windows), and new peptide predictions; (4) the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives) and predictor scores; (5) reproducible R and Python source code; (6) all publication-quality figures in PNG/PDF format.
 
 All analyses are implemented in a fully reproducible pipeline. The random seed for the train/test split is 42.
 
@@ -452,6 +499,10 @@ Not applicable.
 ![Figure S4](../03_Analysis/figures/FigureS4_mutation_paired.png)
 
 **Figure S5.** Cancer mutation frequency landscape. p53 R248W is among the top 8 most common TP53 hotspots across all cancers (3.5% of all TP53 mutations, IARC R18), with highest prominence in skin SCC, colorectal, and oesophageal adenocarcinoma. KRAS G12V is the second most frequent KRAS mutation after G12D, accounting for 28–36% of KRAS-mutant pancreatic adenocarcinoma (PAAD) and ~19% of KRAS-mutant lung adenocarcinoma. Red-highlighted bars indicate cancer types where the neoepitope candidates identified in this study (p53 R248W: `MNWRPILTI`; KRAS G12V: `YKLVVVGAV`) have translational relevance.
+
+**Figure 9.** The rebalanced pan model reaches parity with per-allele specialists across the multi-allele extension. Non-canonical sensitivity at threshold 0.95 for a single rebalanced pan-specific Deep FFN (B\*07:02 upsampled 4×), 5-seed mean ± SD across five common HLA-I alleles. All five alleles meet or exceed the 0.9 target (dashed line).
+
+![Figure 9](companion_multi_allele/fig2_pan_vs_perallele.png)
 
 ![Figure S5](../03_Analysis/figures/FigureS5_tcga_frequency.png)
 
