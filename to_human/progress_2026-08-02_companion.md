@@ -64,3 +64,15 @@ references**.
 
 Submitted cover letter referenced a **private** repo — corrected to the public
 `woodhaha/peptide-mhc-benchmark` and regenerated the DOCX (commit `f640339`).
+
+---
+
+## Update: draft revised after review (2026-08-02, commit ccb9133)
+
+- **[10] Robinson/IMGT-HLA verified** via CrossRef — real reference, not hallucinated.
+- Metadata fixed: 2,239 words / 1 table / **2 figures** (was stale ~5,800/5/4).
+- `[companion submission]` self-refs → formal citation [15].
+- "pre-registered thresholds" → honest "fixed thresholds" (post-hoc 5th-pct canonical).
+- **New Figure 2**: rebalanced pan 5-seed mean ± SD — the core positive result.
+  Per-allele bars deliberately excluded (apples-to-oranges with the n=25 benchmark).
+- Figure 1 (findings panel) now cited in text (1A–1D) with standalone captions.
