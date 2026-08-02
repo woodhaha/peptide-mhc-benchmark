@@ -161,3 +161,27 @@ per-allele.
 rebalanced pan-specific model generalizes to all 5 alleles on both canonical and
 non-canonical binders. The earlier "per-allele > pan" story is fully dead — the pan
 model is competitive or better.
+
+## Literature reframe (2026-08-02) — pan-specific is the FIELD CONSENSUS, not novel
+
+Search of 2024-2025 literature (NetMHCpan-4.1/4.2, RPEMHC, MHCBind, ESM-based):
+- Pan-specific predictors are the established dominant paradigm for MHC-I binding
+  (NetMHCpan trains a single model over pooled alleles, generalizes to novel alleles).
+- RPEMHC (Bioinformatics 2024): pan-specific "capable of prediction for alleles
+  unseen in training" — the field's core advantage.
+- MHCBind (2026 preprint): dual pan+allele-specific GAT+CNN claims superiority.
+- ESM2 fine-tuned models beat NetMHCpan-4.1 (PPV 0.844 vs 0.791).
+- NetMHCpan generalizes to novel alleles without meaningful quality drop (Atkins 2024).
+
+**Implication for our work:** our corrected finding — "a rebalanced pan model matches
+per-allele models across 5 alleles" — CONFIRMS the field consensus. It is NOT novel.
+The interesting novel part would have been "per-allele > pan" (falsified) or a
+pan model matching per-allele on NON-CANONICAL binders specifically (partially
+supported but confounded by protein-likeness and small n).
+
+**Honest positioning:** the multi-allele work is a replication/confirmation
+benchmarking note, not a novel contribution. Its value is negative-result + methods
+hygiene: it shows naive "per-allele wins" claims are benchmark artifacts, and that a
+simple rebalanced Deep FFN pan model is competitive (consistent with NetMHCpan's
+success). This is publishable only as an honest benchmarking note, with the field
+consensus explicitly acknowledged.
