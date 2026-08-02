@@ -174,3 +174,13 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
   - #3 锚点检查器基线（§3.5）：零参数 anchor-checker 规则（p2 L/M/I/V/T + p9 L/M/I/V）在规范占优的 IEDB 基准上 sens 1.0 / F1 0.85-1.0，与训练模型无统计差异 → 规范集高估泛化，有效信号在非规范/hard-tail。
   - #5 预测器平台限制定语（§4.6 新增 Sixth 点）：非规范结合子在 Deep FFN/MHCflurry/MUNIS 三类预测器均 ~0.65 平台；能量补偿尾（P2-K/R/H 达 Glu63 3.83Å）对一切方法预测抵抗。
 - checklist 两处标记 DONE。投稿版 manuscript_bioinformatics.md 未动（投稿在前，修订时统一应用）。
+
+## 2026-08-02 — 姊妹篇草稿修订（审阅后）
+- 审阅发现并修复：
+  - 引用 [10] Robinson/IMGT-HLA 经 CrossRef 验证真实（NAR 2015;43:D423-D431），非虚构。
+  - 字数/表/图元数据修正为实际值（~2,000 词, 1 表, 2 图）。
+  - [companion submission] 自引用改为正式引用 [15]（补参考文献条目）。
+  - "pre-registered thresholds" 改为诚实的 "fixed thresholds"（阈值实为事后确定的 5th-percentile canonical）。
+  - 补核心正结果图：fig2_pan_vs_perallele.png（重平衡 pan 5 种子均±SD）。未叠加 per-allele 条形——per-allele 基准（n=25 broad-motif）与大型非规范集不同，叠加会构成 apples-to-oranges 比较（三堂会审已点名的错误）。
+  - 图 1（findings panel）补正文引用（1A temporal / 1B pan16 / 1C P2 reach / 1D plateau）+ 图注。
+- 现状：正文 Figure 1+2 均被引用且有图注；2,239 词；无残留占位。
