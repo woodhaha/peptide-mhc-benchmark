@@ -147,3 +147,11 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 ### 下一步（仅写作，非研究）
 - 将 manuscript_correction_checklist.md 应用到主稿其他章节
 - 或写多等位基因扩展姊妹篇（可调 ml-paper-writing）
+
+## 2026-08-02 — 作者名单定稿（5 人）
+- 按用户要求：先用 CRC (ImmunoTargets) 名单替换原 5 人名单（加入 Chen Weisheng、Yiqi Cai，移除 Shaoliang Han，6 人），随后删除 Qigang Xu，定稿为 **5 人**。
+- 定稿名单：Zhuha Zhou†*（共同一作+通讯）、Chen Weisheng†（共同一作）、Yiqi Cai、Yongyu Bai、Zhuxian Zhou^（浙大通讯）。
+- 单位重编号：删除肝胆胰外科 affiliation 后，浙大 Zhuxian Zhou 由 ³ → ²。
+- 更新文件：manuscript.md、manuscript_bioinformatics.md、cover_letter.md、cover_letter_bioinformatics.md、README.md、journal_requirements.md、两个 DOCX（重新生成，验证 Qigang 已移除、Chen/Yiqi 保留）。
+- 验证：5 位作者在作者块/贡献/简介中一致出现；无 Qigang 残留（历史 decisions.md 除外）。
+- 132 commits，git clean。
