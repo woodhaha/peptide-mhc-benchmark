@@ -56,3 +56,20 @@
   manuscript_correction_checklist.md (6 items).
 - **Status:** Research converged; findings complete and validated. Next: apply
   corrections to main manuscript OR write companion benchmarking note.
+
+### Phase 9: Improvement round (5 directions)
+- Type A evidence: mass-spec confirmed, 3-6% cross-allele => REAL coverage gap, not noise.
+- Temporal holdout: post-2022 (unseen by MHCflurry) sensitivity preserved/improved =>
+  BREAKS label-circularity concern. Strong positive.
+- P2 virtual mutagenesis: P2CA->Glu63 = 3.83A; K/R/H all reach => salt-bridge is a
+  general principle (charged P2), supports manuscript's "other charged P2" extension.
+- NetMHCpan: BLOCKED by DTU license (no server install, IEDB API unreachable).
+  MHCflurry + MUNIS suffice as independent predictors.
+- Pan16: labeled 11 new alleles + 5 existing, rebalanced pan => pooled non-canonical
+  0.819 (15-allele panel), 12/15 at 0.76-1.0. Weak tail = thin-training B*27:05/B*51:01.
+  Scales "one model replaces the panel" to 15 alleles.
+
+### Phase 10: CONCLUSION (current)
+- 10 validated findings (F1-F10) in FINDINGS_SYNTHESIS.md. Research complete.
+- Next is authoring: apply manuscript_correction_checklist.md to the main manuscript
+  OR write a companion benchmarking note. Not more experiments.
