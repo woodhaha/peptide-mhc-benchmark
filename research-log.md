@@ -154,3 +154,37 @@
   formatted rendering (Harvard refs) ready for submission.
 - Recommended targets: Briefings in Bioinformatics (IF~9.5, T3) or Bioinformatics
   (Oxford, IF~6, formatted version ready).
+
+### Phase 12: JOURNAL SELECTION DECISION (2026-08-02)
+- Verified from official OUP instructions: Briefings in Bioinformatics is a REVIEW journal
+  ("does not publish articles that are pure original research"). Our merged manuscript is
+  original methods research -> BiB is NOT a fit (would desk-reject).
+- Selected target: Bioinformatics (Oxford), Original Paper type.
+  - Limits: ~5,000 words excluding figures (7 pages), abstract <=150 words (structured:
+    Motivation/Results/Availability/Contact/Supplementary), OUP author-year refs (not
+    Vancouver), ML papers need training-set subsection + independent test set.
+  - Figures: Arial/Helvetica >=7pt, 350dpi color / 1200dpi line, RGB, column widths 86/178mm.
+    Our figures already Arial + vector PDF (close; verify dpi).
+  - Format-free first submission allowed (but word/page limits still apply).
+- KEY GAP: current manuscript.md is 11,314 words vs ~5,000 limit. Need ~6,000-word cut
+  (over half). Multi-allele extension may need to be condensed to core findings only.
+- LaTeX: OUP general template (Overleaf official), \documentclass[numsec,webpdf,modern,large],
+  \bibliographystyle{author-date}.
+- Journal facts: IF ~5.4-5.5 (2024), JCR Q1, 中科院 生物 3区 (may be 2区 in 2026.3), non-warning,
+  traditional subscription (not OA, likely no APC).
+- Next: decide compression strategy OR reconsider target (longer-limit journal).
+
+### Phase 12b: COMPRESSION ANALYSIS (2026-08-02)
+- Word distribution (manuscript.md, 11,260 total):
+  Abstract 377 | Key Points 264 | Intro 724 | Methods 1,474 | Results 3,060 |
+  Discussion 2,824 | Data/Code 203 | Declarations 199 | Biographies 152 |
+  References 1,228 | Figure Legends 630
+- To hit ~5,000 words for Bioinformatics Original Paper: must cut ~6,300 words.
+  - Non-negotiable to keep: ML training-set subsection, independent test set.
+  - Biggest levers: Results 3,060 (trim per-finding detail), Discussion 2,824
+    (cut to essential), References 1,228 (limit count), Figure Legends 630.
+  - Realistic floor: Intro ~500, Methods ~1,000, Results ~1,800, Discussion ~1,300,
+    refs ~800 = ~5,400 + abstract 150 = close to limit.
+- ALTERNATIVE: 11k-word content may fit better in a journal with higher word limit
+  (NAR ~free format, Briefings in Functional Genomics). Compression to 5k risks
+  losing the multi-allele extension depth that justified the merge.
