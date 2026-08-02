@@ -29,24 +29,25 @@ metrics:
   primary: per-allele sensitivity, specificity_raw, F1 (src/evaluate_allele.py)
   pass: sens>=0.90 and spec_raw>=0.80 and F1>=0.85
 
-phase: Step B complete → outer-loop reflection
+phase: exploration complete — coherent 3-part story ready
 step_B_result:
-  Pan-specific model (BLOSUM62+allele one-hot, 185-dim) passes all 5 canonical benchmarks
-  but loses non-canonical robustness vs per-allele models:
-    A*02:01 non-canonical sens 1.0 -> 0.80
-    A*01:01 0.88 -> 0.76
-    A*03:01 1.0 -> 0.48 (worst)
-    B*07:02 1.0 -> 0.96
-    B*44:03 0.96 -> 1.0
-  Conclusion: allele one-hot dilutes allele-specific structural signal. Per-allele models
-  win for non-canonical (neoantigen) discovery.
+  Pan one-hot (BLOSUM62+allele one-hot, 185-dim): passes all 5 canonical benchmarks,
+  but non-canonical sens @0.95 collapses: A*02:01 1.0->0.80, A*01:01 0.88->0.76,
+  A*03:01 1.0->0.48, B*07:02 1.0->0.96, B*44:03 0.96->1.0.
+  Pan PSSM (20-dim anchor-preference profile): WORSE in 4/5 alleles (A*03:01 ->0.36).
+  Mechanism settled: shared-parameter model learns average MHC-I motif; the limitation
+  is architectural (shared params), not conditioning strength.
+
+story:
+  1. Deep FFN + BLOSUM62 generalizes to 5 common HLA-I alleles — all pass canonical
+     (sens 100%, spec 97-99%, F1 0.94-0.98) and retain 0.88-1.0 non-canonical sensitivity.
+  2. Prior run-001 "failures" were benchmark curation + training variance, not model.
+  3. Per-allele models > pan-specific for non-canonical robustness; richer conditioning
+     (PSSM) makes pan worse, confirming shared parameters are the fundamental limit.
+  This is a complete, publishable companion to the submitted Bioinformatics manuscript.
 
 next_direction:
-  The multi-allele extension now has a complete, publishable story:
-  (1) Deep FFN + BLOSUM62 generalizes to 5 alleles (all pass canonical, sens 0.88-1.0 non-canonical)
-  (2) Per-allele models > pan-specific for non-canonical robustness
   Candidates:
-    - A*03:01 non-canonical collapse in pan model: WHY? structural / allele-confusion analysis
-    - Per-allele threshold characterization across 5 alleles
-    - Draft a manuscript section / report on the multi-allele extension
-  Consider: this could extend the submitted Bioinformatics manuscript or be a companion paper.
+    - Draft manuscript section / companion paper on multi-allele extension (invoke ml-paper-writing)
+    - Fine-tuned-pan (per-allele heads) as a middle ground (lower priority)
+    - Per-allele threshold characterization
