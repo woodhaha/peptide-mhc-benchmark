@@ -125,3 +125,25 @@ because training was narrow-biased (P9-K/R), so P9-Y/H out-of-distribution; (4) 
 manuscript's specific FNs (KRAS G12V P2-K etc.) are the HARD TAIL even MHCflurry misses
 (3.8-13.8 uM) — genuinely prediction-resistant, cross-predictor. Manuscript framing
 should be "extreme non-canonical tail prediction-resistant," not "systematically missed."
+
+## MUNIS STRUCTURE-BASED TEST (later, AutoDL RTX 6000D)
+
+Installed MUNIS (jwohlwend/munis, AlphaFold-Multimer pMHC structure predictor) on the
+AutoDL server and scored the 4 hard-tail Type B epitopes + 3 canonical controls:
+
+| Peptide | MUNIS | Deep FFN | MHCflurry |
+|---------|:-----:|:--------:|:---------:|
+| ILRGSVAHK | 0.114 | 0.002 | 13,778nM |
+| **QYDPVAALF** | **0.972** | 0.000 | 6,199nM |
+| TLGIVCPIC | 0.098 | 0.000 | 3,782nM |
+| YKLVVVGAV (KRAS P2-K) | 0.131 | 0.254 | 10,039nM |
+| LLFGYPVYV / GILGFVFTL / NLVPMVATV | 0.92-0.99 | binder | binder |
+
+**Finding:** 3/4 hard-tail still fail even in the structure-based method (incl. the
+P2-K salt-bridge, genuinely resistant to ALL predictors). BUT QYDPVAALF (0.972) is
+captured by structure where both sequence models failed — first evidence the
+three-tier pipeline's structure tier rescues a sequence-invisible binder. Partial
+support for the manuscript's three-tier claim.
+
+Setup cost: MUNIS = 428MB weights (5 x 89.5MB no-flanks) + ESM-2 t6; ~30 min to
+install + run on the 85GB GPU server. All files in 05_Submission/munis_results/.
