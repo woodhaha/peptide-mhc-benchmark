@@ -155,6 +155,16 @@ The per-allele-versus-pan comparison illustrates how benchmark artifacts can man
 
 One rebalanced pan-specific model replaces a per-allele panel. Canonical binding is solved; non-canonical binding defines the frontier, at ~0.65 for all current predictor classes including structure-based methods. Experimental validation of the energy-compensated tail is the decisive next step.
 
+## Figure legends
+
+**Figure 1.** Rebalanced pan model non-canonical sensitivity (5-seed mean ± SD) across five common HLA-I alleles. All five alleles meet or exceed the 0.9 target (dashed line).
+
+**Figure 2.** Predictor plateau: canonical versus Type B (non-canonical) sensitivity for Deep FFN, MHCflurry, and MUNIS (structure); dashed line marks the ~0.65 Type B plateau.
+
+**Figure 3.** Pan16: per-allele non-canonical sensitivity for the 15-allele panel, sorted ascending; dashed line marks the pooled 0.819.
+
+**Figure 4.** Temporal holdout: non-canonical sensitivity at threshold 0.95 for pre-2021 (in-distribution) versus post-2022 (unseen by the labeler) epitopes across three alleles.
+
 ## Data and code availability
 
 All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark.
