@@ -4,7 +4,7 @@
 Usage (venv TF): python src/eval_pan_multiseed.py --seeds 0,1,42,123,2024
 Outputs per-allele mean+/-SD non-canonical sens@0.95 across seeds.
 """
-import argparse, json, urllib.request, urllib.parse, collections
+import argparse, json, os, urllib.request, urllib.parse, collections
 import numpy as np
 
 AA_ORDER = "ARNDCQEGHILKMFPSTWYV"
