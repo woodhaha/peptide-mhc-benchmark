@@ -107,3 +107,12 @@
 
 ## Prior Work
 See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
+
+## 2026-08-02 — Conclusions update with multi-allele findings
+- Updated 4.7 Conclusions: added pan16 (15-allele panel, 0.819 pooled non-canonical
+  sensitivity), temporal holdout (post-2022 preserved, breaks label circularity),
+  predictor-plateau (non-canonical ~0.65 across Deep FFN/MHCflurry/MUNIS), P2-K/R/H
+  salt-bridge generality (3.83 Å), three-tier pipeline re-framed as hypothesis.
+- Updated Key Points + Discussion three-tier (248): softened "systematically miss",
+  added MUNIS-plateau caveat.
+- Source: multi-allele extension (10 validated findings, FINDINGS_SYNTHESIS.md).
