@@ -113,18 +113,22 @@ def build(input_dim, n_classes=3):
     m.compile(optimizer=keras.optimizers.Adam(0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     return m
 
-def train_pan(alleles, out_path, b7_factor=4):
+def train_pan(alleles, out_path, min_per_allele=2000):
     import keras
     rng = np.random.RandomState(RANDOM_SEED)
     Xp, yp, Ap = [], [], []
     for i, allele in enumerate(alleles):
+        # new alleles saved as train_HLA-A1101.npz (no underscore), existing as train_HLA-A_0101.npz
         f = f"data/train_{SAFE(allele)}.npz"
+        if not os.path.exists(f):
+            f = f"data/train_{allele.replace('*','').replace(':','')}.npz"
         d = np.load(f, allow_pickle=True); X, y = d["X"], d["y"]
+        # upsample thin alleles to min_per_allele (avoids a tiny allele dominating min-balance)
+        if len(X) < min_per_allele:
+            idx = rng.choice(len(X), min_per_allele, replace=True)
+            X, y = X[idx], y[idx]
         aoh = np.zeros(len(alleles), dtype=np.float32); aoh[i] = 1.0
         A = np.repeat(aoh[None,:], len(X), axis=0)
-        if allele=="HLA-B*07:02" and b7_factor>1:
-            idx=rng.choice(len(X), len(X)*b7_factor, replace=True)
-            X,y,A=X[idx],y[idx],A[idx]
         Xp.append(X); yp.append(y); Ap.append(A)
     X=np.concatenate(Xp); y=np.concatenate(yp); A=np.concatenate(Ap)
     perm=rng.permutation(len(X)); X,y,A=X[perm],y[perm],A[perm]
