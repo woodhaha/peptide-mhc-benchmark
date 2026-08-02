@@ -136,8 +136,8 @@ def main():
             per_th = {}
             for th in [0.5, 0.8, 0.9, 0.95]:
                 pred = (scores >= th).astype(int)
-                tp = int((true==1)&(pred==1)).sum(); fp = int((true==0)&(pred==1)).sum()
-                fn = int((true==1)&(pred==0)).sum(); tn = int((true==0)&(pred==0)).sum()
+                tp = int(((true==1)&(pred==1)).sum()); fp = int(((true==0)&(pred==1)).sum())
+                fn = int(((true==1)&(pred==0)).sum()); tn = int(((true==0)&(pred==0)).sum())
                 sens = tp/(tp+fn) if tp+fn else 0
                 spec = tn/(tn+fp) if tn+fp else 0
                 prec = tp/(tp+fp) if tp+fp else 0
