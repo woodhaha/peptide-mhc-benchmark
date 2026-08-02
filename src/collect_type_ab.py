@@ -34,29 +34,17 @@ BROAD = {
     "HLA-B*44:03": {2: "ED", 9: "FWYL"},
 }
 
-def fetch_all(allele, limit=20000):
-    """Fetch ALL positive 9-mer linear epitopes for an allele (paginated)."""
-    rows, page = [], 1
-    while page <= 20:
-        q = urllib.parse.urlencode({
-            "select": "epitope__name,reference__pmid,assay__method",
-            "mhc_restriction__name": f"eq.{allele}",
-            "epitope__object_type": "eq.Linear peptide",
-            "assay__qualitative_measurement": "eq.Positive",
-            "limit": 1000, "offset": (page-1)*1000,
-        }, safe="*")
-        req = urllib.request.Request(BASE+"?"+q, headers={"Accept": "application/json"})
-        try:
-            with urllib.request.urlopen(req, timeout=120) as r:
-                batch = json.load(r)
-        except Exception as e:
-            print(f"  {allele} page {page}: {e}")
-            break
-        if not batch: break
-        rows.extend(batch)
-        if len(batch) < 1000: break
-        page += 1
-    return rows
+def fetch_all(allele):
+    """Fetch positive 9-mer linear epitopes for an allele (server default page)."""
+    q = urllib.parse.urlencode({
+        "select": "epitope__name,reference__pmid,assay__method",
+        "mhc_restriction__name": f"eq.{allele}",
+        "epitope__object_type": "eq.Linear peptide",
+        "assay__qualitative_measurement": "eq.Positive",
+    }, safe="*")
+    req = urllib.request.Request(BASE+"?"+q, headers={"Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        return json.load(r)
 
 def classify(pep, narrow, broad):
     """canonical = passes narrow OR broad; Type A = broad-only tolerated anchor;
