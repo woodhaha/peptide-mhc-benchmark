@@ -59,10 +59,24 @@ required_before_publishable:
   - split non-canonical: Type A (dict-coverage bug, e.g. A*03:01 P9-Y) vs Type B (true
     energy-compensation, e.g. A*02:01 P2-K salt bridge)
 
+phase: corrected re-eval complete — B*07:02 exception is the real finding
+corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
+  pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
+  A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs
+  [0.41,0.77], non-overlapping). B*44:03 0.96 vs 1.0.
+  The earlier A*03:01 "collapse" (0.48) was a data-size artifact — confirmed dead.
+
+hypothesis (B*07:02 exception):
+  H4: The pan model dilutes the B*07:02 P2-proline anchor specifically. B*07:02's training
+  set is smallest (606) and its motif most distinctive (P2=P is unique among the 5). The
+  shared pathway under-weights the proline anchor, so non-canonical B*07:02 binders (which
+  often retain P2-P while failing P9) get low binding scores in the pan model.
+  Test: examine B*07:02 non-canonical misses in pan-full — are they P2-proline-present or
+  P2-absent? If P2-P-present misses dominate, the pan model is under-using the proline anchor.
+
 next_direction:
-  Do NOT repeat the falsified claims. Options:
-    - Rebuild eval with required fixes (protein negatives, broadened motifs, multi-seed) and
-      re-measure the surviving kernel (pan-full vs per-allele parity)
-    - Write up as an honest negative-result benchmarking note
-    - Abandon multi-allele direction; return to the submitted manuscript
-  The manuscript's K-E63 salt-bridge claim is NOT tested by this work (different granularity).
+  Focused follow-up on B*07:02 (testable, specific):
+    - Characterize the pan-full B*07:02 misses (P2 anchor presence/absence)
+    - Upsample B*07:02 in the pan training (class reweight) and see if 0.60 recovers
+  Do NOT repeat the falsified claims (per-allele>pan, shared-params-limit, PSSM-dilution).
+  The manuscript's K-E63 salt-bridge claim is NOT tested by this work.
