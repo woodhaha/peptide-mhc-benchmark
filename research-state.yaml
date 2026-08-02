@@ -110,3 +110,13 @@ next_direction:
       prediction-resistant (cross-predictor). Strengthens manuscript with honest bounds.
     - The clean Type A/B dichotomy from n=25 is DEAD; don't repeat it.
   Do NOT repeat the falsified claims (per-allele>pan everywhere, Type-A-easy, PSSM-dilution).
+
+  munis_structure_test (2026-08-02): MUNIS (AlphaFold-Multimer pMHC structure predictor)
+    installed on AutoDL RTX 6000D (jwohlwend/munis, 5-model no-flanks ensemble, ESM-2 t6).
+    Scored 4 hard-tail Type B + 3 canonical controls.
+    - 3/4 hard-tail low (0.10-0.13) incl. KRAS P2-K (0.131) — structure ALSO fails them.
+    - QYDPVAALF (0.972) captured by structure where both sequence models failed (n=1 rescue).
+    - Partial support for three-tier pipeline; P2-K salt bridge genuinely resistant to all.
+    Caveats: n=1 rescue, GGGGG flanks, single ensemble.
+    Next: score FULL Type B population (n=3,112) with MUNIS to test if structure lifts the
+    0.61-0.67 sensitivity ceiling — would make the three-tier claim strong.
