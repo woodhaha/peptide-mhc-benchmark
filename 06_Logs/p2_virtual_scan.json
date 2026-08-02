@@ -1,0 +1,105 @@
+{
+ "p2_ca_glu63": 3.83,
+ "results": {
+  "K": {
+   "reach": 7.6,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "R": {
+   "reach": 7.3,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "W": {
+   "reach": 5.3,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "Y": {
+   "reach": 4.9,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "Q": {
+   "reach": 4.5,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "H": {
+   "reach": 4.4,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "E": {
+   "reach": 4.4,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "F": {
+   "reach": 4.4,
+   "nz_oe_est": 0.0,
+   "reachable": true
+  },
+  "N": {
+   "reach": 3.6,
+   "nz_oe_est": 0.23,
+   "reachable": true
+  },
+  "M": {
+   "reach": 3.6,
+   "nz_oe_est": 0.23,
+   "reachable": true
+  },
+  "D": {
+   "reach": 3.0,
+   "nz_oe_est": 0.83,
+   "reachable": true
+  },
+  "C": {
+   "reach": 3.0,
+   "nz_oe_est": 0.83,
+   "reachable": true
+  },
+  "L": {
+   "reach": 2.6,
+   "nz_oe_est": 1.23,
+   "reachable": true
+  },
+  "I": {
+   "reach": 2.5,
+   "nz_oe_est": 1.33,
+   "reachable": true
+  },
+  "T": {
+   "reach": 2.5,
+   "nz_oe_est": 1.33,
+   "reachable": true
+  },
+  "P": {
+   "reach": 2.5,
+   "nz_oe_est": 1.33,
+   "reachable": true
+  },
+  "V": {
+   "reach": 2.0,
+   "nz_oe_est": 1.83,
+   "reachable": true
+  },
+  "S": {
+   "reach": 2.0,
+   "nz_oe_est": 1.83,
+   "reachable": true
+  },
+  "A": {
+   "reach": 1.5,
+   "nz_oe_est": 2.33,
+   "reachable": true
+  },
+  "G": {
+   "reach": 0.0,
+   "nz_oe_est": 3.83,
+   "reachable": true
+  }
+ }
+}

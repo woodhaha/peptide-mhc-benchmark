@@ -465,3 +465,32 @@ MHCflurry 2.x trained on IEDB data ~pre-2021. Scored epitopes published 2022+
 - IEDB 2025-2026 entries (n=1327+266 for A*02:01) dominate post-2022 and may be
   partially auto-curated; but the effect holds even with 2022-2024 (smaller,
   more likely manual) subsets.
+
+## P2 virtual mutagenesis scan (2026-08-02)
+
+Measured P2 C-alpha -> Glu63 carboxyl distance = 3.83 A in 1DUZ (matches manuscript
+~3.7 A). Sidechain reachability scan for all 20 P2 residues.
+
+### Key geometric fact
+P2 C-alpha is only 3.83 A from Glu63 carboxyl — ANY P2 sidechain reaching >3.83 A
+can physically contact it. This is NOT unique to K.
+
+### The real discriminator: ELECTROSTATICS, not reach
+- Glu63 is negatively charged (-1).
+- **K (+1), R (+1), H (+0.5-1 at pH7):** favorable electrostatic compensation
+  (salt bridge) — the manuscript's K-E63 story.
+- **D (-1), E (-1):** same charge as Glu63 -> repulsive clash, NOT compensating.
+- **W, Y, Q, F, M, N (polar/aromatic):** H-bond/van der Waals only, weak compensation.
+
+### Implication for the manuscript
+The K-E63 salt bridge is one instance of a more general principle: P2 residues with
+a POSITIVE charge (K, R, H) can electrostatically compensate the acidic B-pocket.
+R and H at P2 should be equally viable non-canonical anchors. The manuscript's
+claim that "other charged or polar residues at P2 — arginine, histidine — may
+represent additional non-canonical anchor configurations" is geometrically SUPPORTED
+(R reach 7.3 A, H reach 4.4 A both > 3.83 A gap, both positive charge).
+
+### Caveat
+Reachability is necessary not sufficient — actual binding requires the full pocket
+fit (P9 anchor too, peptide register, desolvation). This is a geometric screen, not
+a binding prediction.
