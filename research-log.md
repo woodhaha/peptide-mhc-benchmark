@@ -188,3 +188,22 @@
 - ALTERNATIVE: 11k-word content may fit better in a journal with higher word limit
   (NAR ~free format, Briefings in Functional Genomics). Compression to 5k risks
   losing the multi-allele extension depth that justified the merge.
+
+### Phase 13: BIOINFORMATICS SUBMISSION PREP COMPLETE (2026-08-03)
+- Corrected false premise: manuscript was NEVER submitted (journal_requirements shows [Pending]).
+- BiB confirmed review-only (no original research) -> target Bioinformatics (Oxford).
+- Bioinformatics submission package complete in 06_Bioinformatics_Submission/:
+  - manuscript_bioinformatics_v2.md (4,409 words, within 5k limit)
+  - latex_template/ (OUP bioinfo.cls, 5-page PDF with 9 figures embedded, verified compile)
+  - cover_letter.md (AI disclosure, suggested reviewers)
+  - manuscript_data_package.tar.gz (12.5 MB: data/models/code/figures/README)
+  - journal_requirements.md (verified OUP specs)
+  - companion_paper_plan.md (sister-paper evaluation)
+- Companion manuscript (PLOS Comput Biol target) complete:
+  - companion_manuscript.md (2,400 words, Vancouver refs [1]-[12])
+  - companion_manuscript.docx (pandoc)
+  - companion_cover_letter.md
+  - companion_figures/ (Fig1-4, Nature palette + Arial, PNG+PDF)
+  - PLOS has NO word limit, accepts DOCX, requires Vancouver refs
+- NEXT (pending): sister-paper data package; human review of both manuscripts before submission.
+- 145 commits ahead origin; git clean.

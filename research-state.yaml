@@ -82,7 +82,11 @@ merge_decision: 2026-08-02, USER CHOSE TO MERGE (not split).
   - Figure 9 (rebalanced pan) moved to 03_Analysis/figures/Figure9_pan_vs_perallele.{png,pdf}.
   - FIGURE STYLE: all manuscript figures unified to Nature palette (blue #377EB8, red #E41A1C,
     orange #FF7F00, green #4DAF4A, gray #999999) + Arial font, matching R figures.
-  - Still needs: human review of merged framing; regenerate submission package (DOCX done).
+  - SUBMISSION PREP (2026-08-03): Bioinformatics package COMPLETE in 06_Bioinformatics_Submission/
+    (compressed 4,409w + LaTeX PDF 5pp + cover letter + data package 12.5MB). Companion manuscript
+    COMPLETE for PLOS Comput Biol (2,400w Vancouver + DOCX + cover letter + Fig1-4).
+  - PENDING: sister-paper data package; human review before submission. BiB = review-only (rejected target).
+  - KEY CORRECTION: manuscript was NEVER submitted; earlier "under review at BiB" claims were false.
 corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
   pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
   A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs
