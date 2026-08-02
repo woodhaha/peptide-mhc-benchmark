@@ -42,7 +42,7 @@ generalization — a zero-parameter anchor-checker achieves sens 1.0/F1 0.85-1.0
 the same canonical set. The real signal is the non-canonical/hard-tail.
 
 **Action:** Add an anchor-checker baseline row; report non-canonical sensitivity as
-the informative metric.
+the informative metric. → DONE in manuscript.md §3.5 (2026-08-02).
 
 ## 4. Methods: single-allele framing — the multi-allele result supports it
 
@@ -60,7 +60,7 @@ across 5 common HLA-I alleles (as a strength, not a limitation).
 **Action:** Add a limitation: "Across two independent sequence predictors (our Deep
 FFN, MHCflurry) and a structure-based predictor (MUNIS), non-canonical binders plateau
 at ~0.65 sensitivity. The energy-compensated tail (e.g., P2-K salt bridge) remains
-prediction-resistant to all current methods."
+prediction-resistant to all current methods." → DONE in manuscript.md §4.6 (2026-08-02).
 
 ## 6. Positive to keep
 

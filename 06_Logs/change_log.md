@@ -167,3 +167,10 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 - 实际公开仓库为 `woodhaha/peptide-mhc-benchmark`（PUBLIC，483 文件，含全部数据 CSVs/代码/模型，2026-07-03 推送，与 6/30 投稿稿配套）。
 - 修复：`.md` 源文件 URL 改为公开仓库；`cover_letter.docx` 用 pandoc 重新生成并验证 URL 已替换（document.xml 无私有仓库残留）。
 - 附带确认：公开仓库内容与投稿稿一致，无审稿人可见缺口。本地 114 个未推送提交为投稿后多等位基因扩展（姊妹篇内容），不属于投稿稿范围。
+
+## 2026-08-02 — 主稿应用修正清单 #3 和 #5
+- manuscript_correction_checklist.md 6 项中 #1/#2/#4/#6 已在前期应用（hard tail 措辞、三阶梯改假说、多等位基因支持、K-E63 保留）。
+- 本轮补齐剩余 2 项到工作版 04_Manuscript/manuscript.md：
+  - #3 锚点检查器基线（§3.5）：零参数 anchor-checker 规则（p2 L/M/I/V/T + p9 L/M/I/V）在规范占优的 IEDB 基准上 sens 1.0 / F1 0.85-1.0，与训练模型无统计差异 → 规范集高估泛化，有效信号在非规范/hard-tail。
+  - #5 预测器平台限制定语（§4.6 新增 Sixth 点）：非规范结合子在 Deep FFN/MHCflurry/MUNIS 三类预测器均 ~0.65 平台；能量补偿尾（P2-K/R/H 达 Glu63 3.83Å）对一切方法预测抵抗。
+- checklist 两处标记 DONE。投稿版 manuscript_bioinformatics.md 未动（投稿在前，修订时统一应用）。
