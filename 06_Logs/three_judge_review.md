@@ -418,3 +418,25 @@ Retrained A*02:01/A*03:01/B*07:02 with Type A residues added to the biased gener
 Type A's low sensitivity is an inherent property of those (weak, heterogeneous)
 IEDB positives, not a fixable training-data gap. The canonical-motif bias is what
 makes the model work; diluting it is counterproductive.
+
+## Type A evidence analysis — genuine binders, real coverage gap (2026-08-02)
+
+Question: is Type A's low sensitivity (0.48) low-evidence noise / multi-allele
+confusion, or real biology the model misses?
+
+### Findings
+1. **Mass-spec confirmed**: A*03:01 13/14, B*07:02 11/12 Type A peptides are
+   mass-spec eluted ligands (not weak T-cell epitopes). Genuine binders.
+2. **NOT cross-allele confusion**: only 3-6% of Type A peptides are positive for
+   another allele (A*02:01 4%, A*03:01 6%, B*07:02 3%). A competing allele is NOT
+   the real binder.
+3. Reference-count profile is similar across types (73-87% have <=1 ref), so Type A
+   is not a low-evidence subset.
+
+### Conclusion
+Type A tolerated-anchor binders are genuine, well-evidenced, allele-specific
+peptides that the model genuinely fails to recognize (0.48). This is a REAL coverage
+gap in canonical-motif-biased training — the "inherent hard" conclusion is
+strengthened and it is NOT a data artifact. The manuscript could note this as an
+honest limitation with a path (structure or broader training) that our broad-retrain
+showed is non-trivial.
