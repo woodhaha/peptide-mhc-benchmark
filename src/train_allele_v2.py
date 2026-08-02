@@ -65,7 +65,7 @@ def encode(peptide):
 def biased_peptide(allele, rng):
     """Generate a peptide matching the allele's canonical anchor motif."""
     anchors = ANCHORS[allele]
-    p = list(rng.choice(AA_LIST, 9))
+    p = [rng.choice(AA_LIST) for _ in range(9)]
     for pos, allowed in anchors.items():
         p[pos] = rng.choice(list(allowed))
     return ''.join(p)

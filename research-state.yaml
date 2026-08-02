@@ -21,10 +21,18 @@ hypotheses:
   H3: With fixed data splits (seed 42) and mixed biased+random training, A*01:01 training variance disappears and it crosses 90% sensitivity.
 
 next_steps:
-  1. Curate real IEDB epitope sets for A*01:01, A*03:01, B*44:03 (9-mers, >=15 positives each, verified allele restriction).
-  2. Fix evaluator.py benchmark lists + persist per-allele models.
-  3. Retrain A*01:01, A*03:01, B*44:03 with fixed splits + mixed data.
-  4. Re-evaluate all 5 alleles; update state.
+  1. [DONE] Curated 25 high-confidence IEDB epitopes each for all 5 alleles (02_Data/cleaned/iedb_benchmark_HLA-*.csv).
+  2. [DONE] Restored r-tensorflow venv (uv python 3.10.20 + pyvenv.cfg repoint); TF2.17/keras3.12 verified. mhcflurry labeling via base anaconda (torch works there).
+  3. [DONE] Built src/train_allele_v2.py (fixed splits, mixed biased/random) + src/evaluate_allele.py (curated benchmark).
+  4. [DONE] Labeled 50k peptides each for A*01:01, A*03:01, B*44:03 (balanced sets in data/).
+  5. [IN PROGRESS] Trained + evaluated per allele. HLA-A*01:01 PASSES (sens 1.0, spec 0.99, F1 0.980). A*03:01/B*44:03 training running.
+
+progress:
+  HLA-A*01:01: PASS (2026-08-02) — sens 1.0, spec_raw 0.99, F1 0.980, thresh 0.97. Fixed splits + mixed data eliminated training variance.
+  HLA-A*03:01: training
+  HLA-B*44:03: training
+  HLA-A*02:01: existing Deep_FFN.keras unloadable in keras 3.12 (quantization_config kwarg) — may need retrain
+  HLA-B*07:02: was passing in prior run; re-evaluate with curated benchmark
 
 metrics:
   primary: per-allele sensitivity, specificity_raw, F1 (from evaluator.py)
