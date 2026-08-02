@@ -392,3 +392,29 @@ validation, not an evidence-backed claim. Structure-based prediction (MUNIS) doe
 currently rescue sequence-invisible non-canonical binders at scale. This actually
 STRENGTHENS the paper's scientific honesty: the field's "structure will solve it"
 assumption is challenged by direct measurement.
+
+## Broad-motif retrain — does NOT recover Type A (2026-08-02)
+
+Retrained A*02:01/A*03:01/B*07:02 with Type A residues added to the biased generator
+(A*02:01 P2-Q, A*03:01 P9-H/Y, B*07:02 P9-V). Sensitivity at threshold 0.95:
+
+| Allele | Type A narrow->broad | Type B narrow->broad |
+|--------|:---:|:---:|
+| A*02:01 | 0.080 -> 0.240 | 0.455 -> 0.451 |
+| A*03:01 | 0.634 -> 0.634 | 0.783 -> 0.771 |
+| B*07:02 | 0.333 -> 0.182 | 0.680 -> 0.341 |
+
+### Finding — DECISIVE NEGATIVE
+- Broadening does NOT recover Type A sensitivity (A*03:01 flat 0.634; A*02:01
+  improves marginally 0.08->0.24 but from near-zero).
+- It HURTS Type B on B*07:02 (0.680 -> 0.341): diluting the distinctive P2-P
+  canonical bias spreads capacity thinner and loses recall.
+- Hypothesis "Type A low sens = missing from training" REFUTED. The Type A IEDB
+  positives are heterogeneous/low-evidence; adding them to the biased generator does
+  not make the model better at them, and can hurt the canonical-motif precision that
+  drives Type B recall.
+
+### Implication
+Type A's low sensitivity is an inherent property of those (weak, heterogeneous)
+IEDB positives, not a fixable training-data gap. The canonical-motif bias is what
+makes the model work; diluting it is counterproductive.
