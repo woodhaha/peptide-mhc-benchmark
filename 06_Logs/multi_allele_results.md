@@ -51,3 +51,20 @@ and training-variance artifacts, now resolved:
 ## Next steps (candidate)
 - Pan-specific model (allele encoded in input) — Step B of the multi-allele mission
 - Per-allele threshold characterization across the 5 alleles
+
+## Robustness: non-canonical validated binders (2026-08-02)
+
+The 100% canonical sensitivity could be partly circular (training was 50% motif-biased).
+Tested all 5 models against IEDB positives that FAIL the allele's canonical anchor motif.
+
+| Allele | Non-canonical sens @0.95 | Precision | F1 |
+|--------|:------------------------:|:---------:|:--:|
+| HLA-A*02:01 | 1.0 | 0.806 | 0.893 |
+| HLA-A*01:01 | 0.88 | 0.957 | 0.917 |
+| HLA-A*03:01 | 1.0 | 0.962 | 0.980 |
+| HLA-B*07:02 | 1.0 | 0.862 | 0.926 |
+| HLA-B*44:03 | 0.96 | 0.960 | 0.960 |
+
+**Finding:** models retain 0.88-1.0 sensitivity on non-canonical validated binders —
+they do NOT simply memorize canonical anchors. Precision 0.81-0.96 (lower for A*02:01,
+consistent with that allele's established difficulty). Robust generalization confirmed.
