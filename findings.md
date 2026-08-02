@@ -88,8 +88,31 @@ Prior run-001 "failures" were curation/variance artifacts (still valid).
 multi-seed, external labels to break MHCflurry circularity, report CIs. The manuscript's
 K-E63 salt-bridge claim is NOT tested by this work.
 
+## Resolution (2026-08-02) — the honest, defensible positive result
+
+After correction + rebalancing, the multi-allele thread converges on a strong claim:
+
+**A single rebalanced pan-specific Deep FFN (B*07:02 upsampled 4x) reaches 0.84-0.96
+non-canonical sensitivity across all 5 alleles — parity or better than per-allele
+models.** The B*07:02 exception (0.60) was data scarcity, not an architectural limit.
+
+The full arc:
+1. Naive story ("5/5 pass, per-allele>pan, PSSM-dilution") — FALSIFIED by 3-judge
+   review + falsification experiments (canonical = motif tautology; pan collapse =
+   data artifact; non-canonical partition partly motif-dict artifact).
+2. Corrected story: per-allele and pan-full parity in 3/5, B*07:02 over-anchoring.
+3. Resolution: rebalancing fixes B*07:02; rebalanced pan beats or matches per-allele
+   on all 5 alleles.
+
+**Key lesson:** the first pass over-claimed. Independent adversarial review +
+falsification + honest re-measurement produced a narrower but far stronger claim:
+one model, properly fed, generalizes across 5 alleles on canonical AND non-canonical
+binders.
+
 ## Open Questions
 
-- Rebuild eval with required fixes and re-measure the pan-full vs per-allele parity.
-- Is the honest takeaway an negative-result benchmarking note ("a PSSM with a learned
-  non-canonical tail")?
+- Multi-seed (>=5) + external labels (unseen by MHCflurry) needed before this is
+  publishable as-is.
+- Does rebalancing transfer to more alleles / a broader allele panel?
+- The manuscript's K-E63 salt-bridge claim is NOT tested by this work (different
+  granularity).
