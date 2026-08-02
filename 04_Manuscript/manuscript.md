@@ -502,7 +502,7 @@ Not applicable.
 
 **Figure 9.** The rebalanced pan model reaches parity with per-allele specialists across the multi-allele extension. Non-canonical sensitivity at threshold 0.95 for a single rebalanced pan-specific Deep FFN (B\*07:02 upsampled 4×), 5-seed mean ± SD across five common HLA-I alleles. All five alleles meet or exceed the 0.9 target (dashed line).
 
-![Figure 9](companion_multi_allele/fig2_pan_vs_perallele.png)
+![Figure 9](../03_Analysis/figures/Figure9_pan_vs_perallele.png)
 
 ![Figure S5](../03_Analysis/figures/FigureS5_tcga_frequency.png)
 
