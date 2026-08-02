@@ -132,3 +132,13 @@
   Windows; python figures had DejaVu Sans. Added plt.rcParams["font.family"]="Arial".
   Verified PDFs embed Arial, no DejaVu.
 - All manuscript figures now consistent: Nature palette + Arial font.
+
+### Phase 11f: CONSISTENCY AUDIT (2026-08-02)
+- Verified merged manuscript.md internal consistency after all edits:
+  - All 14 cited figures exist (Figure1-9 + S1-S5), paths resolve from manuscript location.
+  - Tables 1-7 numbered continuously.
+  - All 54 references present; max in-text citation 53 (ref 54 = Editorial Board bioRxiv,
+    cited-only-in-reference, acceptable but flagged).
+- Journal recommendation context: manuscript is with BiB (under review, NOT rejected).
+  Backup options if needed: Bioinformatics (formatted version ready), NAR (needs repackaging).
+- Manuscript is revision-ready and internally consistent.
