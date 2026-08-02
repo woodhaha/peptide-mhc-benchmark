@@ -20,9 +20,9 @@ Peptide binding to MHC class I is the gatekeeper of CD8+ T-cell recognition, and
 
 ## 1 Introduction
 
-Peptide-MHC-I binding prediction underpins epitope discovery for vaccines and cancer immunotherapy (Lundegaard et al., 2011; Backert and Kohlbacher, 2015). The thousands of HLA class I allotypes (Robinson et al., 2015) each present distinct anchor motifs, and pan-specific models trained on pooled allele data — NetMHCpan (Reynisson et al., 2020), MHCflurry (O'Donnell et al., 2020), BigMHC (Albert et al., 2023), MUNIS (Chen et al., 2025) — have become the practical standard because a single model serves all alleles.
+Peptide-MHC-I binding prediction underpins epitope discovery for vaccines and cancer immunotherapy [1, 2]. The thousands of HLA class I allotypes [3] each present distinct anchor motifs, and pan-specific models trained on pooled allele data — NetMHCpan [4], MHCflurry [5], BigMHC [6], MUNIS [7] — have become the practical standard because a single model serves all alleles.
 
-Two questions motivate this work. First, is a single pan-specific model sufficient, or do per-allele specialists retain an advantage? Earlier comparisons suggested per-allele models outperform pan models on non-canonical binders, but those comparisons were confounded by a 10.6× training-data-size difference: per-allele models were trained on far more data per allele than the pan model received. Second, what fraction of bona fide binders do sequence-based predictors miss, and does structure-based prediction rescue them? Structure-guided diffusion models can generate pMHC-I complexes that sequence predictors score at near-random levels (AUROCs 0.06–0.22; Mares et al., 2025), implying a systematic blind spot.
+Two questions motivate this work. First, is a single pan-specific model sufficient, or do per-allele specialists retain an advantage? Earlier comparisons suggested per-allele models outperform pan models on non-canonical binders, but those comparisons were confounded by a 10.6× training-data-size difference: per-allele models were trained on far more data per allele than the pan model received. Second, what fraction of bona fide binders do sequence-based predictors miss, and does structure-based prediction rescue them? Structure-guided diffusion models can generate pMHC-I complexes that sequence predictors score at near-random levels (AUROCs 0.06–0.22) [8], implying a systematic blind spot.
 
 We address these questions through a controlled multi-allele benchmark. A single rebalanced pan DFFN is compared against per-allele specialists, the sequence-based MHCflurry, and the structure-based MUNIS, across five common alleles and a 15-allele panel, with temporal holdout to break label circularity. We find that the rebalanced pan model matches per-allele specialists, that non-canonical binders plateau at ~0.65 sensitivity for every predictor class including structure-based methods, and that the energy-compensated tail is prediction-resistant to all current methods.
 
@@ -30,7 +30,7 @@ We address these questions through a controlled multi-allele benchmark. A single
 
 ### 2.1 Multi-allele data curation
 
-Experimentally confirmed class I binders were curated from the IEDB (Vita et al., 2019) for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations.
+Experimentally confirmed class I binders were curated from the IEDB [9] for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations.
 
 ### 2.2 Type A/B classification
 
@@ -38,15 +38,15 @@ Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) we
 
 ### 2.3 Pan model and per-allele comparators
 
-The pan-specific DFFN uses BLOSUM62 encoding (Henikoff and Henikoff, 1992) through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe.
+The pan-specific DFFN uses BLOSUM62 encoding [12] through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe.
 
 ### 2.4 Comparator predictors
 
-MHCflurry 2.2.1 (O'Donnell et al., 2020) served as an independent sequence predictor (affinity threshold 500 nM). MUNIS (Chen et al., 2025) — a structure-based pMHC-I predictor using ESM-2 embeddings (Rives et al., 2021) and AlphaFold-Multimer-style structure scoring with no-flank checkpoints — served as the structure-conditioned comparator, run on the n = 3,112 Type B population plus canonical controls.
+MHCflurry 2.2.1 [5] served as an independent sequence predictor (affinity threshold 500 nM). MUNIS [7] — a structure-based pMHC-I predictor using ESM-2 embeddings [10] and AlphaFold-Multimer-style structure scoring with no-flank checkpoints — served as the structure-conditioned comparator, run on the n = 3,112 Type B population plus canonical controls.
 
 ### 2.5 Temporal holdout
 
-To address label circularity (Preibisch et al., 2026), IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training data) were compared against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95.
+To address label circularity [11], IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training data) were compared against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95.
 
 ### 2.6 Evaluation
 
@@ -136,7 +136,7 @@ Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:0
 
 Three findings emerge. First, a positive, replicable result: a single rebalanced pan-specific DFFN reaches parity with per-allele specialists across five alleles (and 0.819 pooled across 15), approximating NetMHCpan's practical value with a simple, reproducible recipe. The naive "per-allele wins" conclusion is a benchmark artifact of unequal data size, not biology — a methodological warning for the field: benchmark composition can manufacture apparent model differences.
 
-Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity regardless of whether the predictor uses sequence or structure. The field's assumption that structure-based scoring will rescue what sequence models miss (Mares et al., 2025) is directly challenged by the MUNIS measurement: a structure-based predictor achieves the same sensitivity ceiling as sequence-based methods. Structure-based scoring may still add value for the hardest cases, but it does not currently lift the aggregate plateau.
+Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity regardless of whether the predictor uses sequence or structure. The field's assumption that structure-based scoring will rescue what sequence models miss [8] is directly challenged by the MUNIS measurement: a structure-based predictor achieves the same sensitivity ceiling as sequence-based methods. Structure-based scoring may still add value for the hardest cases, but it does not currently lift the aggregate plateau.
 
 Third, a caveat that strengthens the structural story: the extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63; Zhou et al., companion) is prediction-resistant to every method tested, yet structure-informed analysis predicts these peptides bind. The contrast argues for structure-based screening as a complement for the hardest cases, pending experimental validation.
 
@@ -181,15 +181,15 @@ The authors declare no competing interests.
 
 ## References
 
-Albert BA, Yang Y, Shao XM, et al. BigMHC: deep learning-based prediction of MHC-I epitope presentation. bioRxiv 2023.
-Backert L, Kohlbacher O. Immunoinformatics and epitope prediction in the age of genomic medicine. Genome Med 2015;7:119.
-Chen B, Khodadoust MS, Olsson N, et al. MUNIS: a deep learning model for predicting MHC-I epitope presentation. Nat Biotechnol 2025;43:123-132.
-Henikoff S, Henikoff JG. Amino acid substitution matrices from protein blocks. Proc Natl Acad Sci USA 1992;89:10915-10919.
-Lundegaard C, Lund O, Nielsen M. State of the art and challenges in sequence based T-cell epitope prediction. Immunome Res 2011;6(Suppl 2):S3.
-Mares S, Miao Z, Grzeskowiak CL, et al. Generation of structure-guided pMHC-I libraries using diffusion models. Proc Int Conf Mach Learn 2025. arXiv:2507.08902.
-O'Donnell TJ, Rubinsteyn A, Laserson U. MHCflurry 2.0: improved pan-allele prediction of MHC class I-presented peptides by incorporating antigen processing. Cell Syst 2020;11:42-48.
-Preibisch J, Becker JP, Kohlbacher O. Resolution of recursive data corruption to transform T-cell epitope discovery. bioRxiv 2026.
-Reynisson B, Alvarez B, Paul S, et al. NetMHCpan-4.1 and NetMHCIIpan-4.0: improved predictions of MHC antigen presentation by concurrent motif deconvolution and integration of MS MHC eluted ligand data. Nucleic Acids Res 2020;48:W449-W454.
-Rives A, Meier J, Sercu T, et al. Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. Proc Natl Acad Sci USA 2021;118:e2016239118.
-Robinson J, Halliwell JA, Hayhurst JD, et al. The IPD and IMGT/HLA database: allele variant databases. Nucleic Acids Res 2015;43:D423-D431.
-Vita R, Mahajan S, Overton JA, et al. The Immune Epitope Database (IEDB): 2018 update. Nucleic Acids Res 2019;47:D339-D343.
+1. Lundegaard C, Lund O, Nielsen M. State of the art and challenges in sequence based T-cell epitope prediction. Immunome Res 2011;6(Suppl 2):S3.
+2. Backert L, Kohlbacher O. Immunoinformatics and epitope prediction in the age of genomic medicine. Genome Med 2015;7:119.
+3. Robinson J, Halliwell JA, Hayhurst JD, et al. The IPD and IMGT/HLA database: allele variant databases. Nucleic Acids Res 2015;43:D423-D431.
+4. Reynisson B, Alvarez B, Paul S, et al. NetMHCpan-4.1 and NetMHCIIpan-4.0: improved predictions of MHC antigen presentation by concurrent motif deconvolution and integration of MS MHC eluted ligand data. Nucleic Acids Res 2020;48:W449-W454.
+5. O'Donnell TJ, Rubinsteyn A, Laserson U. MHCflurry 2.0: improved pan-allele prediction of MHC class I-presented peptides by incorporating antigen processing. Cell Syst 2020;11:42-48.
+6. Albert BA, Yang Y, Shao XM, et al. BigMHC: deep learning-based prediction of MHC-I epitope presentation. bioRxiv 2023.
+7. Chen B, Khodadoust MS, Olsson N, et al. MUNIS: a deep learning model for predicting MHC-I epitope presentation. Nat Biotechnol 2025;43:123-132.
+8. Mares S, Miao Z, Grzeskowiak CL, et al. Generation of structure-guided pMHC-I libraries using diffusion models. Proc Int Conf Mach Learn 2025. arXiv:2507.08902.
+9. Vita R, Mahajan S, Overton JA, et al. The Immune Epitope Database (IEDB): 2018 update. Nucleic Acids Res 2019;47:D339-D343.
+10. Rives A, Meier J, Sercu T, et al. Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. Proc Natl Acad Sci USA 2021;118:e2016239118.
+11. Preibisch J, Becker JP, Kohlbacher O. Resolution of recursive data corruption to transform T-cell epitope discovery. bioRxiv 2026.
+12. Henikoff S, Henikoff JG. Amino acid substitution matrices from protein blocks. Proc Natl Acad Sci USA 1992;89:10915-10919.
