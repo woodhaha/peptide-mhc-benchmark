@@ -185,3 +185,34 @@ hygiene: it shows naive "per-allele wins" claims are benchmark artifacts, and th
 simple rebalanced Deep FFN pan model is competitive (consistent with NetMHCpan's
 success). This is publishable only as an honest benchmarking note, with the field
 consensus explicitly acknowledged.
+
+## Reconciliation: multi-allele non-canonical result vs manuscript's "prediction-resistant" claim (2026-08-02)
+
+The main manuscript's core novel claim: non-canonical anchor binders (e.g. KRAS G12V
+P2-K) are "prediction-resistant configurations that sequence-only models systematically
+miss." Three IEDB false negatives carried non-canonical p9; the K-E63 salt bridge is
+framed as structurally-compensating for a blind spot.
+
+**Our multi-allele data bears directly on this:** a rebalanced pan Deep FFN (BLOSUM62)
+achieves non-canonical sensitivity 0.92-0.98 across 5 alleles (5-seed mean±SD:
+A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05, B*44:03
+1.00±0.00) on IEDB mass-spec-validated binders that violate canonical anchor motifs.
+
+**Interpretation — two compatible readings:**
+1. The manuscript's A*02:01 model under-performs on non-canonical binders because it
+   was trained on only 5,088 peptides (small). With adequate per-allele data, non-canonical
+   binders are NOT systematically missed. The "prediction-resistant" framing may be a
+   training-scale artifact, not a fundamental limit.
+2. OR: the manuscript's specific case (P2-K salt bridge, energy-compensated) is a
+   DIFFERENT phenomenon from the A*03:01 P9-Y/H / B*07:02 P9-V/F cases our models catch —
+   those are tolerated weak anchors (Type A dict-coverage), not true energy-compensation
+   (Type B). Our 0.92-0.98 may be inflated by Type A.
+
+**This is genuinely novel and manuscript-relevant either way.** It either (a) softens the
+manuscript's "systematically miss" claim, or (b) sharpens it to "specifically Type B
+energy-compensated binders, not all non-canonical." A reviewer would find this valuable.
+
+**Next step candidate:** test the manuscript's own 3 false-negative non-canonical
+A*02:01 epitopes (ILRGSVAHK, QYDPVAALF, TLGIVCPIC) against the A*02:01 model trained on
+the larger 13k set — if they're now caught, the manuscript's "systematically miss" claim
+needs an honest scale caveat.
