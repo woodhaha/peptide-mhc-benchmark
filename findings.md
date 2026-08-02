@@ -61,8 +61,35 @@ model only for canonical screening at scale.**
 Any pan architecture learns the average MHC-I motif; per-allele models are required
 for non-canonical capacity.
 
+## CORRECTION (2026-08-02, three-judge review)
+
+The 3-part story above was largely FALSIFIED by independent adversarial review +
+falsification experiments:
+
+1. **Canonical "100% / 97-99% / F1 0.94-0.98"** — n=25 Wilson CI floor is 86.7%; a
+   zero-parameter anchor-checker (bind iff P2/P9 match motif) achieves sens 1.0/F1
+   0.85-1.0 on all 5 alleles. The canonical benchmark is a motif tautology, not
+   evidence of capability. Only A*02:01 with protein-background negatives shows the
+   model beating the rule (F1 0.943 vs 0.847).
+2. **"Per-allele > pan for non-canonical"** — the A*03:01 collapse (1.0→0.48) was a
+   10.6× data-size artifact. Pan trained on full data recovers 0.48→1.0. The
+   comparison is UNTESTED, not resolved.
+3. **"Shared params limit pan" / "PSSM worse"** — falsified; it was data imbalance.
+4. **"Non-canonical" partition** — partly a motif-dict artifact: A*03:01 P9=Y/H is a
+   legitimate A3-supertype anchor (640 positives reclassified); B*07:02 P9=V/F (299).
+   True non-canonical (Type B, e.g. A*02:01 P2-K salt bridge) is different from
+   dict-coverage bug (Type A).
+
+**Surviving kernel (defensible):** with full data, a pan model reaches parity with
+per-allele models on non-canonical binders; per-allele superiority is not supported.
+Prior run-001 "failures" were curation/variance artifacts (still valid).
+
+**Before publishable:** protein-background negatives, motifs from independent sources,
+multi-seed, external labels to break MHCflurry circularity, report CIs. The manuscript's
+K-E63 salt-bridge claim is NOT tested by this work.
+
 ## Open Questions
 
-- Non-canonical precision lowest for A*02:01 (0.81) — structural/PSSM hybrid per-allele?
-- Thresholds: A*03:01 optimal 0.95, others 0.97-0.99. Allele-agnostic calibration?
-- Does a fine-tuned-pan (per-allele heads) recover non-canonical? (Candidate, lower priority)
+- Rebuild eval with required fixes and re-measure the pan-full vs per-allele parity.
+- Is the honest takeaway an negative-result benchmarking note ("a PSSM with a learned
+  non-canonical tail")?
