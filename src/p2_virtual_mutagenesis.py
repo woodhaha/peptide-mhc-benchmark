@@ -43,13 +43,14 @@ def load_p2_glu63_distance(pdb_path):
                 resseq = int(line[22:26].strip())
                 x = float(line[30:38]); y = float(line[38:46]); z = float(line[46:54])
                 atoms.append((chain, resseq, resname, name, (x, y, z)))
-    # find peptide P2 CA: peptide chain has residues 1-9 (LLFGYPVYV)
-    # find HLA Glu63 OE: chain A (HLA), resSeq 63, name GLU
+    # 1DUZ: chain C (or F) = peptide (residues 1-9, LLFGYPVYV), chain A (or D) = HLA
+    # Use the FIRST complex: peptide chain C, HLA chain A.
     p2_ca = None; glu_oe = []
     for chain, resseq, resname, name, coord in atoms:
-        # peptide P2: resSeq==2 in the peptide chain (non-A chain containing peptide)
-        if chain != "A" and resseq == 2 and name == "CA":
+        # peptide P2 (chain C, resSeq 2, CA atom)
+        if chain == "C" and resseq == 2 and name == "CA":
             p2_ca = coord
+        # HLA Glu63 (chain A, GLU resSeq 63, carboxyl OE1/OE2)
         if chain == "A" and resname == "GLU" and resseq == 63 and name in ("OE1", "OE2"):
             glu_oe.append(coord)
     if p2_ca is None or not glu_oe:
@@ -75,7 +76,7 @@ def main():
         nz_oe = max(d_p2ca_glu - reach, 0.0)  # simplified: reach subtracts directly
         reachable = nz_oe <= SALT_BRIDGE_MAX
         klass = "charged/polar" if res in CORE_CHARGED else "hydrophobic/other"
-        results[res] = {"reach": reach, "nz_oe_est": round(nz_oe, 2), "reachable": reachable}
+        results[res] = {"reach": float(reach), "nz_oe_est": float(round(nz_oe, 2)), "reachable": bool(reachable)}
         flag = "  <== can reach Glu63" if reachable else ""
         print(f"{res:<7}{reach:<10.1f}{d_p2ca_glu:<13.2f}{nz_oe:<11.2f}{str(reachable):<12}{klass}{flag}")
     n_charged_reach = sum(1 for r in CORE_CHARGED if results.get(r, {}).get("reachable"))
