@@ -66,17 +66,19 @@ corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs 
   [0.41,0.77], non-overlapping). B*44:03 0.96 vs 1.0.
   The earlier A*03:01 "collapse" (0.48) was a data-size artifact — confirmed dead.
 
-hypothesis (B*07:02 exception):
-  H4: The pan model dilutes the B*07:02 P2-proline anchor specifically. B*07:02's training
-  set is smallest (606) and its motif most distinctive (P2=P is unique among the 5). The
-  shared pathway under-weights the proline anchor, so non-canonical B*07:02 binders (which
-  often retain P2-P while failing P9) get low binding scores in the pan model.
-  Test: examine B*07:02 non-canonical misses in pan-full — are they P2-proline-present or
-  P2-absent? If P2-P-present misses dominate, the pan model is under-using the proline anchor.
+hypothesis (B*07:02 exception) — H4 REFUTED, corrected mechanism:
+  H4 (proline under-use) was REFUTED. Pan-full B*07:02 non-canonical misses @0.9 are
+  1/5 P2=P-present; 4/5 are P2-absent (aliphatic V/I). The pan model OVER-commits to
+  B*07:02's distinctive P2-proline anchor, trading recall for precision (over-anchoring,
+  opposite of dilution). Missed binders are legitimate B7-family peptides with
+  aliphatic P2.
 
 next_direction:
-  Focused follow-up on B*07:02 (testable, specific):
-    - Characterize the pan-full B*07:02 misses (P2 anchor presence/absence)
-    - Upsample B*07:02 in the pan training (class reweight) and see if 0.60 recovers
-  Do NOT repeat the falsified claims (per-allele>pan, shared-params-limit, PSSM-dilution).
-  The manuscript's K-E63 salt-bridge claim is NOT tested by this work.
+  The multi-allele thread now has an honest, specific story (see 06_Logs/three_judge_review.md):
+    - 3/5 alleles: pan-full = per-allele parity on non-canonical (A*02:01, A*01:01, A*03:01)
+    - B*07:02: per-allele 0.96 > pan-full 0.60 (over-anchoring, not dilution)
+  Candidates:
+    - Upsample B*07:02 in pan training to test if over-anchoring is fixable (reweight)
+    - Write up the multi-allele work as an honest negative-result benchmarking note
+    - Return to the submitted manuscript (K-E63 salt bridge) — NOT tested by this work
+  Do NOT repeat the falsified claims (per-allele>pan everywhere, shared-params-limit, PSSM-dilution).
