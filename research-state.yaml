@@ -97,13 +97,16 @@ next_direction:
     - But the manuscript's own 3 non-canonical FNs + KRAS G12V P2-K are NOT rescued by
       2.6x more training data (scores 0.000-0.254). These are Type B (energy-compensated,
       e.g. K-E63 salt bridge), genuinely prediction-resistant.
-    - => manuscript's "systematically miss" claim CONFIRMED for Type B; quantified that
-      ordinary non-canonical (Type A) is well-handled by a well-trained model.
-    - This is novel external validation for the submitted manuscript, not a contradiction.
+    - CROSS-PREDICTOR VALIDATED (2026-08-02): MHCflurry independently confirms —
+      all 4 Type B (incl. YKLVVVGAV P2-K at 10,039 nM) predicted non-binder; Type A
+      P9=Y predicted binder (27-37 nM). The claim is NOT model-specific.
+    - => manuscript's "systematically miss" claim CONFIRMED for Type B, cross-predictor
+      robust; ordinary non-canonical (Type A) is well-handled by well-trained models.
 
   Options (revised):
-    - PRIMARY: report this Type A/B distinction as a companion/validation note to the
-      submitted manuscript (strengthens its Type-B-specific claim).
+    - PRIMARY: report Type A/B distinction as companion/validation for the manuscript —
+      now cross-predictor validated, strong support for the K-E63 salt-bridge hypothesis.
     - The multi-allele benchmarking alone is replication (field consensus), low novelty.
-    - External-label validation: low marginal value.
+    - This is a strong, complete result: 2 independent predictors + structure analysis
+      converge on Type B being genuinely prediction-resistant.
   Do NOT repeat the falsified claims (per-allele>pan everywhere, shared-params-limit, PSSM-dilution).
