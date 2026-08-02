@@ -120,3 +120,9 @@ next_direction:
       supported at scale. Honest implication: re-frame three-tier as hypothesis needing
       experimental validation; the field's 'structure will solve it' assumption is
       challenged by direct measurement.
+
+  broad_motif_retrain (2026-08-02) — DOES NOT recover Type A:
+    A*03:01 Type A flat 0.634; A*02:01 0.08->0.24 (marginal); B*07:02 Type B DROPS
+    0.680->0.341. Hypothesis 'Type A low sens = missing from training' REFUTED.
+    Type A IEDB positives are heterogeneous/weak; diluting canonical bias spreads
+    capacity thinner. Canonical-motif bias is what makes the model work.
