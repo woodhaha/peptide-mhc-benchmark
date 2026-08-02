@@ -116,3 +116,34 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 - Updated Key Points + Discussion three-tier (248): softened "systematically miss",
   added MUNIS-plateau caveat.
 - Source: multi-allele extension (10 validated findings, FINDINGS_SYNTHESIS.md).
+
+## 2026-08-02 — 研究进度记录（完整会话）
+### 状态：研究已完成并收敛，全部提交，git clean（127 commits）
+
+### 核心发现（10 个验证过的发现 F1-F10，见 FINDINGS_SYNTHESIS.md）
+1. 单个重平衡 pan Deep FFN 泛化到 15 等位基因面板（非规范灵敏度 pooled 0.819，12/15 ≥0.76）
+2. 规范结合剂被所有预测器类以 ~0.98 识别（已解决）
+3. 非规范（Type B）结合剂在序列 + 结构预测器上停在 ~0.65 平台（MUNIS 不救）
+4. Type A（容忍锚）是真实覆盖率缺口（0.48，质谱确认、非训练缺口）
+5. 极端能量补偿尾巴（P2-K/R/H 盐桥）对所有预测器抵抗
+6. 时间 holdout 验证：post-2022 表位灵敏度保持/提升（打破标签循环）
+7. pan16 面板成立（15 等位基因，B*27:05/B*51:01 弱尾因数据稀缺）
+
+### 关键决策/证伪
+- "per-allele > pan" → 数据量假象（pan-full 恢复）
+- "规范 100% 灵敏度" → motif 循环论证（anchor-checker = 1.0 F1）
+- "三阶梯管线救非规范" → 假说（MUNIS 平台证据不支持）
+
+### 主稿更新
+- 4.7 Conclusions + Key Points + Discussion 三阶梯 → 融入多等位基因发现，三阶梯降级为假说
+
+### 产物清单
+- FINDINGS_SYNTHESIS.md（10 发现）、manuscript_correction_checklist.md（6 项修正）
+- research-log.md（决策时间线，10 阶段）
+- to_human/findings_panel.png（4 联图）+ multi_allele_results.png + type_ab_largesample.png
+- 05_Submission/supplementary/findings_summary_tables.md（5 表）
+- 04_Manuscript/manuscript.md（结论已更新）
+
+### 下一步（仅写作，非研究）
+- 将 manuscript_correction_checklist.md 应用到主稿其他章节
+- 或写多等位基因扩展姊妹篇（可调 ml-paper-writing）
