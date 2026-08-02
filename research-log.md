@@ -73,3 +73,11 @@
 - 10 validated findings (F1-F10) in FINDINGS_SYNTHESIS.md. Research complete.
 - Next is authoring: apply manuscript_correction_checklist.md to the main manuscript
   OR write a companion benchmarking note. Not more experiments.
+
+### Phase 11: COMPANION NOTE (authoring, 2026-08-02)
+- ml-paper-writing installed (from zechenzhangAGI/AI-research-SKILLs, v1.2.0).
+- Full first draft written: 04_Manuscript/companion_multi_allele/companion_note_draft.md (~2,000 words, IMRaD, target Bioinformatics).
+- All 15 numeric claims verified against source data (type_ab_dataset.json, summarize_type_ab.py re-run, munis csv recompute, multiseed_results.json, p2_virtual_scan.json).
+- Figure 1 (4-panel findings panel) generated via plot_findings_panel.py, copied to companion dir.
+- Citation discipline: reused verified refs from manuscript.md (54 refs); no hallucinated citations.
+- Framing: positive (rebalanced pan = per-allele parity, 15-allele panel) + negative (Type B plateau ~0.65 cross-predictor) + structural contrast (P2-K/R/H hard tail).
