@@ -1,0 +1,5 @@
+\section{Conclusion}\label{sec:conclusion}
+
+Label provenance defines the performance ceiling for peptide-MHC binding prediction; architecture choice is secondary. The concentration of label-induced variation in the weak-binder class establishes it as a quantitative sentinel for label contamination, and we recommend that future benchmarks report WB F1 and label provenance as standard practice.
+
+BLOSUM62 proved more robust than ESM-2 at single-allele training scales, and architectural complexity beyond depth with batch normalisation gave diminishing returns. A multi-allele extension showed that one rebalanced pan model replaces a per-allele panel across five common alleles (and reaches 0.819 pooled sensitivity on a 15-allele panel), while non-canonical binders plateau at $\sim$0.65 sensitivity across sequence- and structure-based predictors alike. The energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63) is prediction-resistant to all current methods, defining the current frontier. Experimental validation of the extreme tail is the decisive next step.

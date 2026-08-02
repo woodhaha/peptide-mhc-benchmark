@@ -1,0 +1,74 @@
+\section{Results}\label{sec:results}
+
+\subsection{Training data and architecture comparison}
+MHCflurry labelling of 100,000 random 9-mers yielded 1.7\% SB, 5.1\% WB, 93.2\% NB; after balancing, 5,088 peptides (1,696/class). The Deep FFN achieved the highest accuracy (91.9\%, macro F1 0.921; Table~\ref{Tab:arch}), outperforming FFN (90.9\%), CNN (90.0\%), ResNet (84.3\%), LSTM (83.3\%), and Random Forest (81.1\%). MHCflurry itself scored 100\% on the test set it labelled, quantifying label circularity. The WB class was the most difficult (F1 0.752--0.880). Five-fold CV of the FFN confirmed stable generalisation (89.6 $\pm$ 0.8\%).
+
+The Deep FFN's advantage over more complex architectures reflects the positional nature of peptide--MHC binding: anchor positions p2/p9 dominate, and convolutional or recurrent mixing of positional information adds little.
+
+\subsection{Label quality dominates}
+Label source was the dominant determinant of performance (Table~\ref{Tab:label}). PSSM labels yielded 94.8\% accuracy; MHCflurry 91.9\%; random synthetic 65.8\%. The 2.9\,pp PSSM--MHCflurry gap was concentrated in the WB class (F1 0.925 vs.\ 0.880); the random-label model's WB F1 of 0.000 reflects a model that never predicts the class.
+
+\subsection{Encoding}
+BLOSUM62 generalized stably under cross-validation (92.2 $\pm$ 0.4\%). ESM-2 t6 per-position embeddings scored 93.3\% on a single split but collapsed to 82.2 $\pm$ 1.0\% under CV --- the 2,880-dimensional features overfit the 4,579-sample training set. Mean-pooled t6 embeddings collapsed to 65.9\%, confirming that positional information is essential.
+
+\subsection{External validation and translation}
+The Deep FFN achieved 93.9\% sensitivity (46/49), 75.0\% specificity, ROC AUC 0.947 against IEDB epitopes (Table~\ref{Tab:iedb}). All three false negatives carried non-canonical p9 anchors; a zero-parameter anchor-checker baseline achieved sensitivity 1.0 and F1 0.85--1.0 on the canonical-dominated set, confirming that the canonical benchmark overstates generalisation. Protein scanning confirmed 10/11 known epitopes; mutation scanning identified epitope-altering events in p53 R248W and KRAS G12V (Table~\ref{Tab:mutation}).
+
+\subsection{Structural hypothesis}
+Template-based analysis predicted a K-E63 salt bridge compensating the non-canonical P2 lysine (P2 C$\alpha$--Glu63 3.7\,\AA{} after minimisation; $-30$\,kcal/mol Coulombic estimate), presented as a testable structural hypothesis.
+
+\subsection{Multi-allele generalization}
+A single rebalanced pan DFFN reached non-canonical sensitivity (mean $\pm$ SD, 5 seeds): A*02:01 0.98 $\pm$ 0.02, A*01:01 0.92 $\pm$ 0.04, A*03:01 0.98 $\pm$ 0.02, B*07:02 0.92 $\pm$ 0.05, B*44:03 1.00 $\pm$ 0.00 --- parity with per-allele models. On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (12/15 alleles $\geq$0.76). Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern.
+
+\subsection{Non-canonical plateau}
+Canonical binders were recognized at $\sim$0.98 by every predictor class: DFFN 0.979, MHCflurry 0.986, MUNIS 0.950. Non-canonical (Type B) binders plateaued at $\sim$0.65: DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table~\ref{Tab:plateau}) --- structure-based prediction did not lift the ceiling. Type A binders were inherently hard (DFFN 0.477) and not recovered by broad-motif retraining. The extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63) was scored as non-binder by all three predictors.
+
+\begin{table}[!t]
+\processtable{Model performance on MHCflurry-labelled test set.\label{Tab:arch}}{\begin{tabular}{@{}lllll@{}}\toprule Model & Acc (\%) & Macro F1 & WB F1 & Params\\\midrule
+MHCflurry$^\dagger$ & 100.0 & 1.000 & 1.000 & --\\
+Deep FFN & \textbf{91.9} & \textbf{0.921} & \textbf{0.880} & 152,823\\
+FFN (Jessen) & 90.9 & 0.911 & 0.875 & 49,143\\
+CNN & 90.0 & 0.901 & 0.860 & 1,053,863\\
+ResNet & 84.3 & 0.847 & 0.792 & 324,931\\
+LSTM & 83.3 & 0.836 & 0.752 & 23,939\\
+Random Forest & 81.1 & 0.814 & 0.723 & --\\\botrule
+\end{tabular}}{$^\dagger$MHCflurry evaluated on its own training distribution; 100\% reflects label circularity.}
+\end{table}
+
+\begin{table}[!t]
+\processtable{Deep FFN performance across labelling strategies.\label{Tab:label}}{\begin{tabular}{@{}lllll@{}}\toprule Label source & Acc (\%) & Macro F1 & WB F1 & CV mean (\%)\\\midrule
+PSSM (biophysics) & 94.8 & 0.948 & 0.925 & 91.1 $\pm$ 0.9\\
+MHCflurry 2.2.0 & 91.9 & 0.921 & 0.880 & 89.6 $\pm$ 0.8\\
+Random synthetic & 65.8 & 0.558 & 0.000 & 65.4 $\pm$ 0.4\\\botrule
+\end{tabular}}{}
+\end{table}
+
+\begin{table}[!t]
+\processtable{IEDB benchmark performance.\label{Tab:iedb}}{\begin{tabular}{@{}ll@{}}\toprule Metric & Value\\\midrule
+Sensitivity & 93.9\% (46/49)\\
+Specificity & 75.0\% (15/20)\\
+Precision & 90.2\%\\
+F1 & 0.920\\
+ROC AUC & 0.947\\\botrule
+\end{tabular}}{}
+\end{table}
+
+\begin{table}[!t]
+\processtable{Epitope-altering cancer hotspot mutations.\label{Tab:mutation}}{\begin{tabular}{@{}lllll@{}}\toprule Mutation & WT peptide & Mutant peptide & Effect & Delta\\\midrule
+p53 R248W & MNRRPILTI & MNWRPILTI & CREATED & +0.41\\
+KRAS G12V & YKLVVVGAG & YKLVVVGAV & CREATED & +0.48\\
+KRAS G12V & LVVVGAGGV & LVVVGAVGV & ENHANCED & +0.31\\
+KRAS G12C & LVVVGAGGV & LVVVGACGV & ENHANCED & +0.31\\
+KRAS G13D & GVGKSALTI & DVDKSALTI & DESTROYED & $-0.47$\\
+KRAS A146T & GIPFIETSA & GIPFIETST & DESTROYED & $-0.42$\\
+p53 R249S & GMNRRPILT & GMNRSPILT & DESTROYED & $-0.16$\\\botrule
+\end{tabular}}{}
+\end{table}
+
+\begin{table}[!t]
+\processtable{Non-canonical (Type B) sensitivity by predictor class.\label{Tab:plateau}}{\begin{tabular}{@{}lll@{}}\toprule Predictor & Canonical & Type B\\\midrule
+Deep FFN (sequence) & 0.979 & 0.607\\
+MHCflurry (sequence) & 0.986 & 0.668\\
+MUNIS (structure) & 0.950 & 0.647\\\botrule
+\end{tabular}}{}
+\end{table}
