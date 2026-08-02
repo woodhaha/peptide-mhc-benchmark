@@ -286,3 +286,37 @@ and training from our Deep FFN):
 **Novel, manuscript-relevant contribution:** the Type A/B non-canonical distinction
 is now validated by an independent cross-predictor, directly strengthening the
 submitted manuscript's core claim.
+
+## Large-sample Type A/B test REVISES the story (2026-08-02, n=14,488)
+
+Collected ALL IEDB positive 9-mers for 5 alleles (14,488: canonical 11,225,
+Type A 151, Type B 3,112), scored with BOTH predictors (our Deep FFN + MHCflurry).
+
+### Pooled sensitivity
+| Type | n | Deep FFN | MHCflurry |
+|------|--:|:--------:|:---------:|
+| canonical | 11,225 | 0.979 [0.976,0.982] | 0.986 [0.984,0.988] |
+| type_a | 151 | 0.477 [0.399,0.556] | 0.669 [0.590,0.739] |
+| type_b | 3,112 | 0.607 [0.590,0.624] | 0.668 [0.652,0.685] |
+
+### CRITICAL revisions to the earlier small-n narrative
+1. **Non-canonical penalty is real but MODERATE** (canonical ~0.98 -> non-canonical
+   ~0.6-0.67), not catastrophic. Both predictors agree.
+2. **Type A is NOT easy** — Deep FFN catches only 0.477, WORSE than Type B (0.607).
+   The earlier "Type A caught at 0.92-0.98" was an artifact of 25 cherry-picked
+   top-evidence epitopes scored on the rebalanced pan model. With n=151, Type A
+   (broad-only tolerated anchors) is actually under-scored, because training data
+   was narrow-motif-biased (P9-K/R), so P9-Y/H out-of-distribution variants score low.
+3. **Type B is heterogeneous** — the population catches at 0.61-0.67, but the
+   manuscript's 3 specific FNs (ILRGSVAHK, QYDPVAALF, TLGIVCPIC) are the HARD TAIL
+   that even MHCflurry misses (3.8-13.8 uM). So "Type B prediction-resistant" is true
+   for the extreme tail, not the whole population.
+
+### Honest takeaway
+The clean Type A (easy) vs Type B (hard) dichotomy from n=25 is NOT supported at scale.
+The robust facts: (1) canonical binders are caught at ~0.98 by both predictors;
+(2) any peptide failing the canonical motif is caught at ~0.6-0.67 (a real but moderate
+penalty); (3) the manuscript's specific non-canonical FNs are the hardest cases that
+remain prediction-resistant even for MHCflurry. The manuscript's claim should be framed
+as "the extreme non-canonical tail is prediction-resistant," not "non-canonical binders
+are systematically missed."
