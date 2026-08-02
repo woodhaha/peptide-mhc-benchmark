@@ -24,16 +24,16 @@ MOTIFS = {
 TARGET_POS = 25          # epitopes per allele
 EXCLUDE_LOWCOMPLEX = 4   # max count of any single AA (avoid homopolymer-ish)
 
-def query(allele, page=1, per=1000):
+def query(allele):
     q = {
         "select": "epitope__name,reference__pmid,assay__method,assay__qualitative_measurement",
         "mhc_restriction__name": f"eq.{allele}",
         "epitope__object_type": "eq.Linear peptide",
         "assay__qualitative_measurement": "eq.Positive",
-        "limit": per, "offset": (page-1)*per,
     }
     url = BASE + "?" + urllib.parse.urlencode(q, safe="*")
-    with urllib.request.urlopen(url, timeout=90) as r:
+    req = urllib.request.Request(url, headers={"Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=120) as r:
         return json.load(r)
 
 def is_canonical(pep, motif):
@@ -49,13 +49,7 @@ def low_complexity(pep, maxaa=EXCLUDE_LOWCOMPLEX):
 
 def fetch(allele):
     motif = MOTIFS[allele]
-    rows, page = [], 1
-    while True:
-        batch = query(allele, page=page)
-        if not batch: break
-        rows.extend(batch)
-        if len(batch) < 1000: break
-        page += 1
+    rows = query(allele)
     by = collections.defaultdict(list)
     for r in rows:
         n = r.get("epitope__name")
@@ -85,7 +79,8 @@ def main():
     for allele in args.alleles.split(","):
         ep = fetch(allele)
         import csv
-        path = os.path.join(args.outdir, f"iedb_benchmark_{allele.replace('*','_')}.csv")
+        safe = allele.replace("*", "_").replace(":", "")
+        path = os.path.join(args.outdir, f"iedb_benchmark_{safe}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=["peptide","allele","n_refs","pmids","methods"])
             w.writeheader(); w.writerows(ep)
