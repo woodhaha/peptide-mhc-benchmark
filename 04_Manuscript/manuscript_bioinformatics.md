@@ -1,6 +1,6 @@
 # Systematic Benchmarking of Deep Learning Architectures for Peptide-MHC Binding Prediction Reveals Label Quality, Not Architecture, Defines Performance
 
-**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Yongyu Bai<sup>1,†</sup>, Qigang Xu<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Shaoliang Han<sup>1</sup>
+**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Chen Weisheng<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Yongyu Bai<sup>1</sup>, Qigang Xu<sup>2</sup>, Zhuxian Zhou<sup>3,^</sup>
 
 **Affiliations**:  
 <sup>1</sup> Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China  
@@ -8,7 +8,8 @@
 <sup>3</sup> Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China  
 
 <sup>†</sup> These authors contributed equally to this work.  
-<sup>*</sup> Corresponding author: Zhuha Zhou, Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China. E-mail: zhouzhuha@wmu.edu.cn. ORCID: 0009-0005-1818-4789
+<sup>*</sup> Corresponding author: Zhuha Zhou, Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China. E-mail: zhouzhuha@wmu.edu.cn. ORCID: 0009-0005-1818-4789  
+<sup>^</sup> Zhuxian Zhou, Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China. E-mail: zhouzx@zju.edu.cn
 
 **Word count**: ~7,800 | **Tables**: 6 | **Figures**: 8
 
@@ -273,7 +274,7 @@ The complete analysis pipeline, trained models, feature matrices, and all predic
 
 ## Author contributions
 
-Zhuha Zhou: Conceptualization, Methodology, Software, Formal Analysis, Investigation, Writing -- Original Draft, Writing -- Review & Editing. Yongyu Bai: Conceptualization, Methodology, Validation, Investigation, Writing -- Review & Editing. Qigang Xu: Investigation, Data Curation, Writing -- Review & Editing. Zhuxian Zhou: Methodology, Supervision, Writing -- Review & Editing. Shaoliang Han: Conceptualization, Supervision, Project Administration, Writing -- Review & Editing. Zhuha Zhou and Yongyu Bai contributed equally to this work. All authors read and approved the final manuscript.
+Zhuha Zhou and Chen Weisheng: conception, design, data analysis, manuscript writing. Yiqi Cai: data analysis, manuscript writing. Yongyu Bai and Qigang Xu: data interpretation, manuscript revision. Zhuxian Zhou: supervision, manuscript revision. All authors read and approved the final manuscript.
 
 ## Conflict of interest
 
@@ -288,13 +289,15 @@ This study is purely computational, uses only publicly available data and synthe
 
 **Zhuha Zhou** is a surgeon-researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on gastrointestinal cancer surgery and computational approaches to cancer immunotherapy.
 
+**Chen Weisheng** is a surgeon-researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research interests include gastrointestinal oncology and immunoinformatics.
+
+**Yiqi Cai** is a researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on computational approaches to cancer immunotherapy and multi-omics data analysis.
+
 **Yongyu Bai** is a surgeon-researcher in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research interests include gastrointestinal oncology and immunoinformatics.
 
 **Qigang Xu** is a surgeon in the Department of Hepatobiliary and Pancreatic Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on hepatobiliary and pancreatic cancer.
 
 **Zhuxian Zhou** is a researcher at the Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University. His research interests include nanomedicine and bioengineering approaches for drug delivery.
-
-**Shaoliang Han** is a professor and surgeon in the Department of Gastroenterology Surgery at The First Affiliated Hospital of Wenzhou Medical University. His research focuses on gastrointestinal cancer surgery, translational oncology, and computational methods in surgical oncology.
 
 ---
 

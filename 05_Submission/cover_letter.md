@@ -66,6 +66,14 @@ Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China
 E-mail: zhouzhuha@wmu.edu.cn  
 ORCID: 0009-0005-1818-4789
 
+**Chen Weisheng, MD**<sup>†</sup>  
+Department of Gastroenterology Surgery  
+The First Affiliated Hospital of Wenzhou Medical University
+
+**Yiqi Cai, MD**  
+Department of Gastroenterology Surgery  
+The First Affiliated Hospital of Wenzhou Medical University
+
 **Yongyu Bai, MD**<sup>†</sup>  
 Department of Gastroenterology Surgery  
 The First Affiliated Hospital of Wenzhou Medical University
@@ -77,10 +85,6 @@ The First Affiliated Hospital of Wenzhou Medical University
 **Zhuxian Zhou, PhD**  
 Center for Bionanoengineering, College of Chemical and Biological Engineering  
 Zhejiang University, Hangzhou 310027, China
-
-**Shaoliang Han, MD**  
-Department of Gastroenterology Surgery  
-The First Affiliated Hospital of Wenzhou Medical University
 
 <sup>†</sup> These authors contributed equally to this work.  
 <sup>\*</sup> Corresponding Author
