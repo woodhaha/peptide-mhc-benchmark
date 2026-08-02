@@ -14,9 +14,9 @@ mhc_lo = [0.984, 0.590, 0.652]; mhc_hi = [0.988, 0.739, 0.685]
 x = np.arange(3); w = 0.3
 fig, ax = plt.subplots(figsize=(8, 5))
 ax.bar(x-w/2, dff, w, yerr=[np.array(dff)-np.array(dff_lo), np.array(dff_hi)-np.array(dff)],
-       capsize=4, label="Deep FFN (ours)", color="#2b6cb0")
+       capsize=4, label="Deep FFN (ours)", color="#377EB8")
 ax.bar(x+w/2, mhc, w, yerr=[np.array(mhc)-np.array(mhc_lo), np.array(mhc_hi)-np.array(mhc)],
-       capsize=4, label="MHCflurry", color="#e53e3e")
+       capsize=4, label="MHCflurry", color="#E41A1C")
 ax.set_xticks(x); ax.set_xticklabels(types)
 ax.set_ylabel("Sensitivity on IEDB positives")
 ax.set_ylim(0, 1.1)

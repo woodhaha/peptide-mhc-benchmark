@@ -35,7 +35,7 @@ sds = [pan[a][1] for a in alleles]
 fig, ax = plt.subplots(figsize=(8, 5))
 x = np.arange(len(alleles))
 bars = ax.bar(x, means, 0.55, yerr=sds, capsize=5,
-              color="#2b6cb0", edgecolor="black", linewidth=0.5)
+              color="#377EB8", edgecolor="black", linewidth=0.5)
 for xi, m, sd in zip(x, means, sds):
     ax.text(xi, m + sd + 0.02, f"{m:.2f}±{sd:.2f}", ha="center", fontsize=9)
 

@@ -36,8 +36,8 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 4.2))
 for ax, m, title in zip([axes[0]], range(1), ["Canonical benchmark metrics"]):
     c_sens = [CANON[a][0] for a in alleles]
     c_spec = [CANON[a][1] for a in alleles]
-    ax.bar(x - w/2, c_sens, w, label="Sensitivity", color="#2b6cb0")
-    ax.bar(x + w/2, c_spec, w, label="Specificity", color="#63b3ed")
+    ax.bar(x - w/2, c_sens, w, label="Sensitivity", color="#377EB8")
+    ax.bar(x + w/2, c_spec, w, label="Specificity", color="#999999")
     ax.axhline(0.90, color="gray", ls="--", lw=0.8)
     ax.set_ylim(0, 1.05); ax.set_title(title, fontsize=11)
     ax.set_xticks(x); ax.set_xticklabels(labels, rotation=20, ha="right", fontsize=8)
@@ -47,8 +47,8 @@ for ax, m, title in zip([axes[0]], range(1), ["Canonical benchmark metrics"]):
 pa = [NONCAN_PA[a][0] for a in alleles]
 pn = [NONCAN_PAN[a][0] for a in alleles]
 ax = axes[1]
-ax.bar(x - w/2, pa, w, label="Per-allele models", color="#38a169")
-ax.bar(x + w/2, pn, w, label="Pan-specific model", color="#d69e2e")
+ax.bar(x - w/2, pa, w, label="Per-allele models", color="#4DAF4A")
+ax.bar(x + w/2, pn, w, label="Pan-specific model", color="#FF7F00")
 ax.axhline(0.90, color="gray", ls="--", lw=0.8)
 ax.set_ylim(0, 1.05); ax.set_title("Non-canonical binder sensitivity (IEDB, @0.95)", fontsize=11)
 ax.set_xticks(x); ax.set_xticklabels(labels, rotation=20, ha="right", fontsize=8)
