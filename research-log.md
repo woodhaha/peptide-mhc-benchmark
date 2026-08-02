@@ -110,3 +110,14 @@
   - Metadata: ~8,500 -> ~11,000 words, 6 -> 7 tables, 8 -> 9 figures
 - Standalone companion note archived to 06_Logs/archived/companion_note_draft_superseded.md (content now in main manuscript).
 - Verified: Tables 1-7 and Figures 1-9 + S1-S6 numbered continuously.
+
+### Phase 11d: SYNC submitted version to merged manuscript (2026-08-02)
+- User decision: one manuscript, not two. manuscript.md = single source of truth.
+- manuscript_bioinformatics.md is the Bioinformatics-formatted rendering (Harvard refs),
+  regenerated from manuscript.md via reformat_bioinformatics.py.
+- Ran the converter: manuscript_bioinformatics.md now includes the merged multi-allele
+  extension (Methods 2.8-2.10, Results 3.11-3.16, Table 7, Figure 9), Harvard citations
+  intact, 10,507 words.
+- NOTE: this regenerated version is NOT what the journal currently has (submitted June 30
+  without multi-allele). It represents the revision-ready version if the manuscript is
+  accepted with revisions. The originally-submitted content is preserved in git history.
