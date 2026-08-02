@@ -28,9 +28,8 @@ def load(seed):
     perm = rng.permutation(len(X))
     return X[perm], y[perm], A[perm]
 
-def build(dim, seed):
+def build(dim):
     import keras
-    keras.utils.set_random_seed(seed)
     m = keras.Sequential([
         keras.layers.Input(shape=(dim,)),
         keras.layers.Dense(360, activation='relu'),
@@ -53,6 +52,7 @@ def main():
     ap.add_argument("--outdir", default="models")
     args = ap.parse_args()
     import keras
+    keras.utils.set_random_seed(42)  # deterministic base init; per-seed variation via data RNG
     seeds = [int(s) for s in args.seeds.split(",")]
     for seed in seeds:
         X, y, A = load(seed)
@@ -61,7 +61,7 @@ def main():
         idx = np.arange(len(Xa)); rng.shuffle(idx)
         ntr = int(len(Xa)*0.9)
         tr, te = idx[:ntr], idx[ntr:]
-        m = build(Xa.shape[1], seed)
+        m = build(Xa.shape[1])
         cb = [keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, restore_best_weights=True),
               keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6)]
         m.fit(Xa[tr], y[tr], epochs=150, batch_size=64, validation_split=0.1, callbacks=cb, verbose=0)
