@@ -101,3 +101,19 @@ non-canonical epitopes missed). The allele one-hot encoding dilutes the
 allele-specific structural signal that carries non-canonical binders (the
 manuscript's P2-K / salt-bridge class). **Per-allele models remain the better
 choice when non-canonical binders matter** (neoantigen discovery).
+
+## Mechanism: why the pan model collapses on A*03:01 non-canonical (2026-08-02)
+
+The pan model misses 14/25 A*03:01 non-canonical epitopes @0.9 threshold; the
+per-allele A*03:01 model misses 0/25. Missed epitopes share P9 = H/Y/R (not the
+canonical A*03:01 P9-K), e.g. KVADMALHY (0.717), VLYDRVLKY (0.415), QLYSTILSH (0.065).
+
+**Interpretation:** the 5-dim allele one-hot is a weak conditioning signal. The pan
+model's shared sequence pathway learns a compromise "average MHC-I" preference and
+becomes stricter about canonical anchors; the per-allele model can devote all capacity
+to the A*03:01 binding motif including its non-canonical variants. The allele one-hot
+does not carry enough structural information to rescue non-canonical binders.
+
+**Implication:** for neoantigen / non-canonical-binder discovery, per-allele models
+are the correct choice. The pan model is acceptable only for canonical-binder
+screening at scale. This is a publishable design-guidance finding.
