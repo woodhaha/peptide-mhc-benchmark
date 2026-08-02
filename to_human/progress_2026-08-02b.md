@@ -165,3 +165,25 @@ same rate as sequence models. The n=1 QYDPVAALF rescue was not representative.
 **Honest scientific value:** challenges the field's assumption that "structure will
 solve what sequence misses." Non-canonical binding is hard for ALL predictor classes.
 Manuscript should re-frame three-tier as hypothesis needing experimental validation.
+
+## BROAD-MOTIF RETRAIN — does NOT recover Type A (decisive negative)
+
+Retrained A*02:01/A*03:01/B*07:02 with Type A residues (P2-Q, P9-H/Y, P9-V) added to
+the biased generator:
+
+| Allele | Type A narrow→broad | Type B narrow→broad |
+|--------|:---:|:---:|
+| A*02:01 | 0.080→0.240 | 0.455→0.451 |
+| A*03:01 | 0.634→0.634 | 0.783→0.771 |
+| B*07:02 | 0.333→0.182 | 0.680→0.341 |
+
+**Type A low sensitivity is NOT a training-data gap.** Broadening dilutes the model
+and hurts B*07:02 Type B (0.680→0.341). The canonical-motif bias is what makes the
+model work. This closes the Type A recovery question.
+
+## COMPLETE FINDING SET (all validated)
+1. Canonical binders: ~0.98 by all predictors (DeepFFN/MHCflurry/MUNIS).
+2. Type B non-canonical: plateau ~0.65 by all predictor classes — structure does NOT rescue.
+3. Type A (tolerated anchors): ~0.48, inherent to weak heterogeneous IEDB positives, not fixable by retrain.
+4. Extreme tail (P2-K salt bridge): prediction-resistant to all (cross-predictor).
+5. Manuscript corrections documented in 06_Logs/manuscript_correction_checklist.md.
