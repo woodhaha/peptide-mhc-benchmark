@@ -494,3 +494,19 @@ represent additional non-canonical anchor configurations" is geometrically SUPPO
 Reachability is necessary not sufficient — actual binding requires the full pocket
 fit (P9 anchor too, peptide register, desolvation). This is a geometric screen, not
 a binding prediction.
+
+## Full-panel scaling — data availability (2026-08-02)
+
+IEDB has ample data for a 16-allele HLA class I panel (9-mer positives):
+- Our 5: A*02:01 (4165), A*01:01 (1751), A*03:01 (2573), B*07:02 (3273), B*44:03 (2726)
+- New 11: A*11:01 (6041), A*24:02 (6048), B*08:01 (4613), B*15:01 (6389), B*27:05
+  (4132), B*35:01 (5028), B*40:01 (4058), B*49:01 (6535), B*51:01 (5313), B*57:01
+  (3124), plus B*07:02 (4774)
+
+A 16-allele panel pan model would make "one model replaces the panel" much stronger
+than 5 alleles. This is the one result that could genuinely exceed the field norm
+(NETMHCpan covers ~100 alleles but our claim would be "simple rebalanced Deep FFN
+matches per-allele across a diverse panel").
+
+Status: pending (needs labeling + training ~11 new alleles, ~1-2h). High value, high
+compute. Candidate for continuation.
