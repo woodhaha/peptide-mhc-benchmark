@@ -59,7 +59,7 @@ required_before_publishable:
   - split non-canonical: Type A (dict-coverage bug, e.g. A*03:01 P9-Y) vs Type B (true
     energy-compensation, e.g. A*02:01 P2-K salt bridge)
 
-phase: corrected re-eval complete — B*07:02 exception is the real finding
+phase: multi-allele thread RESOLVED — rebalanced pan matches per-allele on all 5 alleles
 corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
   pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
   A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs
@@ -74,11 +74,15 @@ hypothesis (B*07:02 exception) — H4 REFUTED, corrected mechanism:
   aliphatic P2.
 
 next_direction:
-  The multi-allele thread now has an honest, specific story (see 06_Logs/three_judge_review.md):
-    - 3/5 alleles: pan-full = per-allele parity on non-canonical (A*02:01, A*01:01, A*03:01)
-    - B*07:02: per-allele 0.96 > pan-full 0.60 (over-anchoring, not dilution)
-  Candidates:
-    - Upsample B*07:02 in pan training to test if over-anchoring is fixable (reweight)
-    - Write up the multi-allele work as an honest negative-result benchmarking note
+  Multi-allele thread RESOLVED with a defensible positive result:
+    rebalanced pan model (B*07:02 x4) reaches non-canonical sens 0.84-0.96 across all
+    5 alleles = parity or better vs per-allele models. Single model replaces 5.
+  The story arc (for writeup): prior "5/5 pass, per-allele>pan" was overstated
+    (canonical=motif tautology, pan collapse=data artifact); after correction +
+    rebalancing, the honest finding is that a single rebalanced pan model generalizes
+    across 5 alleles on canonical AND non-canonical binders.
+  Options:
+    - Write up as honest benchmarking note / companion to the submitted manuscript
+    - Multi-seed + external-label validation before any claim of publishability
     - Return to the submitted manuscript (K-E63 salt bridge) — NOT tested by this work
   Do NOT repeat the falsified claims (per-allele>pan everywhere, shared-params-limit, PSSM-dilution).
