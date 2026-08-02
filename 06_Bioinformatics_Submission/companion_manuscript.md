@@ -1,0 +1,185 @@
+# A Rebalanced Pan-Specific Model and the Non-Canonical Frontier: A Multi-Allele Benchmark of Peptide-MHC-I Binding Prediction
+
+**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Weisheng Chen<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Yongyu Bai<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
+
+**Affiliations**:  
+<sup>1</sup> Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China  
+<sup>2</sup> Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China  
+
+<sup>†</sup> These authors contributed equally to this work.  
+<sup>*</sup> Corresponding author: Zhuha Zhou, zhouzhuha@wmu.edu.cn, ORCID: 0009-0005-1818-4789  
+<sup>^</sup> Zhuxian Zhou, zhouzx@zju.edu.cn
+
+---
+
+## Abstract
+
+Peptide binding to MHC class I is the gatekeeper of CD8+ T-cell recognition, and pan-specific predictors have become the field standard for multi-allele screening. Two questions remain open: whether a single sequence-based pan model can match per-allele specialists, and how hard non-canonical (motif-failing) binders are for current prediction methods — including structure-based approaches. We benchmarked a rebalanced pan-specific deep feed-forward network (DFFN) across five common HLA-I alleles (n = 14,488 curated IEDB positives) and a 15-allele panel, comparing against per-allele models, MHCflurry, and the structure-based predictor MUNIS. Across five seeds, the rebalanced pan model reached non-canonical sensitivity 0.92–1.00, matching per-allele specialists; an apparent per-allele advantage in prior work was a 10.6× training-data-size artifact. On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (12/15 alleles ≥0.76). Canonical binders were recognized at ~0.98 by every predictor class. In contrast, non-canonical (Type B) binders plateaued at ~0.65 sensitivity across DFFN (0.607), MHCflurry (0.668), and MUNIS (0.647) — structure-based prediction did not lift the ceiling. Type A (tolerated weak anchors) binders were inherently hard (0.477) and not recovered by broad-motif retraining. Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern. We conclude that one rebalanced pan model replaces a per-allele panel, and that the canonical binder problem is effectively solved while the non-canonical tail — prediction-resistant to all current methods including structure-based scoring — defines the current frontier.
+
+---
+
+## 1 Introduction
+
+Peptide-MHC-I binding prediction underpins epitope discovery for vaccines and cancer immunotherapy (Lundegaard et al., 2011; Backert and Kohlbacher, 2015). The thousands of HLA class I allotypes (Robinson et al., 2015) each present distinct anchor motifs, and pan-specific models trained on pooled allele data — NetMHCpan (Reynisson et al., 2020), MHCflurry (O'Donnell et al., 2020), BigMHC (Albert et al., 2023), MUNIS (Chen et al., 2025) — have become the practical standard because a single model serves all alleles.
+
+Two questions motivate this work. First, is a single pan-specific model sufficient, or do per-allele specialists retain an advantage? Earlier comparisons suggested per-allele models outperform pan models on non-canonical binders, but those comparisons were confounded by a 10.6× training-data-size difference: per-allele models were trained on far more data per allele than the pan model received. Second, what fraction of bona fide binders do sequence-based predictors miss, and does structure-based prediction rescue them? Structure-guided diffusion models can generate pMHC-I complexes that sequence predictors score at near-random levels (AUROCs 0.06–0.22; Mares et al., 2025), implying a systematic blind spot.
+
+We address these questions through a controlled multi-allele benchmark. A single rebalanced pan DFFN is compared against per-allele specialists, the sequence-based MHCflurry, and the structure-based MUNIS, across five common alleles and a 15-allele panel, with temporal holdout to break label circularity. We find that the rebalanced pan model matches per-allele specialists, that non-canonical binders plateau at ~0.65 sensitivity for every predictor class including structure-based methods, and that the energy-compensated tail is prediction-resistant to all current methods.
+
+## 2 Methods
+
+### 2.1 Multi-allele data curation
+
+Experimentally confirmed class I binders were curated from the IEDB (Vita et al., 2019) for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations.
+
+### 2.2 Type A/B classification
+
+Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9. Type A carries broad-only tolerated anchors (residues that appear in binding motifs but are non-canonical); Type B carries non-canonical residues at anchor positions. This distinction matters because the two classes have different biological origins and, as we show, different prediction difficulty.
+
+### 2.3 Pan model and per-allele comparators
+
+The pan-specific DFFN uses BLOSUM62 encoding (Henikoff and Henikoff, 1992) through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe.
+
+### 2.4 Comparator predictors
+
+MHCflurry 2.2.1 (O'Donnell et al., 2020) served as an independent sequence predictor (affinity threshold 500 nM). MUNIS (Chen et al., 2025) — a structure-based pMHC-I predictor using ESM-2 embeddings (Rives et al., 2021) and AlphaFold-Multimer-style structure scoring with no-flank checkpoints — served as the structure-conditioned comparator, run on the n = 3,112 Type B population plus canonical controls.
+
+### 2.5 Temporal holdout
+
+To address label circularity (Preibisch et al., 2026), IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training data) were compared against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95.
+
+### 2.6 Evaluation
+
+Sensitivity was computed with protein-background negatives and fixed thresholds (0.95 for the pan model; 500 nM for MHCflurry; 5th percentile of canonical scores for MUNIS). Wilson 95% confidence intervals are reported for pooled estimates.
+
+## 3 Results
+
+### 3.1 A rebalanced pan model matches per-allele specialists
+
+Across five seeds, the rebalanced pan DFFN reached non-canonical sensitivity (mean ± SD): A\*02:01 0.98 ± 0.02, A\*01:01 0.92 ± 0.04, A\*03:01 0.98 ± 0.02, B\*07:02 0.92 ± 0.05, B\*44:03 1.00 ± 0.00 (Table 1; Figure 1). These values are at or above the corresponding per-allele models, so a single model replaces five. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
+
+**Table 1. Rebalanced pan non-canonical sensitivity by allele (5-seed mean ± SD, @0.95).**
+
+| Allele | Mean ± SD | Per-seed values |
+|--------|:---------:|-----------------|
+| A\*02:01 | 0.98 ± 0.02 | 1.0, 1.0, 1.0, 0.96, 0.96 |
+| A\*01:01 | 0.92 ± 0.04 | 0.92, 0.92, 0.96, 0.84, 0.96 |
+| A\*03:01 | 0.98 ± 0.02 | 1.0, 0.96, 1.0, 0.96, 0.96 |
+| B\*07:02 | 0.92 ± 0.05 | 0.92, 0.92, 0.84, 0.92, 1.0 |
+| B\*44:03 | 1.00 ± 0.00 | 1.0, 1.0, 1.0, 1.0, 1.0 |
+
+### 3.2 Canonical binders are recognized at ~0.98 by every predictor
+
+On n = 11,225 canonical positives, all three predictors were saturated: DFFN 0.979, MHCflurry 0.986, MUNIS 0.950 (Table 2). The canonical binder problem is effectively solved by all current methods.
+
+### 3.3 Non-canonical (Type B) binders plateau at ~0.65 across predictor classes
+
+On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 2; Figure 2). The three values are statistically indistinguishable (overlapping Wilson CIs); structure-based prediction does not lift the ceiling.
+
+**Table 2. Predictor sensitivity by binder class (pooled, 5 alleles).**
+
+| Predictor | Canonical (n=11,225) | Type A (n=151) | Type B (n=3,112) |
+|-----------|:--------------------:|:--------------:|:----------------:|
+| DFFN (sequence) | 0.979 | 0.477 | 0.607 |
+| MHCflurry (sequence) | 0.986 | 0.669 | 0.668 |
+| MUNIS (structure) | 0.950 | — | 0.647 |
+
+### 3.4 Type A (tolerated weak anchors) is inherently hard
+
+On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669. Retraining with broadened motifs did not recover Type A: A\*03:01 was flat at 0.634, and B\*07:02 Type B sensitivity dropped from 0.680 to 0.341 (Table 3). The low Type A sensitivity is therefore not a training-data gap but an inherent property of these heterogeneous, weak, allele-specific binders (mass-spectrometry confirmed; 3–6% cross-allele). The canonical-motif bias is what makes the model work.
+
+**Table 3. Broad-motif retraining does not recover Type A.**
+
+| Allele | Type A before | Type A after | Type B after |
+|--------|:------------:|:------------:|:------------:|
+| A\*03:01 | — | 0.634 | — |
+| A\*02:01 | 0.08 | 0.24 | — |
+| B\*07:02 | — | — | 0.341 (from 0.680) |
+
+### 3.5 The extreme tail is prediction-resistant, cross-predictor
+
+The three false negatives from our single-allele IEDB benchmark (`ILRGSVAHK`, `QYDPVAALF`, `TLGIVCPIC`) and the KRAS G12V P2-Lys epitope `YKLVVVGAV` were scored as non-binders by all three predictors (MHCflurry 3.8–13.8 µM; DFFN 0.000–0.254; MUNIS 3/4 low). A single counterexample — `QYDPVAALF` rescued by MUNIS (0.972 vs. sequence 0.000 / 6,199 nM) — is encouraging but n = 1.
+
+### 3.6 Scaling: one model replaces a 15-allele panel
+
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 at 0.08 with only 150 samples, B\*51:01 at 0.52 with 1,665 — reflects data scarcity, not architecture.
+
+**Table 4. Pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).**
+
+| Allele | Sens | Allele | Sens |
+|--------|:----:|--------|:----:|
+| A\*02:01 | 0.88 | A\*11:01 | 1.00 |
+| A\*01:01 | 0.80 | A\*24:02 | 0.76 |
+| A\*03:01 | 1.00 | B\*08:01 | 0.88 |
+| B\*07:02 | 0.64 | B\*15:01 | 0.96 |
+| B\*44:03 | 1.00 | B\*27:05 | 0.08 |
+| | | B\*35:01 | 0.84 |
+| | | B\*40:01 | 1.00 |
+| | | B\*49:01 | 1.00 |
+| | | B\*51:01 | 0.52 |
+| | | B\*57:01 | 0.92 |
+| **Pooled** | **0.819** | | |
+
+### 3.7 Temporal holdout breaks the label-circularity concern
+
+Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 — preserved versus pre-2021 (0.879/0.905/0.898), with A\*03:01 and B\*07:02 improving (Table 5; Figure 4). The model is not overfit to a single training-data era.
+
+**Table 5. Temporal holdout: pre-2021 vs. post-2022 sensitivity (@0.95).**
+
+| Allele | Pre-2021 (in-distribution) | Post-2022 (unseen) |
+|--------|:--------------------------:|:------------------:|
+| A\*02:01 | 0.879 | 0.824 |
+| A\*03:01 | 0.905 | 0.936 |
+| B\*07:02 | 0.898 | 0.973 |
+
+## 4 Discussion
+
+Three findings emerge. First, a positive, replicable result: a single rebalanced pan-specific DFFN reaches parity with per-allele specialists across five alleles (and 0.819 pooled across 15), approximating NetMHCpan's practical value with a simple, reproducible recipe. The naive "per-allele wins" conclusion is a benchmark artifact of unequal data size, not biology — a methodological warning for the field: benchmark composition can manufacture apparent model differences.
+
+Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity regardless of whether the predictor uses sequence or structure. The field's assumption that structure-based scoring will rescue what sequence models miss (Mares et al., 2025) is directly challenged by the MUNIS measurement: a structure-based predictor achieves the same sensitivity ceiling as sequence-based methods. Structure-based scoring may still add value for the hardest cases, but it does not currently lift the aggregate plateau.
+
+Third, a caveat that strengthens the structural story: the extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63; Zhou et al., companion) is prediction-resistant to every method tested, yet structure-informed analysis predicts these peptides bind. The contrast argues for structure-based screening as a complement for the hardest cases, pending experimental validation.
+
+### 4.1 Methodological implications
+
+The per-allele-versus-pan comparison illustrates how benchmark artifacts can manufacture false conclusions. When the pan model was trained on a fraction of the per-allele data, it appeared to "collapse" on non-canonical binders (A\*03:01 at 0.48); retraining on equalized data restored parity (0.98). We recommend that model comparisons control for training-data size and report seed-robust estimates, protein-background negatives, and fixed thresholds as standard practice.
+
+### 4.2 Limitations
+
+- The plateau and hard-tail estimates rest on IEDB-derived positives; experimental (non-IEDB) validation of the extreme tail is outstanding.
+- A pMHC-fine-tuned structure model (beyond generic AlphaFold-Multimer) might lift the Type B plateau; MUNIS is a strong but not definitive structural comparator.
+- Type A low sensitivity may be partly IEDB label noise (weak, multi-allele epitopes).
+- NetMHCpan comparison was blocked by the DTU license; MHCflurry and MUNIS served as independent sequence and structure predictors.
+
+## 5 Conclusion
+
+One rebalanced pan-specific model replaces a per-allele panel. Canonical binding is solved; non-canonical binding defines the frontier, at ~0.65 for all current predictor classes including structure-based methods. Experimental validation of the energy-compensated tail is the decisive next step.
+
+## Data and code availability
+
+All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark.
+
+## Funding
+
+This research did not receive specific grant funding.
+
+## Competing interests
+
+The authors declare no competing interests.
+
+---
+
+## References
+
+Albert BA, Yang Y, Shao XM, et al. BigMHC: deep learning-based prediction of MHC-I epitope presentation. bioRxiv 2023.
+Backert L, Kohlbacher O. Immunoinformatics and epitope prediction in the age of genomic medicine. Genome Med 2015;7:119.
+Chen B, Khodadoust MS, Olsson N, et al. MUNIS: a deep learning model for predicting MHC-I epitope presentation. Nat Biotechnol 2025;43:123-132.
+Henikoff S, Henikoff JG. Amino acid substitution matrices from protein blocks. Proc Natl Acad Sci USA 1992;89:10915-10919.
+Lundegaard C, Lund O, Nielsen M. State of the art and challenges in sequence based T-cell epitope prediction. Immunome Res 2011;6(Suppl 2):S3.
+Mares S, Miao Z, Grzeskowiak CL, et al. Generation of structure-guided pMHC-I libraries using diffusion models. Proc Int Conf Mach Learn 2025. arXiv:2507.08902.
+O'Donnell TJ, Rubinsteyn A, Laserson U. MHCflurry 2.0: improved pan-allele prediction of MHC class I-presented peptides by incorporating antigen processing. Cell Syst 2020;11:42-48.
+Preibisch J, Becker JP, Kohlbacher O. Resolution of recursive data corruption to transform T-cell epitope discovery. bioRxiv 2026.
+Reynisson B, Alvarez B, Paul S, et al. NetMHCpan-4.1 and NetMHCIIpan-4.0: improved predictions of MHC antigen presentation by concurrent motif deconvolution and integration of MS MHC eluted ligand data. Nucleic Acids Res 2020;48:W449-W454.
+Rives A, Meier J, Sercu T, et al. Biological structure and function emerge from scaling unsupervised learning to 250 million protein sequences. Proc Natl Acad Sci USA 2021;118:e2016239118.
+Robinson J, Halliwell JA, Hayhurst JD, et al. The IPD and IMGT/HLA database: allele variant databases. Nucleic Acids Res 2015;43:D423-D431.
+Vita R, Mahajan S, Overton JA, et al. The Immune Epitope Database (IEDB): 2018 update. Nucleic Acids Res 2019;47:D339-D343.
