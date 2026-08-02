@@ -16,7 +16,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-os.makedirs("04_Manuscript/companion_multi_allele", exist_ok=True)
+os.makedirs("03_Analysis/figures", exist_ok=True)
 
 # Verified from multiseed_results.json (rebalanced pan, B*07:02 x4)
 pan = {
@@ -47,7 +47,7 @@ ax.text(4.55, 0.915, "0.9 target", fontsize=8, color="gray", ha="right")
 ax.set_title("Rebalanced pan model — non-canonical sensitivity, 5-seed mean ± SD",
              fontsize=11)
 fig.tight_layout()
-out = "04_Manuscript/companion_multi_allele/fig2_pan_vs_perallele.png"
+out = "03_Analysis/figures/Figure9_pan_vs_perallele.png"
 fig.savefig(out, dpi=300)
-fig.savefig("04_Manuscript/companion_multi_allele/fig2_pan_vs_perallele.pdf")
+fig.savefig("03_Analysis/figures/Figure9_pan_vs_perallele.pdf")
 print(f"saved {out}")
