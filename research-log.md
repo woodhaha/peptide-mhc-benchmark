@@ -81,3 +81,20 @@
 - Figure 1 (4-panel findings panel) generated via plot_findings_panel.py, copied to companion dir.
 - Citation discipline: reused verified refs from manuscript.md (54 refs); no hallucinated citations.
 - Framing: positive (rebalanced pan = per-allele parity, 15-allele panel) + negative (Type B plateau ~0.65 cross-predictor) + structural contrast (P2-K/R/H hard tail).
+
+### Phase 11b: COMPANION NOTE REVISIONS + FIG VECTORIZATION (2026-08-02)
+- Draft review found 5 defects, all fixed (commit ccb9133):
+  - [10] Robinson/IMGT-HLA verified via CrossRef (real, NAR 2015;43:D423-D431)
+  - Metadata corrected (~2,000 words, 1 table, 2 figures)
+  - [companion submission] self-refs -> formal [15]
+  - "pre-registered" -> honest "fixed thresholds" (post-hoc 5th-pct canonical)
+  - New Figure 2 (rebalanced pan 5-seed mean+/-SD); per-allele bars excluded
+    (n=25 benchmark != large non-canonical set = apples-to-oranges)
+- Figures 1-2 now have vector PDFs (commit 4d35a78).
+- All matplotlib figures vectorized (commit ab8f141): md pic/ 15 + to_human/ 2.
+  Excluded: docking/p53 PyMOL renders (2, raster by nature), analysis_100ns.png
+  (no source script).
+- Fixed falsified claim in plot_multi_allele_results.py (commit 17e8914):
+  suptitle "per-allele > pan" + A*03:01 0.48 -> corrected to 5-seed means
+  (0.984/0.920/0.976/0.920/1.000) and "parity" framing. Historical falsification
+  records (falsify_pan_equalfull.py, to_human/progress_*) intentionally kept.
