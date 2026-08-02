@@ -352,3 +352,43 @@ controls, HLA-A*02:01, on AutoDL RTX 6000D.
 - n=1 rescued case; GGGGG flanks (not natural flanks); single 5-model ensemble.
 - To strengthen: score the FULL Type B population (n=3,112) and measure whether MUNIS
   lifts the 0.61-0.67 sensitivity ceiling. That would be a stronger claim.
+
+## MUNIS full Type B population test — structure does NOT lift the ceiling (2026-08-02)
+
+Scored all 6,224 peptides (3,112 Type B + 3,112 matched canonical, 5 alleles) with
+MUNIS on AutoDL RTX 6000D (7s). Threshold = 5th percentile of canonical scores
+(95% canonical sensitivity reference).
+
+### MUNIS sensitivity by type
+| Allele | Canonical | Type B | threshold |
+|--------|:---------:|:------:|:---------:|
+| A*02:01 | 0.949 | 0.603 | 0.772 |
+| A*01:01 | 0.950 | 0.349 | 0.974 |
+| A*03:01 | 0.950 | 0.805 | 0.817 |
+| B*07:02 | 0.949 | 0.538 | 0.944 |
+| B*44:03 | 0.950 | 0.628 | 0.958 |
+| **POOLED** | **0.950** | **0.647** | 0.884 |
+
+### Comparison (pooled Type B sensitivity)
+| Predictor | Type B sens |
+|-----------|:-----------:|
+| Deep FFN (sequence) | 0.607 |
+| MHCflurry (sequence) | 0.668 |
+| **MUNIS (structure)** | **0.647** |
+
+### Finding — DECISIVE NEGATIVE for the three-tier pipeline
+- MUNIS catches Type B at 0.647, statistically identical to sequence models
+  (0.607-0.668). **Structure-based prediction does NOT lift the sensitivity ceiling.**
+- The n=1 QYDPVAALF rescue (0.972) was NOT representative — at population scale,
+  structure adds no recall on Type B.
+- The manuscript's three-tier pipeline claim (sequence -> AlphaFold -> structure
+  rescues non-canonical binders) is NOT supported by this data. The P2-K salt-bridge
+  and the Type B population are genuinely hard for ALL predictor classes tested
+  (2 sequence + 1 structure).
+
+### Honest implication for the manuscript
+The three-tier pipeline should be re-framed as a HYPOTHESIS needing experimental
+validation, not an evidence-backed claim. Structure-based prediction (MUNIS) does not
+currently rescue sequence-invisible non-canonical binders at scale. This actually
+STRENGTHENS the paper's scientific honesty: the field's "structure will solve it"
+assumption is challenged by direct measurement.
