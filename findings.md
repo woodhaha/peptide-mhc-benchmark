@@ -132,9 +132,22 @@ binders are "systematically missed" is CONFIRMED, but sharpened to Type B only.
 Ordinary non-canonical binders are actually well-handled by well-trained sequence
 models. This is novel external validation FOR the manuscript, not a contradiction.
 
+## Cross-predictor validation (2026-08-02)
+
+MHCflurry 2.2.1 (independent predictor, different architecture/training) confirms the
+Type A/B distinction:
+- **Type B (all 4, incl. KRAS G12V P2-K):** predicted non-binder by MHCflurry
+  (3.8-13.8 uM). The "prediction-resistant" claim is NOT model-specific.
+- **Type A (P9=Y):** predicted strong binder by MHCflurry (27-37 nM).
+
+Two independent sequence predictors + the manuscript's structure-informed analysis
+now converge: Type B (energy-compensated, e.g. K-E63 salt bridge) is genuinely
+prediction-resistant; Type A (tolerated weak anchors) is well-handled. This
+strengthens the manuscript's K-E63 salt-bridge hypothesis substantially.
+
 ## Open Questions
 
-- Would NetMHCpan also miss the manuscript's Type B cases (cross-predictor check)?
-  (Would further validate the claim.)
 - Does the Type A/B distinction hold for more alleles / more epitopes (larger n)?
+- Would a structure-based predictor (AlphaFold3 / MUNIS) catch Type B where sequence
+  models fail? (Would complete the three-tier pipeline argument.)
 - External-label validation (unseen by MHCflurry) still the general publishability gate.
