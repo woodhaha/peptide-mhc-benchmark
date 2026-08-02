@@ -142,3 +142,15 @@
 - Journal recommendation context: manuscript is with BiB (under review, NOT rejected).
   Backup options if needed: Bioinformatics (formatted version ready), NAR (needs repackaging).
 - Manuscript is revision-ready and internally consistent.
+
+### Phase 11g: CORRECTION — manuscript was NEVER submitted (2026-08-02)
+- FACT CHECK: journal_requirements.md says "Submission date: [Pending]". No submission
+  receipt or system confirmation exists. Earlier records claiming "submitted June 30",
+  "under review at BiB", "submitted to Bioinformatics" were ERRONEOUS assumptions
+  (conflating submission-ready with submitted). The "submission risk assessment" was
+  based on this false premise.
+- Actual state: merged manuscript.md is revision-ready (multi-allele extension included),
+  NOT submitted to any journal. manuscript_bioinformatics.md is the Bioinformatics-
+  formatted rendering (Harvard refs) ready for submission.
+- Recommended targets: Briefings in Bioinformatics (IF~9.5, T3) or Bioinformatics
+  (Oxford, IF~6, formatted version ready).

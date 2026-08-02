@@ -184,3 +184,9 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
   - 补核心正结果图：fig2_pan_vs_perallele.png（重平衡 pan 5 种子均±SD）。未叠加 per-allele 条形——per-allele 基准（n=25 broad-motif）与大型非规范集不同，叠加会构成 apples-to-oranges 比较（三堂会审已点名的错误）。
   - 图 1（findings panel）补正文引用（1A temporal / 1B pan16 / 1C P2 reach / 1D plateau）+ 图注。
 - 现状：正文 Figure 1+2 均被引用且有图注；2,239 词；无残留占位。
+
+## 2026-08-02 — 投稿状态纠正（重要更正）
+- **事实核查：稿件从未提交。** journal_requirements.md 显示 "Submission date: [Pending]"；无任何投稿回执或系统确认。
+- 前述多条记录（"已投 BiB"、"投稿版"、"6/30 投稿"、"与 6/30 投稿稿配套"、"投稿在前"）均为**错误假设**，把"准备投稿"误当"已投稿"。此前的"投稿风险评估"基于错误前提。
+- 实际状态：合并稿 manuscript.md 已修订就绪（含多等位基因扩展），尚未投任何期刊。manuscript_bioinformatics.md 是 Bioinformatics 格式的渲染版（Harvard 引用），供投稿使用。
+- 正确推荐：可投 Briefings in Bioinformatics（IF~9.5，T3）或 Bioinformatics（Oxford，IF~6，格式已就绪）。
