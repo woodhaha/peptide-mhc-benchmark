@@ -91,3 +91,17 @@ finding:
 "systematically missed" only for Type B (energy-compensated). Ordinary non-canonical
 (Type A) is well-handled by well-trained models. This is novel external validation FOR
 the submitted manuscript.
+
+## CROSS-PREDICTOR VALIDATION (later)
+
+MHCflurry 2.2.1 (independent predictor) confirms the Type A/B distinction:
+- **Type B** (manuscript's 4, incl. KRAS G12V P2-K): ALL predicted non-binder
+  (3,782-13,778 nM). YKLVVVGAV = 10,039 nM.
+- **Type A** (P9=Y tolerated anchors): predicted strong binder (27-37 nM).
+
+**The prediction-resistant claim is NOT model-specific** — two independent sequence
+predictors (our Deep FFN + MHCflurry) both fail on Type B, while both catch Type A.
+This makes the manuscript's K-E63 salt-bridge structural hypothesis substantially
+stronger: if sequence models systematically fail and structure says it binds, the
+structural compensation story is credible. The Type A/B distinction is the novel,
+cross-predictor-validated contribution of the multi-allele work.
