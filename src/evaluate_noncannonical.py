@@ -98,6 +98,15 @@ def main():
         o = np.zeros(len(ALLELES), dtype=np.float32)
         o[ALLELES.index(allele)] = 1.0
         X = np.concatenate([X, np.repeat(o[None, :], len(X), axis=0)], axis=1)
+    if "--pssm" in sys.argv:
+        allowed = set()
+        for _anpos, res in {"HLA-A*02:01": {2: "LMIVAT", 9: "LVIM"}, "HLA-A*01:01": {3: "DE", 9: "YF"},
+                            "HLA-A*03:01": {2: "LVIM", 9: "KR"}, "HLA-B*07:02": {2: "P", 9: "LIMF"},
+                            "HLA-B*44:03": {2: "ED", 9: "FWYL"}}[allele].items():
+            allowed.update(res)
+        v = np.array([1.0 if a in allowed else 0.05 for a in "ACDEFGHIKLMNPQRSTVWY"], dtype=np.float32)
+        v /= v.sum()
+        X = np.concatenate([X, np.repeat(v[None, :], len(X), axis=0)], axis=1)
     m = keras.models.load_model(model_path, compile=False)
     probs = m.predict(X, verbose=0)
     scores = probs[:, 1] + probs[:, 2]

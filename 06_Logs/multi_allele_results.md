@@ -117,3 +117,23 @@ does not carry enough structural information to rescue non-canonical binders.
 **Implication:** for neoantigen / non-canonical-binder discovery, per-allele models
 are the correct choice. The pan model is acceptable only for canonical-binder
 screening at scale. This is a publishable design-guidance finding.
+
+## Negative result: allele PSSM conditioning does NOT recover non-canonical robustness (2026-08-02)
+
+Tested replacing the 5-dim allele one-hot with a 20-dim anchor-preference PSSM in the pan model.
+Non-canonical sensitivity @0.95 is WORSE in 4/5 alleles:
+
+| Allele | Per-allele | Pan one-hot | Pan PSSM |
+|--------|:----------:|:-----------:|:--------:|
+| HLA-A*02:01 | 1.0 | 0.80 | 0.72 |
+| HLA-A*01:01 | 0.88 | 0.76 | 0.56 |
+| HLA-A*03:01 | 1.0 | 0.48 | 0.36 |
+| HLA-B*07:02 | 1.0 | 0.96 | 0.72 |
+| HLA-B*44:03 | 0.96 | 1.0 | 0.80 |
+
+**Interpretation:** the anchor-preference PSSM literally encodes the canonical motif
+bias the shared model over-relies on, reinforcing rather than rescuing the collapse.
+The problem is NOT conditioning strength — it is that ANY shared-parameter model
+learns the "average MHC-I" motif and structurally cannot retain per-allele
+non-canonical capacity. Per-allele models are the correct architecture for
+non-canonical/neoantigen discovery; the pan architecture is fundamentally limited here.
