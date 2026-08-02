@@ -59,6 +59,23 @@ tested.
 - They are genuine, allele-specific, tolerated-anchor binders the model fails at 0.48.
 - Broad-retrain does not fix it — a genuine limitation, honestly reportable.
 
+### F8. Pan16 — one model replaces a 15-allele panel
+- Rebalanced pan16 (11 new alleles + 5 existing): pooled non-canonical sens 0.819
+  (307/375 @0.95). 12/15 alleles at 0.76-1.0.
+- Weak tail = B*27:05 (0.08, only 150 samples) and B*51:01 (0.52, 1,665) — data
+  scarcity, not architecture.
+- Scales the "one model replaces the panel" claim to 15 alleles, approximating
+  NetMHCpan's practical value with a simple rebalanced Deep FFN.
+
+### F9. Temporal generalization (breaks label circularity)
+- Post-2022 epitopes (unseen by MHCflurry's training): sens@0.95 A*02:01 0.824,
+  A*03:01 0.936, B*07:02 0.973 — preserved vs pre-2021. Model not overfit to era.
+
+### F10. P2 salt-bridge generality (structural)
+- P2 C-alpha -> Glu63 = 3.83 A. Positive-charge P2 (K/R/H) can electrostatically
+  compensate the acidic B-pocket (R reach 7.3 A, H 4.4 A). Manuscript's "other
+  charged P2" extension is geometrically supported.
+
 ## Falsified claims (do NOT repeat)
 - "5/5 alleles pass; per-allele > pan" — canonical benchmark was motif-tautology
   (anchor-checker = 1.0 F1); pan collapse was data-size artifact.
