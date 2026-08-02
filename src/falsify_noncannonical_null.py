@@ -16,7 +16,7 @@ non-canonical partition (counts), leaving the numbers for the paper discussion.
 
 Usage: python src/falsify_noncannonical_null.py   (base python; no TF)
 """
-import csv, urllib.request, urllib.parse, collections
+import csv, json, urllib.request, urllib.parse, collections
 
 # Literature-validated anchor sets (broader than the 2-residue simplification)
 # A3-supertype (A*03/11/31/33/68): P2 aliphatic, P9 basic OR Y/H tolerated.
