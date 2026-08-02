@@ -29,25 +29,40 @@ metrics:
   primary: per-allele sensitivity, specificity_raw, F1 (src/evaluate_allele.py)
   pass: sens>=0.90 and spec_raw>=0.80 and F1>=0.85
 
-phase: exploration complete — coherent 3-part story ready
-step_B_result:
-  Pan one-hot (BLOSUM62+allele one-hot, 185-dim): passes all 5 canonical benchmarks,
-  but non-canonical sens @0.95 collapses: A*02:01 1.0->0.80, A*01:01 0.88->0.76,
-  A*03:01 1.0->0.48, B*07:02 1.0->0.96, B*44:03 0.96->1.0.
-  Pan PSSM (20-dim anchor-preference profile): WORSE in 4/5 alleles (A*03:01 ->0.36).
-  Mechanism settled: shared-parameter model learns average MHC-I motif; the limitation
-  is architectural (shared params), not conditioning strength.
+phase: three-judge review complete — claims largely FALSIFIED
+three_judge_review: 2026-08-02, 3 rounds. See 06_Logs/three_judge_review.md.
+  R1 (tribunals): canonical F1 ~tautology; pan-vs-per-allele data confound; motif over-narrow; teacher leakage.
+  R2 (falsify): anchor-checker=1.0 F1 (tautology CONFIRMED); pan-full recovers A*03:01 0.48->1.0
+    (data-size artifact CONFIRMED, collapse FALSIFIED); motif broadening reclassifies 640 A*03:01 (CONFIRMED).
+  R3 (revised verdicts): see below.
 
-story:
-  1. Deep FFN + BLOSUM62 generalizes to 5 common HLA-I alleles — all pass canonical
-     (sens 100%, spec 97-99%, F1 0.94-0.98) and retain 0.88-1.0 non-canonical sensitivity.
-  2. Prior run-001 "failures" were benchmark curation + training variance, not model.
-  3. Per-allele models > pan-specific for non-canonical robustness; richer conditioning
-     (PSSM) makes pan worse, confirming shared parameters are the fundamental limit.
-  This is a complete, publishable companion to the submitted Bioinformatics manuscript.
+corrected_understanding (FALSIFIED):
+  - "100% / 97-99% / F1 0.94-0.98" canonical — n=25 CI floor 86.7%, motif tautology, decoy negatives.
+  - "Per-allele > pan for non-canonical" — was a 10.6x data-size artifact; pan-full reaches parity.
+  - "Shared params limit pan" / "PSSM worse = dilution" — falsified by Exp B; comparison now UNTESTED.
+  - "Canonical passes 5/5 as evidence" — a zero-param anchor-checker matches it.
+
+surviving_kernel (defensible negative-result claim):
+  - With full per-allele data, a pan model reaches parity with per-allele models on
+    non-canonical binders; per-allele superiority is NOT supported.
+  - Prior run-001 "failures" were curation/variance artifacts (documented).
+  - A*02:01 protein-negative beat over anchor rule (F1 0.943 vs 0.847) — one non-tautological number.
+  - Non-canonical sens 0.88-1.0 (per-allele) / 0.76-1.0 (pan-full), but partly inherited
+    from MHCflurry (teacher) + protein-likeness signal.
+
+required_before_publishable:
+  - protein-background negatives (not uniform-random)
+  - motifs from independent validated sources (netMHCpan anchors), recompute partition
+  - multi-seed >=5 mean+/-SD; pre-register one threshold
+  - external labels (affinity<500nM) unseen by MHCflurry to break circularity
+  - report n=25 CIs; drop salt-bridge/structural-mechanism + per-allele-superiority claims
+  - split non-canonical: Type A (dict-coverage bug, e.g. A*03:01 P9-Y) vs Type B (true
+    energy-compensation, e.g. A*02:01 P2-K salt bridge)
 
 next_direction:
-  Candidates:
-    - Draft manuscript section / companion paper on multi-allele extension (invoke ml-paper-writing)
-    - Fine-tuned-pan (per-allele heads) as a middle ground (lower priority)
-    - Per-allele threshold characterization
+  Do NOT repeat the falsified claims. Options:
+    - Rebuild eval with required fixes (protein negatives, broadened motifs, multi-seed) and
+      re-measure the surviving kernel (pan-full vs per-allele parity)
+    - Write up as an honest negative-result benchmarking note
+    - Abandon multi-allele direction; return to the submitted manuscript
+  The manuscript's K-E63 salt-bridge claim is NOT tested by this work (different granularity).
