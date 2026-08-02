@@ -33,9 +33,23 @@ splits with mixed biased+random data. 3/3 previously-"failed" alleles now pass.
 - Old `.h5`/`.keras` models saved under keras 2.x have a `quantization_config` kwarg
   that keras 3.12 rejects — retrain rather than patch-load.
 
+## Update (2026-08-02, mission complete)
+
+**5/5 alleles PASS** with the Deep FFN + BLOSUM62 recipe + curated IEDB benchmarks:
+sens 100%, spec 97-99%, F1 0.94-0.98 for all. The prior run-001 "failures" were
+benchmark-curation and training-variance artifacts.
+
+**Non-canonical robustness confirmed:** models retain 0.88-1.0 sensitivity on IEDB
+positives that violate canonical anchor motifs — they do not simply memorize anchors.
+Precision 0.81-0.96 (lowest for A*02:01, its established hard case). This directly
+supports the manuscript's claim that non-canonical binders (K-E63 salt bridge) are
+the genuine hard case, not a failure of cross-allele generalization.
+
 ## Open Questions
 
-- Do the 2 remaining alleles (A*02:01, B*07:02) also pass with the same recipe?
-- Does a pan-specific model (allele encoded in input) match per-allele models? (Step B)
-- How does per-allele threshold behavior differ? (A*01:01/B*44:03 optimal ~0.97,
-  A*03:01 ~0.95 — all above the original 0.95 binding-score rule.)
+- Does a pan-specific model (allele encoded in input) match or beat per-allele
+  models? (Step B)
+- Non-canonical precision is lowest for A*02:01 (0.81) — does a structural/PSSM
+  hybrid recover it?
+- Thresholds: A*03:01 optimal 0.95, others 0.97-0.99. Is there an allele-agnostic
+  calibration?
