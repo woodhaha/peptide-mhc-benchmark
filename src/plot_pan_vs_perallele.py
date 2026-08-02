@@ -49,4 +49,5 @@ ax.set_title("Rebalanced pan model — non-canonical sensitivity, 5-seed mean ±
 fig.tight_layout()
 out = "04_Manuscript/companion_multi_allele/fig2_pan_vs_perallele.png"
 fig.savefig(out, dpi=300)
+fig.savefig("04_Manuscript/companion_multi_allele/fig2_pan_vs_perallele.pdf")
 print(f"saved {out}")
