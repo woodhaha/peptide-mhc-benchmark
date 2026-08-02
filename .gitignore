@@ -38,3 +38,4 @@ data/
 .venv_mhcflurry/
 .venv_*/
 *.log
+.munis_dl/
