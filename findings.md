@@ -132,22 +132,36 @@ binders are "systematically missed" is CONFIRMED, but sharpened to Type B only.
 Ordinary non-canonical binders are actually well-handled by well-trained sequence
 models. This is novel external validation FOR the manuscript, not a contradiction.
 
-## Cross-predictor validation (2026-08-02)
+## Large-sample Type A/B test — REVISED (2026-08-02, n=14,488)
 
-MHCflurry 2.2.1 (independent predictor, different architecture/training) confirms the
-Type A/B distinction:
-- **Type B (all 4, incl. KRAS G12V P2-K):** predicted non-binder by MHCflurry
-  (3.8-13.8 uM). The "prediction-resistant" claim is NOT model-specific.
-- **Type A (P9=Y):** predicted strong binder by MHCflurry (27-37 nM).
+Collected ALL IEDB positive 9-mers for 5 alleles (14,488: canonical 11,225,
+Type A 151, Type B 3,112), scored with both predictors (Deep FFN + MHCflurry).
 
-Two independent sequence predictors + the manuscript's structure-informed analysis
-now converge: Type B (energy-compensated, e.g. K-E63 salt bridge) is genuinely
-prediction-resistant; Type A (tolerated weak anchors) is well-handled. This
-strengthens the manuscript's K-E63 salt-bridge hypothesis substantially.
+| Type | n | Deep FFN sens | MHCflurry sens |
+|------|--:|:-------------:|:--------------:|
+| canonical | 11,225 | 0.979 [0.976,0.982] | 0.986 [0.984,0.988] |
+| type_a | 151 | 0.477 [0.399,0.556] | 0.669 [0.590,0.739] |
+| type_b | 3,112 | 0.607 [0.590,0.624] | 0.668 [0.652,0.685] |
+
+**Revisions to the small-n story (CRITICAL):**
+1. Non-canonical penalty is real but MODERATE (~0.98 -> ~0.6), not catastrophic.
+2. Type A is NOT easy — DFF catches only 0.477, worse than Type B. The n=25 "Type A
+   at 0.92-0.98" was cherry-picked top-evidence epitopes + pan model; at scale with
+   narrow-biased training, broad-only tolerated anchors (P9-Y/H) are out-of-distribution
+   and score low.
+3. Type B is heterogeneous. The manuscript's 3 FNs + KRAS P2-K are the HARD TAIL that
+   even MHCflurry misses (3.8-13.8 uM) — genuinely prediction-resistant, cross-predictor.
+
+**Robust, manuscript-relevant facts:** canonical binders caught ~0.98 by both predictors;
+motif-failing peptides caught ~0.6-0.67 (moderate penalty); the extreme non-canonical
+tail (energy-compensated, e.g. P2-K salt bridge) is prediction-resistant for both.
+Manuscript should frame its claim as "extreme non-canonical tail prediction-resistant,"
+not "non-canonical binders systematically missed."
 
 ## Open Questions
 
-- Does the Type A/B distinction hold for more alleles / more epitopes (larger n)?
-- Would a structure-based predictor (AlphaFold3 / MUNIS) catch Type B where sequence
-  models fail? (Would complete the three-tier pipeline argument.)
+- Would a structure-based predictor (AlphaFold3 / MUNIS) catch the hard tail that both
+  sequence models miss? (Completes the three-tier pipeline argument.)
+- Does a broader-motif-trained model (include Type A residues in training data) recover
+  the type_a 0.48?
 - External-label validation (unseen by MHCflurry) still the general publishability gate.
