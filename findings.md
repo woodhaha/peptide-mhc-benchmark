@@ -158,10 +158,31 @@ tail (energy-compensated, e.g. P2-K salt bridge) is prediction-resistant for bot
 Manuscript should frame its claim as "extreme non-canonical tail prediction-resistant,"
 not "non-canonical binders systematically missed."
 
+## MUNIS full-population result — structure does NOT rescue non-canonical binders (2026-08-02)
+
+Scored all 3,112 Type B + 3,112 canonical with MUNIS (AlphaFold-Multimer pMHC structure
+predictor) on AutoDL RTX 6000D:
+
+| Predictor | Type B sens (pooled) |
+|-----------|:--------------------:|
+| Deep FFN (sequence) | 0.607 |
+| MHCflurry (sequence) | 0.668 |
+| **MUNIS (structure)** | **0.647** |
+
+**The three-tier pipeline claim is NOT supported.** Structure-based prediction catches
+Type B non-canonical binders at the same rate as sequence models (~0.65). The n=1
+QYDPVAALF rescue was not representative.
+
+**Honest scientific value:** this directly challenges the field's assumption that
+"structure will solve what sequence misses." Non-canonical binding (Type B, incl. the
+P2-K salt-bridge class) is genuinely hard for ALL predictor classes tested. The
+manuscript should re-frame its three-tier pipeline as a hypothesis needing experimental
+validation.
+
 ## Open Questions
 
-- Would a structure-based predictor (AlphaFold3 / MUNIS) catch the hard tail that both
-  sequence models miss? (Completes the three-tier pipeline argument.)
 - Does a broader-motif-trained model (include Type A residues in training data) recover
   the type_a 0.48?
+- Would a *fine-tuned-on-pMHC* structure model (not generic AF2-multimer) do better?
+  (MUNIS is trained on pMHC, so this is a probe of current limits.)
 - External-label validation (unseen by MHCflurry) still the general publishability gate.
