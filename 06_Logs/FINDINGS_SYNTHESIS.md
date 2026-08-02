@@ -47,6 +47,18 @@ tested.
   FFN 0.000-0.254, MUNIS 3/4 low. QYDPVAALF is the single structure-rescued case
   (MUNIS 0.972 vs sequence 0.000/6,199nM) — n=1.
 
+## Validated findings (post-synthesis additions)
+
+### F6. Temporal generalization (breaks label circularity)
+- Post-2022 epitopes (unseen by MHCflurry's training): sens@0.95 A*02:01 0.824,
+  A*03:01 0.936, B*07:02 0.973 — preserved vs pre-2021 (A*03:01/B*07:02 improve).
+- The model is NOT overfit to the IEDB-era distribution.
+
+### F7. Type A is a real coverage gap (not noise/confusion)
+- Type A peptides are mass-spec confirmed (13/14, 11/12) and only 3-6% cross-allele.
+- They are genuine, allele-specific, tolerated-anchor binders the model fails at 0.48.
+- Broad-retrain does not fix it — a genuine limitation, honestly reportable.
+
 ## Falsified claims (do NOT repeat)
 - "5/5 alleles pass; per-allele > pan" — canonical benchmark was motif-tautology
   (anchor-checker = 1.0 F1); pan collapse was data-size artifact.
