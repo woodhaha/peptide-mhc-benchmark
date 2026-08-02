@@ -187,3 +187,19 @@ model work. This closes the Type A recovery question.
 3. Type A (tolerated anchors): ~0.48, inherent to weak heterogeneous IEDB positives, not fixable by retrain.
 4. Extreme tail (P2-K salt bridge): prediction-resistant to all (cross-predictor).
 5. Manuscript corrections documented in 06_Logs/manuscript_correction_checklist.md.
+
+## IMPROVEMENT ROUND (5 directions, 4 done)
+
+1. **Type A evidence analysis** (DONE): Type A = mass-spec confirmed (13/14, 11/12),
+   only 3-6% cross-allele. REAL coverage gap, not noise/confusion. Not fixable by retrain.
+2. **Temporal holdout** (DONE, strong positive): post-2022 epitopes (unseen by
+   MHCflurry) sens@0.95: A*02:01 0.824, A*03:01 0.936, B*07:02 0.973 — preserved vs
+   pre-2021. BREAKS the label-circularity concern.
+3. **P2 virtual mutagenesis** (DONE): P2CA->Glu63 = 3.83A. Positive-charge P2 (K/R/H)
+   can electrostatically compensate (R 7.3A, H 4.4A reach). Supports manuscript's
+   "other charged P2" extension.
+4. **NetMHCpan comparison** (BLOCKED): requires DTU license download; server has no
+   NetMHCpan, IEDB API unreachable. Used MHCflurry + MUNIS instead (2 predictors suffice).
+5. **Pan16 full panel** (IN PROGRESS): labeled 11 new alleles (A*11:01, A*24:02,
+   B*08:01, B*15:01, B*35:01, B*40:01, B*49:01, B*57:01 + thin B*27:05/B*51:01).
+   Training expanded pan model to test "one model replaces a 16-allele panel."
