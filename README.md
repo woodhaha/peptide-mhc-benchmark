@@ -157,7 +157,7 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 ```bibtex
 @article{zhou2025benchmarking,
   title={Systematic Benchmarking of Deep Learning Architectures for Peptide-MHC Binding Prediction Reveals Label Quality, Not Architecture, Defines Performance},
-  author={Zhou, Zhuha and Chen, Weisheng and Cai, Yiqi and Bai, Yongyu and Xu, Qigang and Zhou, Zhuxian},
+  author={Zhou, Zhuha and Chen, Weisheng and Cai, Yiqi and Bai, Yongyu and Zhou, Zhuxian},
   journal={Submitted to Briefings in Bioinformatics},
   year={2026}
 }

@@ -46,7 +46,7 @@ E-mail: zhouzhuha@wmu.edu.cn
 ORCID: 0009-0005-1818-4789
 
 On behalf of all authors:
-Chen Weisheng<sup>dagger</sup>, Yiqi Cai, Yongyu Bai<sup>dagger</sup>, Qigang Xu, Zhuxian Zhou
+Chen Weisheng<sup>dagger</sup>, Yiqi Cai, Yongyu Bai<sup>dagger</sup>, Zhuxian Zhou
 
 <sup>dagger</sup> These authors contributed equally to this work.
 <sup>\*</sup> Corresponding Author

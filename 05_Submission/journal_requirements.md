@@ -105,7 +105,7 @@ We are submitting as: **Method Review / Original Research Article**
 | 17 | All references verified | ⚠️ | Refs 21 (blog), 31 (preprint), 36 (PhD thesis) flagged; remainder not verified |
 | 18 | CrossCheck/iThenticate | ❌ | Not yet run |
 | 19 | Title matches manuscript | ✅ | "Systematic Benchmarking..." across all files |
-| 20 | Author name consistency | ✅ | Qigang Xu confirmed; all files consistent |
+| 20 | Author name consistency | ✅ | 5-author list (Zhou, Chen, Cai, Bai, Zhuxian Zhou) consistent across all files |
 | 21 | Funding declaration consistent | ✅ | "No specific grant" — no contradiction with Author Contributions |
 | 22 | Abstract word count ≤250 | ✅ | ~240 words |
 | 23 | References in Vancouver style | ✅ | Numbered, consistent format |

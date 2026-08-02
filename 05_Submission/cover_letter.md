@@ -78,10 +78,6 @@ The First Affiliated Hospital of Wenzhou Medical University
 Department of Gastroenterology Surgery  
 The First Affiliated Hospital of Wenzhou Medical University
 
-**Qigang Xu, MD**  
-Department of Hepatobiliary and Pancreatic Surgery  
-The First Affiliated Hospital of Wenzhou Medical University
-
 **Zhuxian Zhou, PhD**  
 Center for Bionanoengineering, College of Chemical and Biological Engineering  
 Zhejiang University, Hangzhou 310027, China
