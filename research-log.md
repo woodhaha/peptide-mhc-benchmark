@@ -207,3 +207,14 @@
   - PLOS has NO word limit, accepts DOCX, requires Vancouver refs
 - NEXT (pending): sister-paper data package; human review of both manuscripts before submission.
 - 145 commits ahead origin; git clean.
+
+### Phase 13b: COMPANION DATA PACKAGE COMPLETE (2026-08-03)
+- companion_data_package.tar.gz (10.6 MB) + dir created in 06_Bioinformatics_Submission/:
+  5 data files, 6 Keras models (pan 5 seeds + pan16), 5 analysis scripts,
+  4 figure PDFs, README. Commit ea5b284.
+- BOTH submission packages now fully complete (manuscript + cover letter +
+  figures + data package):
+  - Bioinformatics: 4,409w + LaTeX 5pp PDF (9 figs) + cover letter + 12.5MB package
+  - PLOS Comput Biol (companion): 2,400w Vancouver + DOCX + cover letter + Fig1-4 + 10.6MB package
+- REMAINING: human review of both manuscripts before submission. Nothing else pending.
+- 147 commits ahead origin, git clean.
