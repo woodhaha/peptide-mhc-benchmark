@@ -155,3 +155,9 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 - 更新文件：manuscript.md、manuscript_bioinformatics.md、cover_letter.md、cover_letter_bioinformatics.md、README.md、journal_requirements.md、两个 DOCX（重新生成，验证 Qigang 已移除、Chen/Yiqi 保留）。
 - 验证：5 位作者在作者块/贡献/简介中一致出现；无 Qigang 残留（历史 decisions.md 除外）。
 - 132 commits，git clean。
+
+## 2026-08-02 — 投稿风险评估（结论）
+- 投稿版 manuscript_bioinformatics.md 的结论**已是诚实表述**：包含"实验验证盐桥/免疫原性尚需进行"、PSSM 基线作为对照、无"系统性漏掉/三阶梯解决方案"过度主张。
+- 与工作版 manuscript.md 的唯一实质差异是：投稿版**缺少多等位基因扩展新发现**（pan16、时间 holdout、MUNIS 平台）—— 这些是**修订时新增内容**，不是对既有主张的修正。
+- **风险修正**：先前判断"投稿版结论与修正版不一致"为高风险，经核查实为中低风险 —— 投稿版已自洽，无紧迫修复必要。
+- 遗留中风险：单一等位基因泛化性（pan16 现成可回应）、标签循环（时间 holdout 现成可回应）。
