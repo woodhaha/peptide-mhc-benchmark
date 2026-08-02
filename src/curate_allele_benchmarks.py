@@ -16,8 +16,10 @@ BASE = "https://query-api.iedb.org/mhc_export"
 # Canonical anchor motifs per allele (position: allowed residues). Only canonical
 # binders are retained so the benchmark matches BLOSUM62-anchor learnable signal.
 MOTIFS = {
+    "HLA-A*02:01": {"p2": "LMIVAT", "p9": "LVIM"},  # canonical A2 anchors
     "HLA-A*01:01": {"p3": "DE", "p9": "YF"},   # P3 D/E dominant anchor, P9 Y/F
     "HLA-A*03:01": {"p2": "LVIM", "p9": "KR"},  # P2 aliphatic, P9 basic
+    "HLA-B*07:02": {"p2": "P", "p9": "LIMF"},   # P2 proline dominant, P9 aliphatic
     "HLA-B*44:03": {"p2": "ED", "p9": "FWYL"},  # B44 family: acidic P2
 }
 
