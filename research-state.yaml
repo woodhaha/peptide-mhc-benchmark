@@ -59,7 +59,7 @@ required_before_publishable:
   - split non-canonical: Type A (dict-coverage bug, e.g. A*03:01 P9-Y) vs Type B (true
     energy-compensation, e.g. A*02:01 P2-K salt bridge)
 
-phase: multi-allele thread RESOLVED — rebalanced pan matches per-allele on all 5 alleles
+phase: multi-allele thread RESOLVED + seed-robust — rebalanced pan matches per-allele on all 5 alleles
 corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
   pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
   A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs
@@ -81,8 +81,11 @@ next_direction:
     (canonical=motif tautology, pan collapse=data artifact); after correction +
     rebalancing, the honest finding is that a single rebalanced pan model generalizes
     across 5 alleles on canonical AND non-canonical binders.
+  seed_robustness (2026-08-02): 5 seeds (0,1,42,123,2024) — rebalanced pan non-canonical
+    sens mean±SD: A*02:01 0.98±0.02, A*01:01 0.92±0.04, A*03:01 0.98±0.02, B*07:02 0.92±0.05,
+    B*44:03 1.00±0.00. Test acc 0.952-0.956 (SD~0.002). Single-seed concern CLOSED.
   Options:
     - Write up as honest benchmarking note / companion to the submitted manuscript
-    - Multi-seed + external-label validation before any claim of publishability
+    - External-label validation (unseen by MHCflurry) remains the last gap
     - Return to the submitted manuscript (K-E63 salt bridge) — NOT tested by this work
   Do NOT repeat the falsified claims (per-allele>pan everywhere, shared-params-limit, PSSM-dilution).
