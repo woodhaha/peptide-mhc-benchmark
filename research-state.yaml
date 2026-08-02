@@ -59,14 +59,20 @@ required_before_publishable:
   - split non-canonical: Type A (dict-coverage bug, e.g. A*03:01 P9-Y) vs Type B (true
     energy-compensation, e.g. A*02:01 P2-K salt bridge)
 
-phase: CONSOLIDATED — findings complete, write-up ready
-  Findings fully validated (pan-generalization seed-robust, canonical ~0.98 all
-  predictors, Type B plateau ~0.65 all classes incl structure, Type A ~0.48 inherent,
-  extreme tail cross-predictor-resistant). Three-tier pipeline claim NOT supported.
-  Consolidation artifacts: 06_Logs/FINDINGS_SYNTHESIS.md (paper backbone),
-  06_Logs/manuscript_correction_checklist.md (6 items), research-log.md (timeline).
-  Next: apply corrections to main manuscript OR write companion benchmarking note.
-  Do NOT run more falsification — claims are settled. Do NOT repeat falsified claims.
+phase: CONCLUDED — research complete, 10 validated findings, write-up ready
+  Findings fully validated (F1-F10 in 06_Logs/FINDINGS_SYNTHESIS.md):
+    F1 pan-generalization seed-robust; F2 canonical ~0.98 all predictors;
+    F3 Type B plateau ~0.65 all classes incl structure; F4 Type A ~0.48 inherent;
+    F5 extreme tail cross-predictor-resistant; F6 temporal generalization (breaks
+    label circularity); F7 Type A real coverage gap; F8 pan16 (15-allele panel,
+    pooled 0.819); F9 temporal; F10 P2 salt-bridge generality (K/R/H reach Glu63).
+  Three-tier pipeline claim NOT supported (MUNIS plateau). NetMHCpan comparison
+  blocked by DTU license.
+  Consolidation artifacts: 06_Logs/FINDINGS_SYNTHESIS.md, manuscript_correction_checklist.md,
+  research-log.md. All committed, git clean.
+  Next (authoring, not research): apply corrections to main manuscript OR write
+  companion benchmarking note. Invoke ml-paper-writing when starting the write-up.
+  Do NOT run more experiments — claims are settled.
 corrected_reeval: 2026-08-02, protein-negatives + broadened motifs + Wilson CIs + fixed thresholds.
   pan-full = per-allele parity (non-canonical sens@0.95): A*02:01 0.84=0.84, A*01:01 0.88=0.88,
   A*03:01 1.0=1.0. B*07:02 exception: per-allele 0.96 vs pan-full 0.60 (CIs [0.81,0.99] vs
