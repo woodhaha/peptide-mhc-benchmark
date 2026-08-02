@@ -122,3 +122,19 @@ open question is WHY B*07:02 — its training set is the smallest (606) and its 
 the most distinctive (P2-proline), so the pan model's shared pathway may dilute the
 proline anchor specifically. This is a candidate for a focused follow-up, not a
 headline.
+
+## H4 test — B*07:02 pan-full exception mechanism (2026-08-02)
+
+Hypothesis H4 (proline-anchor under-use) was REFUTED. The 5 pan-full B*07:02
+non-canonical misses @0.9: only 1/5 has P2=P. The other 4 (SVRPVPLEV, LIRPVSASF,
+RVRDINEAF, TVKPLTLEL) have aliphatic P2 (V/I) — the pan model is OVER-demanding
+P2-proline, not under-using it.
+
+Corrected mechanism: the pan model's shared pathway over-commits to B*07:02's
+distinctive P2-proline anchor, trading recall for precision. Missed binders are
+legitimate B7-family peptides that retain aliphatic P2 but the shared model rejects
+them. This is a precision-bias, opposite to H4's dilution idea.
+
+Implication: the B*07:02 exception is real but its mechanism is "over-anchoring,"
+not dilution. A per-allele model can afford to be loose on the P2 anchor for the
+allele where proline is the hallmark; the pan model cannot.
