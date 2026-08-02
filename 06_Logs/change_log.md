@@ -161,3 +161,9 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 - 与工作版 manuscript.md 的唯一实质差异是：投稿版**缺少多等位基因扩展新发现**（pan16、时间 holdout、MUNIS 平台）—— 这些是**修订时新增内容**，不是对既有主张的修正。
 - **风险修正**：先前判断"投稿版结论与修正版不一致"为高风险，经核查实为中低风险 —— 投稿版已自洽，无紧迫修复必要。
 - 遗留中风险：单一等位基因泛化性（pan16 现成可回应）、标签循环（时间 holdout 现成可回应）。
+
+## 2026-08-02 — 投稿版 cover letter URL 修复（私有→公开仓库）
+- 发现：投稿版 `cover_letter_bioinformatics.md:23` 引用的代码仓库 URL `woodhaha/peptide-epitope-prediction` 为 **PRIVATE**，审稿人无法访问。
+- 实际公开仓库为 `woodhaha/peptide-mhc-benchmark`（PUBLIC，483 文件，含全部数据 CSVs/代码/模型，2026-07-03 推送，与 6/30 投稿稿配套）。
+- 修复：`.md` 源文件 URL 改为公开仓库；`cover_letter.docx` 用 pandoc 重新生成并验证 URL 已替换（document.xml 无私有仓库残留）。
+- 附带确认：公开仓库内容与投稿稿一致，无审稿人可见缺口。本地 114 个未推送提交为投稿后多等位基因扩展（姊妹篇内容），不属于投稿稿范围。

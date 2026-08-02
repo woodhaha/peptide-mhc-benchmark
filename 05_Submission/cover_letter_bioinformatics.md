@@ -20,7 +20,7 @@ External validation against 49 experimentally verified IEDB epitopes yielded 93.
 
 These findings connect directly to Preibisch et al. (2026), who report that over 55% of IEDB entries are computationally rather than experimentally labelled. Our results quantify the downstream consequences of this label provenance problem: models trained on derivative labels inherit the biases of their teachers, and the weak binder class is the primary locus of this variation (F1: 0.925 [PSSM] vs. 0.880 [MHCflurry]). We recommend that future benchmarking studies explicitly report label provenance and include biophysical baselines as comparators.
 
-All code, trained models, feature matrices, and prediction results are provided as a fully reproducible open-source pipeline (R and Python, with Jupyter notebooks documenting each analytical step), publicly available at https://github.com/woodhaha/peptide-epitope-prediction.
+All code, trained models, feature matrices, and prediction results are provided as a fully reproducible open-source pipeline (R and Python, with Jupyter notebooks documenting each analytical step), publicly available at https://github.com/woodhaha/peptide-mhc-benchmark.
 
 We believe this work aligns well with *Briefings in Bioinformatics*, which has a strong tradition of publishing methodological benchmark studies and reproducible computational pipelines of broad interest to the immunoinformatics and computational biology communities.
 
