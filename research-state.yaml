@@ -1,0 +1,31 @@
+# Authors: autoresearch state
+project: Peptide-MHC Binding Prediction — Multi-Allele Extension
+mode: autoresearch
+phase: inner-loop (benchmark curation → retraining)
+started: 2026-08-02
+
+mission: Complete the 5-allele HLA class I extension (A*02:01, A*01:01, B*07:02, A*03:01, B*44:03) so all per-allele Deep FFN models pass (sens>=0.90, spec_raw>=0.80, F1>=0.85).
+
+current_understanding:
+  - Main single-allele manuscript (A*02:01) is complete, submitted to Bioinformatics, with full submission package in 05_Submission/.
+  - Four prior autoresearch tracks exist; multi-allele is the only unfinished one (2/5 alleles pass per .omc/state/autoresearch-state.json).
+  - ESM-2 t6 was NOT a success: mean-pool collapsed to 65.9%, per-position 93.3% single-split but 82.2±1.0% CV vs BLOSUM62 92.2±0.4%. BLOSUM62 remains the champion encoding.
+  - The multi-allele benchmark in .omc/autoresearch/multi-allele/evaluator.py is CURATION-DEGENERATE for 2 alleles:
+      * A*03:01: 4/17 9-mers are canonical A*02:01 epitopes (SVYDFFVWL, ILRGSVAHK, KVLEYVIKV, RMFPNAPYL) — contamination.
+      * B*44:03: only 5 unique 9-mers survive, all EE*IVVLF near-duplicates → F1 mathematically capped ~0.63. "F1 ceiling" is an artifact.
+  - Training environment was broken: r-tensorflow venv base Python 3.10.20 was deleted by uv cleanup. Restored via uv python install + pyvenv.cfg repoint. TF 2.17.0/keras 3.12.2 verified. torch broken (c10.dll) → reinstalling CPU torch.
+
+hypotheses:
+  H1: B*44:03 passes (F1>=0.85) once evaluated against a real, curated IEDB epitope set with >=15 diverse positives instead of 5 near-duplicates.
+  H2: A*03:01 passes once its benchmark is purged of A*02:01-contaminated epitopes.
+  H3: With fixed data splits (seed 42) and mixed biased+random training, A*01:01 training variance disappears and it crosses 90% sensitivity.
+
+next_steps:
+  1. Curate real IEDB epitope sets for A*01:01, A*03:01, B*44:03 (9-mers, >=15 positives each, verified allele restriction).
+  2. Fix evaluator.py benchmark lists + persist per-allele models.
+  3. Retrain A*01:01, A*03:01, B*44:03 with fixed splits + mixed data.
+  4. Re-evaluate all 5 alleles; update state.
+
+metrics:
+  primary: per-allele sensitivity, specificity_raw, F1 (from evaluator.py)
+  pass: sens>=0.90 and spec_raw>=0.80 and F1>=0.85
