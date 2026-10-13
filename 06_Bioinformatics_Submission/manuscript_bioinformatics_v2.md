@@ -1,4 +1,4 @@
-# Architecture, Label Source, and the Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Benchmark
+# The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Multi-Architecture and Multi-Allele Benchmark
 
 **Authors**: Zhuha Zhou<sup>1,†,*</sup>, Weisheng Chen<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Xiaopeng Zhuang<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
 
