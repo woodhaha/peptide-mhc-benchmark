@@ -98,7 +98,7 @@ On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669. Retraining
 
 ### 3.5 The extreme tail is prediction-resistant, cross-predictor
 
-The three false negatives from our single-allele IEDB benchmark (`ILRGSVAHK`, `QYDPVAALF`, `TLGIVCPIC`) and the KRAS G12V P2-Lys epitope `YKLVVVGAV` were scored as non-binders by all three predictors (MHCflurry 3.8–13.8 µM; DFFN 0.000–0.254; MUNIS 3/4 low). A single counterexample — `QYDPVAALF` rescued by MUNIS (0.972 vs. sequence 0.000 / 6,199 nM) — is encouraging but n = 1.
+The two false negatives from our single-allele IEDB benchmark (`QYDPVAALF`, `TLGIVCPIC`) and the KRAS G12V P2-Lys epitope `YKLVVVGAV` were scored as non-binders by all three predictors (MHCflurry 3.8–13.8 µM; DFFN 0.000–0.254; MUNIS 3/4 low). A single counterexample — `QYDPVAALF` rescued by MUNIS (0.972 vs. sequence 0.000 / 6,199 nM) — is encouraging but n = 1.
 
 ### 3.6 Scaling: one model replaces a 15-allele panel
 
