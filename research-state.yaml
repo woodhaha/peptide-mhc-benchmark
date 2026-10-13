@@ -5,6 +5,13 @@ phase: CONCLUDED — research complete, 10 validated findings, write-up ready
 started: 2026-08-02
 completed: 2026-08-02
 
+# CORRECTION 2026-10-13 — data-integrity audit supersedes several numbers below.
+# See 06_Logs/data_integrity_audit.md. Key corrections:
+#   - Architecture ranking is CNN > Deep FFN (5-seed), not "Deep FFN best".
+#   - Multi-allele non-canonical sens is 0.84-0.96 (not 0.92-1.00); B*07:02 pan = 0.60.
+#   - "Random label 65.8%" was unreproducible; true i.i.d. null ~33%.
+#   - Single-allele data consolidated to 5,190 peptides (not 5,088).
+
 mission: Complete the 5-allele HLA class I extension so all per-allele Deep FFN models pass (sens>=0.90, spec_raw>=0.80, F1>=0.85).
 
 current_understanding:
