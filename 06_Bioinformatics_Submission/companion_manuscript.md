@@ -14,7 +14,7 @@
 
 ## Abstract
 
-Peptide binding to MHC class I is the gatekeeper of CD8+ T-cell recognition, and pan-specific predictors have become the field standard for multi-allele screening. Two questions remain open: whether a single sequence-based pan model can match per-allele specialists, and how hard non-canonical (motif-failing) binders are for current prediction methods. We benchmarked a rebalanced pan-specific deep feed-forward network (DFFN) across five common HLA-I alleles (n = 14,488 curated IEDB positives) and a 15-allele panel, comparing against per-allele models, MHCflurry, and the sequence-based predictor MUNIS (ESM-2+LSTM). Across five seeds, the rebalanced pan model reached non-canonical sensitivity 0.92–1.00, matching per-allele specialists; an apparent per-allele advantage in prior work was a 10.6× training-data-size artifact. On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (12/15 alleles ≥0.76). Canonical binders were recognized at ~0.98 by every predictor class. In contrast, non-canonical (Type B) binders plateaued at ~0.65 sensitivity across DFFN (0.607), MHCflurry (0.668), and MUNIS (0.647) — a third sequence predictor did not lift the ceiling. Type A (tolerated weak anchors) binders were inherently hard (0.477) and not recovered by broad-motif retraining. Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern. We conclude that one rebalanced pan model replaces a per-allele panel, and that the canonical binder problem is effectively solved while the non-canonical tail — prediction-resistant to all three sequence predictors tested — defines the current frontier.
+Peptide binding to MHC class I is the gatekeeper of CD8+ T-cell recognition, and pan-specific predictors have become the field standard for multi-allele screening. Two questions remain open: whether a single sequence-based pan model can match per-allele specialists, and how hard non-canonical (motif-failing) binders are for current prediction methods. We benchmarked a rebalanced pan-specific deep feed-forward network (DFFN) across five common HLA-I alleles (n = 14,488 curated IEDB positives) and a 15-allele panel, comparing against per-allele models, MHCflurry, and the sequence-based predictor MUNIS (ESM-2+LSTM). With protein-background negatives, per-allele models reached non-canonical sensitivity 0.84–0.96, and a rebalanced pan model matched them on four of five alleles; B\*07:02 was a notable exception (pan 0.60 vs per-allele 0.96, over-anchoring to P2-Proline). An apparent per-allele advantage in prior work was a 10.6× training-data-size artifact. On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (12/15 alleles ≥0.76). Canonical binders were recognized at ~0.98 by every predictor class. In contrast, non-canonical (Type B) binders plateaued at ~0.65 sensitivity across DFFN (0.607), MHCflurry (0.668), and MUNIS (0.647) — a third sequence predictor did not lift the ceiling. Type A (tolerated weak anchors) binders were inherently hard (0.477) and not recovered by broad-motif retraining. Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern. We conclude that a rebalanced pan model matches per-allele specialists on four of five alleles, that the canonical binder problem is effectively solved while the non-canonical tail — prediction-resistant to all three sequence predictors tested — defines the current frontier.
 
 ---
 
@@ -30,7 +30,7 @@ We address these questions through a controlled multi-allele benchmark. A single
 
 ### 2.1 Multi-allele data curation
 
-Experimentally confirmed class I binders were curated from the IEDB [9] for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations.
+Experimentally confirmed class I binders were curated from the IEDB [9] for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations. IEDB data were queried live from query-api.iedb.org (accessed 2026-08-02); the 15-allele and temporal-holdout estimates are therefore snapshot-dependent and drift slightly as the IEDB grows.
 
 ### 2.2 Type A/B classification
 
@@ -54,19 +54,19 @@ Sensitivity was computed with protein-background negatives and fixed thresholds 
 
 ## 3 Results
 
-### 3.1 A rebalanced pan model matches per-allele specialists
+### 3.1 A rebalanced pan model matches per-allele specialists on four of five alleles
 
-Across five seeds, the rebalanced pan DFFN reached non-canonical sensitivity (mean ± SD): A\*02:01 0.98 ± 0.02, A\*01:01 0.92 ± 0.04, A\*03:01 0.98 ± 0.02, B\*07:02 0.92 ± 0.05, B\*44:03 1.00 ± 0.00 (Table 1; Figure 1). These values are at or above the corresponding per-allele models, so a single model replaces five. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
+With protein-background negatives and a fixed threshold (n=25 non-canonical binders per allele), per-allele models reached non-canonical sensitivity A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*07:02 0.96, B\*44:03 0.96 (Table 1). The rebalanced pan model matched this on four of five alleles (A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*44:03 1.00), but B\*07:02 was a notable exception: the pan model dropped to 0.60 versus 0.96 per-allele (Wilson 95% CIs [0.41, 0.77] vs [0.81, 0.99], non-overlapping), consistent with over-anchoring to B\*07:02's distinctive P2-Proline. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
 
-**Table 1. Rebalanced pan non-canonical sensitivity by allele (5-seed mean ± SD, @0.95).**
+**Table 1. Non-canonical sensitivity by allele (protein-background negatives, n=25 per allele, @0.95).**
 
-| Allele | Mean ± SD | Per-seed values |
-|--------|:---------:|-----------------|
-| A\*02:01 | 0.98 ± 0.02 | 1.0, 1.0, 1.0, 0.96, 0.96 |
-| A\*01:01 | 0.92 ± 0.04 | 0.92, 0.92, 0.96, 0.84, 0.96 |
-| A\*03:01 | 0.98 ± 0.02 | 1.0, 0.96, 1.0, 0.96, 0.96 |
-| B\*07:02 | 0.92 ± 0.05 | 0.92, 0.92, 0.84, 0.92, 1.0 |
-| B\*44:03 | 1.00 ± 0.00 | 1.0, 1.0, 1.0, 1.0, 1.0 |
+| Allele | Per-allele | Pan |
+|--------|:----------:|:---:|
+| A\*02:01 | 0.84 | 0.84 |
+| A\*01:01 | 0.88 | 0.88 |
+| A\*03:01 | 1.00 | 1.00 |
+| B\*07:02 | 0.96 | **0.60** |
+| B\*44:03 | 0.96 | 1.00 |
 
 ### 3.2 Canonical binders are recognized at ~0.98 by every predictor
 
@@ -74,7 +74,7 @@ On n = 11,225 canonical positives, all three predictors were saturated: DFFN 0.9
 
 ### 3.3 Non-canonical (Type B) binders plateau at ~0.65 across predictor classes
 
-On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 2; Figure 2). The three values are statistically indistinguishable (overlapping Wilson CIs); a third sequence predictor does not lift the ceiling.
+On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 2; Figure 2). The three values fall within a narrow band (0.607–0.668), far below the ~0.98 canonical sensitivity; a third sequence predictor does not lift the ceiling.
 
 **Table 2. Predictor sensitivity by binder class (pooled, 5 alleles).**
 
@@ -102,7 +102,7 @@ The three false negatives from our single-allele IEDB benchmark (`ILRGSVAHK`, `Q
 
 ### 3.6 Scaling: one model replaces a 15-allele panel
 
-The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 at 0.08 with only 150 samples, B\*51:01 at 0.52 with 1,665 — reflects data scarcity, not architecture.
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with ~11/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08–0.20), B\*51:01 (0.36–0.52), B\*07:02 (0.60), A\*24:02 (0.72) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
 
 **Table 4. Pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).**
 
@@ -122,7 +122,7 @@ The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0
 
 ### 3.7 Temporal holdout breaks the label-circularity concern
 
-Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 — preserved versus pre-2021 (0.879/0.905/0.898), with A\*03:01 and B\*07:02 improving (Table 5; Figure 4). The model is not overfit to a single training-data era.
+Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 — preserved versus pre-2021 (0.879/0.905/0.898), with no systematic drop in the post-2022 era (Table 5; Figure 4). The model is not overfit to a single training-data era.
 
 **Table 5. Temporal holdout: pre-2021 vs. post-2022 sensitivity (@0.95).**
 
@@ -134,7 +134,7 @@ Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:0
 
 ## 4 Discussion
 
-Three findings emerge. First, a positive, replicable result: a single rebalanced pan-specific DFFN reaches parity with per-allele specialists across five alleles (and 0.819 pooled across 15), approximating NetMHCpan's practical value with a simple, reproducible recipe. The naive "per-allele wins" conclusion is a benchmark artifact of unequal data size, not biology — a methodological warning for the field: benchmark composition can manufacture apparent model differences.
+Three findings emerge. First, a positive, replicable result: a single rebalanced pan-specific DFFN reaches parity with per-allele specialists on four of five alleles (B\*07:02 excepted; and 0.819 pooled across 15), approximating NetMHCpan's practical value with a simple, reproducible recipe. The naive "per-allele wins" conclusion is a benchmark artifact of unequal data size, not biology — a methodological warning for the field: benchmark composition can manufacture apparent model differences.
 
 Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity across three independent sequence-based predictors (our DFFN, MHCflurry, MUNIS), so the ceiling is shared across sequence architectures of varying complexity rather than specific to our simple network. Whether structure-based scoring (e.g. structure-guided diffusion models [8]) can lift this ceiling remains open — it was not benchmarked here at scale.
 
@@ -142,7 +142,7 @@ Third, a caveat that strengthens the structural story: the extreme energy-compen
 
 ### 4.1 Methodological implications
 
-The per-allele-versus-pan comparison illustrates how benchmark artifacts can manufacture false conclusions. When the pan model was trained on a fraction of the per-allele data, it appeared to "collapse" on non-canonical binders (A\*03:01 at 0.48); retraining on equalized data restored parity (0.98). We recommend that model comparisons control for training-data size and report seed-robust estimates, protein-background negatives, and fixed thresholds as standard practice.
+The per-allele-versus-pan comparison illustrates how benchmark artifacts can manufacture false conclusions. When the pan model was trained on a fraction of the per-allele data, it appeared to "collapse" on non-canonical binders (A\*03:01 at 0.48); retraining on equalized data restored parity (A\*03:01 at 1.0). We recommend that model comparisons control for training-data size and report seed-robust estimates, protein-background negatives, and fixed thresholds as standard practice.
 
 ### 4.2 Limitations
 
@@ -153,11 +153,11 @@ The per-allele-versus-pan comparison illustrates how benchmark artifacts can man
 
 ## 5 Conclusion
 
-One rebalanced pan-specific model replaces a per-allele panel. Canonical binding is solved; non-canonical binding defines the frontier, at ~0.65 across three independent sequence-based predictors. Experimental validation of the energy-compensated tail is the decisive next step.
+A rebalanced pan-specific model matches per-allele specialists on four of five common alleles, with B\*07:02 as a notable exception (over-anchoring to P2-Proline). Canonical binding is solved; non-canonical binding defines the frontier, at ~0.65 across three independent sequence-based predictors. Experimental validation of the energy-compensated tail is the decisive next step.
 
 ## Figure legends
 
-**Figure 1.** Rebalanced pan model non-canonical sensitivity (5-seed mean ± SD) across five common HLA-I alleles. All five alleles meet or exceed the 0.9 target (dashed line).
+**Figure 1.** Non-canonical sensitivity (per-allele vs pan) across five common HLA-I alleles (protein-background negatives). Four of five alleles reach parity; B\*07:02 is the exception (pan 0.60 vs per-allele 0.96).
 
 **Figure 2.** Predictor plateau: canonical versus Type B (non-canonical) sensitivity for Deep FFN, MHCflurry, and MUNIS (sequence); dashed line marks the ~0.65 Type B plateau.
 
