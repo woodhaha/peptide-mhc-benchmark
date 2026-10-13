@@ -1,6 +1,6 @@
 # Cover Letter — Submission to *PLOS Computational Biology*
 
-**Date**: August 3, 2026
+**Date**: October 13, 2026
 
 **To**: The Editors
 *PLOS Computational Biology*
@@ -11,13 +11,13 @@
 
 Dear Editors,
 
-We are pleased to submit our research article for consideration in *PLOS Computational Biology*. This work addresses two open questions in computational immunology: whether a single pan-specific sequence model can replace per-allele specialists, and how hard non-canonical peptide-MHC-I binders are for current prediction methods — including structure-based approaches.
+We are pleased to submit our research article for consideration in *PLOS Computational Biology*. This work addresses two open questions in computational immunology: whether a single pan-specific sequence model can replace per-allele specialists, and how hard non-canonical peptide-MHC-I binders are for current sequence-based prediction methods.
 
-**One rebalanced pan model replaces a per-allele panel.** We benchmarked a rebalanced pan-specific deep feed-forward network across five common HLA-I alleles (n = 14,488 curated IEDB positives) and a 15-allele panel, comparing against per-allele models, MHCflurry, and the structure-based predictor MUNIS. Across five seeds, the rebalanced pan model reached non-canonical sensitivity 0.92–1.00, matching per-allele specialists. We show that an apparent per-allele advantage reported in prior work was a 10.6× training-data-size artifact — a methodological warning that benchmark composition can manufacture apparent model differences.
+**A rebalanced pan model matches per-allele specialists on four of five alleles.** We benchmarked a rebalanced pan-specific deep feed-forward network across five common HLA-I alleles (n = 14,488 curated IEDB positives) and a 15-allele panel, comparing against per-allele models, MHCflurry, and the sequence-based predictor MUNIS (ESM-2+LSTM). With protein-background negatives, the rebalanced pan model matched per-allele specialists on four of five alleles (non-canonical sensitivity 0.84–0.96), with B\*07:02 as a notable exception (over-anchoring to P2-Proline). We show that an apparent per-allele advantage reported in prior work was a 10.6× training-data-size artifact — a methodological warning that benchmark composition can manufacture apparent model differences.
 
-**The non-canonical frontier.** Canonical binders were recognized at ~0.98 by every predictor class. In contrast, non-canonical (Type B) binders plateaued at ~0.65 sensitivity across DFFN (0.607), MHCflurry (0.668), and MUNIS (0.647) — a structure-based predictor achieves the same sensitivity ceiling as sequence-based methods, directly challenging the field's assumption that structural scoring will solve the non-canonical problem. Type A binders were inherently hard (0.477) and not recovered by broad-motif retraining. Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern.
+**The non-canonical frontier.** Canonical binders were recognized at ~0.98 by every predictor class. In contrast, non-canonical (Type B) binders plateaued at ~0.65 sensitivity across DFFN (0.607), MHCflurry (0.668), and MUNIS (0.647) — a third sequence predictor achieves the same sensitivity ceiling, indicating the plateau is shared across sequence architectures. Type A binders were inherently hard (0.477) and not recovered by broad-motif retraining. Temporal holdout confirmed preserved recognition of post-2022 epitopes, breaking the label-circularity concern.
 
-We believe this work is well aligned with *PLOS Computational Biology*'s scope of rigorous computational methods research. The study provides: (i) a fully controlled multi-allele benchmark with seed-robust estimates and protein-background negatives; (ii) a direct test of whether structure-based prediction lifts the non-canonical sensitivity ceiling; and (iii) a reproducible pipeline with all code, models, and curated datasets publicly available at https://github.com/woodhaha/peptide-mhc-benchmark.
+We believe this work is well aligned with *PLOS Computational Biology*'s scope of rigorous computational methods research. The study provides: (i) a fully controlled multi-allele benchmark with seed-robust estimates and protein-background negatives; (ii) a direct test of whether a third sequence predictor lifts the non-canonical sensitivity ceiling; and (iii) a reproducible pipeline with all code, models, and curated datasets publicly available at https://github.com/woodhaha/peptide-mhc-benchmark.
 
 This manuscript has not been published previously and is not under consideration elsewhere. All authors have approved the manuscript and agree with its submission. The authors declare no competing interests. No specific grant funding was received.
 
@@ -47,4 +47,4 @@ Weisheng Chen<sup>†</sup>, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou
 
 ---
 
-*Cover letter prepared for submission to PLOS Computational Biology. August 2026.*
+*Cover letter prepared for submission to PLOS Computational Biology. October 2026.*
