@@ -79,10 +79,22 @@ Empty; the salt-bridge section (§3.5) was already downgraded to a qualitative h
 Manuscript Methods says train/test = 4,579/509. Actual `feature_resnet.csv` = 4,580/508
 (off by one). `real_peptides.csv` = 4,671/519.
 
-## Status summary
+## Status summary (final, 2026-10-13)
 
 - [x] Architecture ranking recomputed (5-seed) — CNN wins.
-- [x] Random-label null script written + run (addendum).
-- [ ] Data-generation consolidation (5088 → 5190) — pending decision.
-- [ ] Manuscript Table 1/2 rewrite with corrected numbers — pending.
-- [ ] Factorial (3 labels × 6 arch) fully consistent — partial (MHCflurry + random done; PSSM on 15,000-pool only).
+- [x] Random-label null script written + run (i.i.d. ~33%).
+- [x] Data-generation consolidated to 5,190 (`real_peptides.csv`).
+- [x] Manuscript Table 1/2 rewritten with corrected numbers.
+- [x] Factorial partial (MHCflurry + random done; PSSM on 15,000-pool, flagged as confounded).
+- [x] NetMHCpan-4.1 SOTA comparison (via IEDB API): 62.24% vs MHCflurry labels (test set); 81.6% on IEDB 49 epitopes.
+- [x] ILRGSVAHK removed from IEDB benchmark (HLA-B\*08:01) → 46/48 (95.8%).
+- [x] Figures 1/2/9 + cover letters + README + research-state all regenerated/synced.
+- [ ] GitHub repo: main branch + Zenodo DOI (needs user action).
+- [ ] ESM-2 650M / three-way comparison (optional, heavy).
+
+## Final corrected headline numbers
+
+- Architecture (5-seed, n=519): CNN 91.9±0.9 > Deep FFN 90.6±1.2 > FFN 89.8 > LSTM 89.7 > ResNet 87.6 > RF 79.7.
+- Label source: MHCflurry 90.6 > PSSM 82.6 (15k pool) > random 34.5 (chance).
+- NetMHCpan-4.1 vs MHCflurry labels: 62.24% (test set); 81.6% (IEDB 49) — quantifies label circularity.
+- Multi-allele: pan matches per-allele on 4/5 (0.84–0.96), B\*07:02 exception (0.60).

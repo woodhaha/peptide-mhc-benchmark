@@ -11,6 +11,10 @@ completed: 2026-08-02
 #   - Multi-allele non-canonical sens is 0.84-0.96 (not 0.92-1.00); B*07:02 pan = 0.60.
 #   - "Random label 65.8%" was unreproducible; true i.i.d. null ~33%.
 #   - Single-allele data consolidated to 5,190 peptides (not 5,088).
+#   - NetMHCpan-4.1 SOTA added (via IEDB API): 62.24% vs MHCflurry labels (test set);
+#     IEDB 49-epitope sens 81.6% (independent) vs Deep FFN 95.8% — quantifies label circularity.
+#   - ILRGSVAHK removed from IEDB benchmark (HLA-B*08:01, not A*02:01): 46/49 -> 46/48 (95.8%).
+#   - Figures 1/2/9 + cover letters regenerated to corrected findings.
 
 mission: Complete the 5-allele HLA class I extension so all per-allele Deep FFN models pass (sens>=0.90, spec_raw>=0.80, F1>=0.85).
 
