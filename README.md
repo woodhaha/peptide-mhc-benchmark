@@ -1,27 +1,29 @@
 # Peptide-MHC Binding Prediction Benchmark
 
-> **Label quality, not architecture, defines the performance ceiling for peptide-MHC binding prediction.**
+> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that the non-canonical tail defines the real prediction frontier.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![R 4.6.0+](https://img.shields.io/badge/R-4.6.0%2B-blue)
 ![Python 3.13+](https://img.shields.io/badge/Python-3.13%2B-blue)
 
-Systematic benchmarking of six deep learning architectures for HLA-A\*02:01 peptide-MHC binding prediction, with external validation against 49 experimentally verified IEDB epitopes, cancer hotspot mutation analysis (p53 R248W, KRAS G12V), and molecular docking-based structural hypotheses for neoepitope-MHC interactions.
+Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 49 IEDB epitopes, and a data-integrity re-analysis that corrected three benchmark artifacts.
 
-**Manuscript**: `04_Manuscript/manuscript.md` (54 references, ~9,000 words, 8 figures, 6 tables)
+**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (16 references, ~4,400 words, 9 figures, 7 tables) · companion `06_Bioinformatics_Submission/companion_manuscript.md` (PLOS Comput Biol target)
 
 ---
 
-## Core Finding
+## Core Findings
 
-| Comparison | Accuracy | Macro F1 | WB F1 |
-|-----------|:--------:|:--------:|:-----:|
-| **PSSM labels** (deterministic) | **94.8%** | **0.948** | **0.925** |
-| Deep FFN (MHCflurry labels) | 91.9% | 0.921 | 0.880 |
-| Random Forest | 81.1% | 0.814 | 0.723 |
-| Random labels | 65.8% | 0.558 | 0.000 |
+| Model | Accuracy (5-seed mean ± SD) |
+|-------|:---------------------------:|
+| CNN | **91.9% ± 0.9%** |
+| Deep FFN | 90.6% ± 1.2% |
+| FFN (Jessen) | 89.8% ± 1.1% |
+| LSTM | 89.7% ± 0.9% |
+| ResNet | 87.6% ± 1.8% |
+| Random Forest | 79.7% ± 0.4% |
 
-Label source accounts for **~29 percentage points** of accuracy variation — exceeding the maximum inter-architecture difference of ~11 percentage points. The **weak binder (WB) class** is the primary locus of both label-induced and architecture-induced variation.
+Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it plateaus at ~0.65 sensitivity across three independent sequence predictors (15-allele panel), defining the current frontier.
 
 ---
 
@@ -29,13 +31,13 @@ Label source accounts for **~29 percentage points** of accuracy variation — ex
 
 | Metric | Value |
 |--------|:-----:|
-| Best architecture | Deep FFN (152K parameters) |
+| Best architecture | CNN (1.05M parameters) |
 | IEDB sensitivity | **93.9%** (46/49) |
 | IEDB ROC AUC | **0.947** |
-| ESM-2 t6 per-position accuracy | 93.3% |
-| 10-protein scanning | **10/11 known epitopes** confirmed |
+| Anchor-rule baseline | sensitivity 1.0 on canonical peptides |
+| Non-canonical plateau | ~0.65 across 3 sequence predictors |
 | Cancer neoepitopes | p53 R248W (`MNWRPILTI`), KRAS G12V (`YKLVVVGAV`) |
-| Predicted salt bridge | K-E63, ~−30 kcal/mol (vs −3 kcal/mol canonical) |
+| Salt bridge | K-E63, qualitative hypothesis (not quantified) |
 
 ---
 
@@ -105,17 +107,17 @@ cd ../03_Analysis/Python_scripts && python mhcflurry_direct_compare.py
 
 ## Methodological Highlights
 
-### Label Contamination Cascade
+### Benchmark Artifacts (Methods Hygiene)
 
-Three labelling strategies demonstrate how ML-derived training labels systematically compound performance ambiguity:
+Three apparent findings dissolved under controlled re-analysis:
 
 ```
-PSSM (deterministic)   → 94.8% accuracy  "Clean"
-MHCflurry 2.2.0 (ML)  → 91.9% accuracy  "Complex boundary"
-Random synthetic       → 65.8% accuracy  "Noise baseline"
+per-allele > pan         → 10.6× data-size artifact
+label quality dominates  → degenerate random-null artifact
+Deep FFN > CNN           → stale-checkpoint artifact
 ```
 
-**WB F1 drops from 0.925 → 0.880 → 0.000**, concentrating all performance variation in the ambiguous 50–500 nM affinity range.
+A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-training shows a CNN modestly outperforms the Deep FFN.
 
 ### MHCflurry Label Circularity
 
@@ -133,7 +135,7 @@ Proposed integration of structural information to capture non-canonical binding 
 
 ### K-E63 Salt Bridge: A Predictor Blind Spot
 
-The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a non-canonical anchor configuration. Template-based structural analysis and energy minimisation predict a K-E63 salt bridge with −30 kcal/mol electrostatic stabilisation, representing a **"prediction-resistant"** configuration that sequence-based models systematically miss (Mares et al., ICML 2025, AUROC 0.06–0.22).
+The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a non-canonical anchor configuration. Template-based structural analysis and energy minimisation suggest a possible K-E63 salt bridge (qualitative, un-solvated electrostatic estimate only), a prediction-resistant configuration (cf. Mares et al., ICML 2025, AUROC 0.06–0.22).
 
 ---
 
@@ -142,7 +144,7 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 | Figure | Description |
 |--------|-------------|
 | **Figure 1** | Model performance comparison (7 models including MHCflurry baseline) |
-| **Figure 2** | Label quality effect — PSSM vs MHCflurry vs Random |
+| **Figure 2** | Architecture comparison + label-source controls — MHCflurry (90.6%), PSSM (82.6%), random (chance ~33%) |
 | **Figure 3** | IEDB benchmark — ROC curve, confusion matrix, per-epitope scores |
 | **Figure 4** | Protein epitope scanning — 10 proteins, 3,536 peptides |
 | **Figure 5** | Cancer hotspot mutation analysis — p53 + KRAS |
@@ -155,10 +157,10 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 ## Citation
 
 ```bibtex
-@article{zhou2025benchmarking,
-  title={Systematic Benchmarking of Deep Learning Architectures for Peptide-MHC Binding Prediction Reveals Label Quality, Not Architecture, Defines Performance},
-  author={Zhou, Zhuha and Chen, Weisheng and Cai, Yiqi and Bai, Yongyu and Zhou, Zhuxian},
-  journal={Submitted to Briefings in Bioinformatics},
+@article{zhou2026benchmarking,
+  title={The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Multi-Architecture and Multi-Allele Benchmark},
+  author={Zhou, Zhuha and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian},
+  journal={Submitted},
   year={2026}
 }
 ```
