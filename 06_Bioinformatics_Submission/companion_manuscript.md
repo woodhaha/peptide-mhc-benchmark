@@ -1,6 +1,6 @@
 # A Rebalanced Pan-Specific Model and the Non-Canonical Frontier: A Multi-Allele Benchmark of Peptide-MHC-I Binding Prediction
 
-**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Weisheng Chen<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Yongyu Bai<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
+**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Weisheng Chen<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Xiaopeng Zhuang<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
 
 **Affiliations**:  
 <sup>1</sup> Department of Gastroenterology Surgery, The First Affiliated Hospital of Wenzhou Medical University, Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China  

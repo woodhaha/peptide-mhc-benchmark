@@ -1,6 +1,6 @@
 # Label Quality Defines the Performance Ceiling for Peptide-MHC Binding Prediction: A Six-Architecture Benchmark with Multi-Allele Generalization
 
-**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Chen Weisheng<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Yongyu Bai<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
+**Authors**: Zhuha Zhou<sup>1,†,*</sup>, Weisheng Chen<sup>1,†</sup>, Yiqi Cai<sup>1</sup>, Xiaopeng Zhuang<sup>1</sup>, Zhuxian Zhou<sup>2,^</sup>
 
 **Word count**: ~4,400 (main text) | **Tables**: 7 | **Figures**: 9
 
@@ -220,7 +220,7 @@ All code, trained models (including pan models `deep_ffn_pan_seed*.keras`, `deep
 
 ## Author contributions
 
-Zhuha Zhou and Chen Weisheng: conception, design, data analysis, manuscript writing. Yiqi Cai: data analysis, manuscript writing. Yongyu Bai: data interpretation, manuscript revision. Zhuxian Zhou: supervision, manuscript revision. All authors read and approved the final manuscript.
+Zhuha Zhou and Weisheng Chen: conception, design, data analysis, manuscript writing. Yiqi Cai: data analysis, manuscript writing. Xiaopeng Zhuang: data interpretation, manuscript revision. Zhuxian Zhou: supervision, manuscript revision. All authors read and approved the final manuscript.
 
 ## Competing interests
 

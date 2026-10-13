@@ -43,7 +43,7 @@ E-mail: zhouzhuha@wmu.edu.cn
 ORCID: 0009-0005-1818-4789
 
 On behalf of all authors:
-Weisheng Chen<sup>†</sup>, Yiqi Cai, Yongyu Bai, Zhuxian Zhou
+Weisheng Chen<sup>†</sup>, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou
 
 <sup>†</sup> These authors contributed equally to this work.
 <sup>*</sup> Corresponding Author
