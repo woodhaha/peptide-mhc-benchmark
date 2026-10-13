@@ -62,7 +62,7 @@ required_before_publishable:
 phase: CONCLUDED — research complete, 10 validated findings, write-up ready
   Findings fully validated (F1-F10 in 06_Logs/FINDINGS_SYNTHESIS.md):
     F1 pan-generalization seed-robust; F2 canonical ~0.98 all predictors;
-    F3 Type B plateau ~0.65 all classes incl structure; F4 Type A ~0.48 inherent;
+    F3 Type B plateau ~0.65 across three sequence predictors; F4 Type A ~0.48 inherent;
     F5 extreme tail cross-predictor-resistant; F6 temporal generalization (breaks
     label circularity); F7 Type A real coverage gap; F8 pan16 (15-allele panel,
     pooled 0.819); F9 temporal; F10 P2 salt-bridge generality (K/R/H reach Glu63).
@@ -140,15 +140,14 @@ next_direction:
     - The clean Type A/B dichotomy from n=25 is DEAD; don't repeat it.
   Do NOT repeat the falsified claims (per-allele>pan everywhere, Type-A-easy, PSSM-dilution).
 
-  munis_structure_test (2026-08-02, n=1 then FULL population):
-    n=1: QYDPVAALF (0.972) rescued by structure where sequence failed — looked promising.
+  munis_test (2026-08-02, n=1 then FULL population) — CORRECTION 2026-10-13: MUNIS is sequence-based (ESM-2+LSTM), not structure-based:
+    n=1: QYDPVAALF (0.972) rescued by MUNIS where the other sequence models failed — looked promising.
     FULL POPULATION (n=3,112 Type B, 5 alleles, 7s on RTX 6000D):
       MUNIS Type B sens 0.647 vs DeepFFN 0.607 / MHCflurry 0.668 (threshold = 5th pct canonical).
-    DECISIVE NEGATIVE: structure-based prediction does NOT lift the Type B sensitivity
-      ceiling. The n=1 rescue was not representative. Three-tier pipeline claim NOT
-      supported at scale. Honest implication: re-frame three-tier as hypothesis needing
-      experimental validation; the field's 'structure will solve it' assumption is
-      challenged by direct measurement.
+    DECISIVE NEGATIVE: a third sequence predictor (MUNIS) does NOT lift the Type B
+      sensitivity ceiling. Structure-based prediction was NOT benchmarked at scale. The
+      n=1 rescue was not representative. Three-tier (structural) claim remains untested
+      and is a hypothesis needing experimental validation.
 
   broad_motif_retrain (2026-08-02) — DOES NOT recover Type A:
     A*03:01 Type A flat 0.634; A*02:01 0.08->0.24 (marginal); B*07:02 Type B DROPS

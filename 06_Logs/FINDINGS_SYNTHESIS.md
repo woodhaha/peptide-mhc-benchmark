@@ -13,8 +13,7 @@ A single rebalanced pan-specific Deep FFN (B*07:02 upsampled 4x) reaches 0.92-1.
 non-canonical sensitivity across 5 alleles (5-seed SD <=0.05) — parity or better
 than per-allele models. Canonical binders are caught at ~0.98 by every predictor
 class (Deep FFN, MHCflurry, MUNIS). Non-canonical (Type B) binders plateau at
-~0.65 across ALL predictor classes, including structure-based MUNIS — the field's
-"structure will solve it" assumption is challenged. The extreme energy-compensated
+~0.65 across three independent sequence predictors (Deep FFN, MHCflurry, MUNIS); MUNIS is sequence-based (ESM-2+LSTM), so the structural tier remains untested at scale. The extreme energy-compensated
 tail (e.g. KRAS G12V P2-K salt bridge) is prediction-resistant to every method
 tested.
 
@@ -33,7 +32,7 @@ tested.
 
 ### F3. Non-canonical (Type B) plateau (~0.65)
 - n=3,112 Type B: Deep FFN 0.607, MHCflurry 0.668, MUNIS 0.647.
-- Structure-based prediction does NOT lift the ceiling. Three-tier pipeline claim
+- A third sequence predictor (MUNIS) does NOT lift the ceiling. Three-tier pipeline claim
   NOT supported.
 
 ### F4. Type A (tolerated weak anchors) is inherent-hard (~0.48)
@@ -44,7 +43,7 @@ tested.
 
 ### F5. Extreme tail is prediction-resistant (cross-predictor)
 - Manuscript's 3 FNs + KRAS G12V P2-K: MHCflurry 3.8-13.8 uM (non-binder), Deep
-  FFN 0.000-0.254, MUNIS 3/4 low. QYDPVAALF is the single structure-rescued case
+  FFN 0.000-0.254, MUNIS 3/4 low. QYDPVAALF is the single MUNIS-rescued case
   (MUNIS 0.972 vs sequence 0.000/6,199nM) — n=1.
 
 ## Validated findings (post-synthesis additions)
@@ -83,7 +82,7 @@ tested.
 - "Type A is easy (0.92-0.98)" — n=25 cherry-pick artifact; real 0.48.
 - "Non-canonical binders systematically missed" — moderate penalty (~0.65), not
   catastrophic.
-- "Three-tier pipeline rescues non-canonical binders" — structure (MUNIS) does not.
+- "Three-tier pipeline rescues non-canonical binders" — a third sequence predictor (MUNIS) does not.
 
 ## Manuscript implications
 See `06_Logs/manuscript_correction_checklist.md` (6 items). Core: weaken the

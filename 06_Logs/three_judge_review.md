@@ -321,10 +321,11 @@ remain prediction-resistant even for MHCflurry. The manuscript's claim should be
 as "the extreme non-canonical tail is prediction-resistant," not "non-canonical binders
 are systematically missed."
 
-## MUNIS structure-based test on the hard tail (2026-08-02)
+## MUNIS test on the hard tail (2026-08-02)
 
-Ran MUNIS (AlphaFold-Multimer-based pMHC structure predictor, 5-model no-flanks
-ensemble, ESM-2 t6 embeddings) on the 4 hard-tail Type B epitopes + 3 canonical
+> **CORRECTION (2026-10-13)**: MUNIS is a **sequence-based** model (ESM-2 + LSTM; Wohlwend et al. 2025, *Nat Mach Intell*), not an AlphaFold-Multimer structure predictor as labelled below. Scores are unchanged and valid; only the 'structure' framing is corrected.
+
+Ran MUNIS (ESM-2 + LSTM sequence model, 5-model ensemble) on the 4 hard-tail Type B epitopes + 3 canonical
 controls, HLA-A*02:01, on AutoDL RTX 6000D.
 
 ### MUNIS scores (presentation score, GGGGG flanks; controls calibrate ~0.92-0.99 = binder)
@@ -341,7 +342,7 @@ controls, HLA-A*02:01, on AutoDL RTX 6000D.
 ### Finding (n=1, preliminary)
 - MUNIS ALSO fails on 3/4 hard-tail (0.10-0.13), consistent with sequence models —
   the P2-K salt-bridge neoepitope YKLVVVGAV scores LOW in all three predictors.
-- **BUT QYDPVAALF (0.972) is captured by the structure-based method where BOTH
+- **BUT QYDPVAALF (0.972) is captured by the second sequence model where BOTH
   sequence models failed** (Deep FFN 0.000, MHCflurry 6,199 nM). First evidence the
   three-tier pipeline's structure tier can rescue a sequence-invisible binder.
 - The manuscript's three-tier claim (sequence -> AlphaFold -> structure) is PARTIALLY
@@ -353,7 +354,7 @@ controls, HLA-A*02:01, on AutoDL RTX 6000D.
 - To strengthen: score the FULL Type B population (n=3,112) and measure whether MUNIS
   lifts the 0.61-0.67 sensitivity ceiling. That would be a stronger claim.
 
-## MUNIS full Type B population test — structure does NOT lift the ceiling (2026-08-02)
+## MUNIS full Type B population test — a third sequence predictor does NOT lift the ceiling (2026-08-02)
 
 Scored all 6,224 peptides (3,112 Type B + 3,112 matched canonical, 5 alleles) with
 MUNIS on AutoDL RTX 6000D (7s). Threshold = 5th percentile of canonical scores
@@ -374,24 +375,24 @@ MUNIS on AutoDL RTX 6000D (7s). Threshold = 5th percentile of canonical scores
 |-----------|:-----------:|
 | Deep FFN (sequence) | 0.607 |
 | MHCflurry (sequence) | 0.668 |
-| **MUNIS (structure)** | **0.647** |
+| **MUNIS (sequence)** | **0.647** |
 
 ### Finding — DECISIVE NEGATIVE for the three-tier pipeline
 - MUNIS catches Type B at 0.647, statistically identical to sequence models
-  (0.607-0.668). **Structure-based prediction does NOT lift the sensitivity ceiling.**
+  (0.607-0.668). **A third sequence predictor does NOT lift the sensitivity ceiling.**
 - The n=1 QYDPVAALF rescue (0.972) was NOT representative — at population scale,
-  structure adds no recall on Type B.
+  MUNIS adds no recall on Type B.
 - The manuscript's three-tier pipeline claim (sequence -> AlphaFold -> structure
   rescues non-canonical binders) is NOT supported by this data. The P2-K salt-bridge
   and the Type B population are genuinely hard for ALL predictor classes tested
-  (2 sequence + 1 structure).
+  (3 independent sequence predictors).
 
 ### Honest implication for the manuscript
 The three-tier pipeline should be re-framed as a HYPOTHESIS needing experimental
-validation, not an evidence-backed claim. Structure-based prediction (MUNIS) does not
+validation, not an evidence-backed claim. A third sequence predictor (MUNIS) does not
 currently rescue sequence-invisible non-canonical binders at scale. This actually
 STRENGTHENS the paper's scientific honesty: the field's "structure will solve it"
-assumption is challenged by direct measurement.
+assumption remains untested at scale (MUNIS is sequence-based, not structure).
 
 ## Broad-motif retrain — does NOT recover Type A (2026-08-02)
 

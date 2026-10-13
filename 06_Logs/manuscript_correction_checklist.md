@@ -1,6 +1,6 @@
 # Manuscript Correction Checklist (2026-08-02)
 
-Based on the multi-allele + Type A/B + cross-predictor + MUNIS structural validation
+Based on the multi-allele + Type A/B + cross-predictor + MUNIS (sequence) validation
 work. These findings should be incorporated into the submitted manuscript (Briefings
 in Bioinformatics) either as revisions or as honest caveats in the discussion.
 
@@ -25,9 +25,9 @@ MHCflurry, MUNIS all fail)."
 **Current claim (Discussion 4.5):** a three-tier screening pipeline (Tier 2 AlphaFold3,
 Tier 3 energy minimization) would "capture these blind-spot configurations."
 
-**Corrected finding:** MUNIS (structure-based pMHC predictor, the Tier-2 equivalent)
+**Corrected finding:** MUNIS (sequence-based pMHC predictor, ESM-2+LSTM; NOT the structural Tier-2 equivalent)
 catches Type B at 0.647 — statistically identical to sequence models (0.607-0.668).
-Structure does NOT lift the non-canonical sensitivity ceiling at population scale.
+A third sequence predictor (MUNIS) does NOT lift the non-canonical sensitivity ceiling at population scale; structure was not benchmarked.
 
 **Action:** Re-frame the three-tier pipeline as a HYPOTHESIS needing experimental
 validation, not an evidence-backed claim. Optionally note the single counterexample
@@ -58,7 +58,7 @@ across 5 common HLA-I alleles (as a strength, not a limitation).
 ## 5. Limitations (4.6): add the predictor-plateau fact
 
 **Action:** Add a limitation: "Across two independent sequence predictors (our Deep
-FFN, MHCflurry) and a structure-based predictor (MUNIS), non-canonical binders plateau
+FFN, MHCflurry) and a second independent sequence predictor (MUNIS), non-canonical binders plateau
 at ~0.65 sensitivity. The energy-compensated tail (e.g., P2-K salt bridge) remains
 prediction-resistant to all current methods." → DONE in manuscript.md §4.6 (2026-08-02).
 
@@ -75,6 +75,6 @@ prediction-resistant to all current methods." → DONE in manuscript.md §4.6 (2
 |-----------------|:--------------:|:-----------:|
 | Deep FFN (sequence) | 0.979 | 0.607 |
 | MHCflurry (sequence) | 0.986 | 0.668 |
-| MUNIS (structure) | 0.950 | 0.647 |
+| MUNIS (sequence) | 0.950 | 0.647 |
 
 All source data: `06_Logs/type_ab_*.json`, `05_Submission/munis_results/`.

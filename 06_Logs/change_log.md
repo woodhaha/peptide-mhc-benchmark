@@ -123,7 +123,7 @@ See `06_Logs/decisions.md` for historical analysis decisions and iteration log.
 ### 核心发现（10 个验证过的发现 F1-F10，见 FINDINGS_SYNTHESIS.md）
 1. 单个重平衡 pan Deep FFN 泛化到 15 等位基因面板（非规范灵敏度 pooled 0.819，12/15 ≥0.76）
 2. 规范结合剂被所有预测器类以 ~0.98 识别（已解决）
-3. 非规范（Type B）结合剂在序列 + 结构预测器上停在 ~0.65 平台（MUNIS 不救）
+3. 非规范（Type B）结合剂在三个独立序列预测器上停在 ~0.65 平台（MUNIS 不救；MUNIS 是序列模型 ESM-2+LSTM）
 4. Type A（容忍锚）是真实覆盖率缺口（0.48，质谱确认、非训练缺口）
 5. 极端能量补偿尾巴（P2-K/R/H 盐桥）对所有预测器抵抗
 6. 时间 holdout 验证：post-2022 表位灵敏度保持/提升（打破标签循环）
