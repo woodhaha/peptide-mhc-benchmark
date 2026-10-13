@@ -56,7 +56,7 @@ Sensitivity was computed with protein-background negatives and fixed thresholds 
 
 ### 3.1 A rebalanced pan model matches per-allele specialists on four of five alleles
 
-With protein-background negatives and a fixed threshold (n=25 non-canonical binders per allele), per-allele models reached non-canonical sensitivity A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*07:02 0.96, B\*44:03 0.96 (Table 1). The rebalanced pan model matched this on four of five alleles (A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*44:03 1.00), but B\*07:02 was a notable exception: the pan model dropped to 0.60 versus 0.96 per-allele (Wilson 95% CIs [0.41, 0.77] vs [0.81, 0.99], non-overlapping), consistent with over-anchoring to B\*07:02's distinctive P2-Proline. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
+With protein-background negatives and a fixed threshold (n=25 non-canonical binders per allele), per-allele models reached non-canonical sensitivity A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*07:02 0.96, B\*44:03 0.96 (Table 1; Figure 1). The rebalanced pan model matched this on four of five alleles (A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*44:03 1.00), but B\*07:02 was a notable exception: the pan model dropped to 0.60 versus 0.96 per-allele (Wilson 95% CIs [0.41, 0.77] vs [0.81, 0.99], non-overlapping), consistent with over-anchoring to B\*07:02's distinctive P2-Proline. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
 
 **Table 1. Non-canonical sensitivity by allele (protein-background negatives, n=25 per allele, @0.95).**
 
