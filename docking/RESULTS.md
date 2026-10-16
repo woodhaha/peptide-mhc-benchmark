@@ -20,7 +20,6 @@ free-energy calculation and experimental validation.
 | Coulombic estimate (un-solvated) | ~−30 kcal/mol | **Overstates** — a buried salt bridge contributes only a few kcal/mol after desolvation |
 | Molecular dynamics (100 ns, 3 replicas) | K–E63 mean 7.4 Å; < 3 Å in ~14% of frames | Salt bridge is **transient**, not persistent |
 | MM-GBSA (final 50 ns) | ΔG = −19.6 ± 46.3 kcal/mol | Too noisy for a precise estimate |
-| HDOCKlite docking (10 poses) | K–E63 = 15–47 Å in all poses | **Inconclusive** — peptide placed outside the groove; HDOCKlite is not suited to peptide-MHC docking |
 
 ## What was wrong in the prior version
 
@@ -32,5 +31,4 @@ free-energy calculation and experimental validation.
 ## Status
 
 The structural argument is restricted to minimisation and qualitative electrostatics
-(manuscript §3.5). The 100-ns MD is reported in Supplementary Note S. Neither the Coulombic
-estimate nor the HDOCKlite docking supports a **quantitative** salt-bridge claim.
+(manuscript §3.5). The 100-ns MD is reported in Supplementary Note S. The un-solvated Coulombic estimate does not support a **quantitative** salt-bridge claim.

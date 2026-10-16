@@ -42,15 +42,6 @@ salt-bridge hypothesis as qualitative, pending a more rigorous free-energy calcu
 (e.g., alchemical transformation or umbrella sampling) and experimental validation
 (e.g., X-ray crystallography or cryo-EM of the YKLVVVGAV–HLA-A\*02:01 complex).
 
-## S.4 Formal docking (HDOCKlite)
-
-Formal peptide–MHC docking was attempted with HDOCKlite (rigid-body protein–protein
-docking) for the KRAS G12V neoepitope and controls. All ten returned poses placed the
-peptide outside the binding groove (P2-Lys–Glu63 ≥ 15 Å), reflecting the unsuitability of
-a rigid-body docking tool for peptide–MHC docking; these poses were therefore not used for
-the structural argument. The template-based geometry and minimisation (§S.2, main text
-§3.5) remain the basis of the structural hypothesis.
-
 ## Figures
 
 - **Fig. S-MD1** — 100-ns summary panel (system overview).
