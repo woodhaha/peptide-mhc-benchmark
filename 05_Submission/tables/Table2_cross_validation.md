@@ -9,4 +9,4 @@
 | 5 | 88.8% | 89.6% |
 | **Mean ± SD** | **89.6% ± 0.8%** | — |
 
-**Note:** 5-fold cross-validation on the full 5,088-peptide MHCflurry-labeled dataset. The low standard deviation (±0.8%) indicates stable performance across data partitions. No evidence of overfitting to specific peptide subsets.
+**Note:** 5-fold cross-validation on the full 5,190-peptide MHCflurry-labeled dataset. The low standard deviation (±0.8%) indicates stable performance across data partitions. No evidence of overfitting to specific peptide subsets.

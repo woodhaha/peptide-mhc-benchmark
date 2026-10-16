@@ -58,12 +58,6 @@ Our manuscript has independent IEDB test set → compliant.
 - Single-anonymized review, ~3 reviewers, acceptance ~30%
 - Code must be accessible & URL functional at review (GitHub ready)
 
-## LaTeX Template
-- OUP general template (Overleaf official)
-- `\documentclass[numsec,webpdf,modern,large]`
-- `\bibliographystyle{author-date}`
-- GitHub improved: RagnarGrootKoerkamp/oxford-bioinformatics-template
-
 ## Key Gap
 - Current manuscript.md: **11,314 words** → need ~5,000 (cut ~6,300)
 - Word distribution: Abstract 377 | Key Points 264 | Intro 724 | Methods 1,474 |

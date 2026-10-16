@@ -57,9 +57,8 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 │   ├── manuscript.md        # Primary draft
 │   ├── tables/              # Tables 1-5
 │   └── reports/             # 10 analysis reports
-├── 05_Submission/           # Cover letter + graphical abstract
-│   ├── cover_letter_bioinformatics.md
-│   └── graphical_abstract_concept.md
+├── 05_Submission/           # Cover letter + submission materials
+│   └── cover_letter_bioinformatics.md
 ├── 06_Logs/                 # Decisions + change log
 ├── docking/                 # Structural analysis (separate workflow)
 │   ├── salt_bridge_validate.py    # K-E63 validation
