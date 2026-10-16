@@ -33,14 +33,14 @@ with open(DOCK_DIR / "energy_results.json") as f:
 # Color scheme
 # ═══════════════════════════════════════════════════════════════════════════════
 C = {
-    'salt_bridge': '#E74C3C',   # red — K-E63 interaction
-    'canonical':   '#3498DB',   # blue — canonical Leu anchor
-    'pocket':      '#F39C12',   # gold — B-pocket residues
-    'hbond':       '#2ECC71',   # green — H-bonds
+    'salt_bridge': '#E41A1C',   # Nature red — K-E63 interaction
+    'canonical':   '#377EB8',   # Nature blue — canonical Leu anchor
+    'pocket':      '#FF7F00',   # Nature orange — B-pocket residues
+    'hbond':       '#4DAF4A',   # Nature green — H-bonds
     'surface':     '#FDEBD0',   # cream — molecular surface
-    'peptide':     '#8E44AD',   # purple — peptide backbone
-    'bg':          '#FAFAFA',
-    'grid':        '#E0E0E0',
+    'peptide':     '#984EA3',   # Nature purple — peptide backbone
+    'bg':          '#FFFFFF',
+    'grid':        '#E5E5E5',
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -100,7 +100,7 @@ def draw_interaction_diagram(ax):
             bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=C['salt_bridge'], alpha=0.8))
 
     # ── Coulomb energy annotation ──
-    ax.text(4.75, 2.2, 'ΔE = −29.6 kcal/mol', ha='center', fontsize=10, fontweight='bold',
+    ax.text(4.75, 2.2, 'ΔE ≈ −30 kcal/mol (un-solvated, overestimates)', ha='center', fontsize=10, fontweight='bold',
             color=C['salt_bridge'], bbox=dict(boxstyle='round,pad=0.3', facecolor='#FDEDEC',
             edgecolor=C['salt_bridge'], alpha=0.9))
 
@@ -214,11 +214,9 @@ def draw_energy_decomposition(ax):
     ax.grid(axis='y', alpha=0.3, color=C['grid'])
     ax.set_facecolor(C['bg'])
 
-    # Ratio annotation
-    ratio = abs(energies[0] / energies[1])
-    ax.annotate(f'{ratio:.0f}× stronger', xy=(0, energies[0]/2), fontsize=13, fontweight='bold',
-                color=C['salt_bridge'], ha='center',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=C['salt_bridge'], alpha=0.8))
+    # Caveat
+    ax.text(0.5, -30, 'un-solvated Coulombic; overestimates desolvation',
+            ha='center', va='top', fontsize=8, color='#666666', style='italic')
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -333,7 +331,7 @@ def generate_py3dmol_views():
 def main():
     print("Generating enhanced structural figure...")
 
-    fig = plt.figure(figsize=(16, 20), facecolor='white')
+    fig = plt.figure(figsize=(10, 12), facecolor='white')
 
     # 2×3 grid: A(top-left) B(top-right) C(middle-left) D(middle-right) E(bottom, full-width)
     gs = fig.add_gridspec(3, 2, height_ratios=[1, 1, 0.6], hspace=0.35, wspace=0.3)
@@ -363,11 +361,10 @@ def main():
         ('Min OE distance', f'{sb["geometry"]["min_oe"]} Å'),
         ('K sidechain reach (CA→Nz)', f'{sb["geometry"]["k_sidechain_reach_angstrom"]} Å'),
         ('Salt bridge cutoff', '4.0 Å (standard N–O definition)'),
-        ('Coulomb ΔE (salt bridge)', f'{sb["salt_bridge_energy_kcal_per_mol"]:.1f} kcal/mol'),
+        ('Coulomb ΔE (salt bridge, un-solvated)', f'{sb["salt_bridge_energy_kcal_per_mol"]:.1f} kcal/mol (overestimates)'),
         ('Canonical Leu burial ΔG', '−3.0 kcal/mol (hydrophobic anchor)'),
-        ('Salt bridge advantage', f'~{abs(sb["salt_bridge_energy_kcal_per_mol"]/3.0):.0f}× vs canonical'),
-        ('B-pocket conservation (8 PDBs)', f'11.4 ± 0.1 Å'),
-        ('Verdict', 'PLAUSIBLE — structurally & energetically favorable'),
+                ('B-pocket conservation (8 PDBs)', f'11.4 ± 0.1 Å'),
+        ('Verdict', 'Qualitative hypothesis — not quantified'),
     ]
 
     y = 0.82
@@ -381,18 +378,14 @@ def main():
                   transform=ax_e.transAxes)
         y -= 0.06
 
-    # Highlight box for verdict
-    verdict_box = FancyBboxPatch((0.48, 0.08), 0.50, 0.10, boxstyle="round,pad=0.1",
-                                  facecolor='#FDEDEC', edgecolor=C['salt_bridge'], linewidth=1.5)
-    ax_e.add_patch(verdict_box)
-    ax_e.text(0.73, 0.13, 'First documented charged P2 anchor\nin HLA-A*02:01 binding',
-              transform=ax_e.transAxes, ha='center', va='center', fontsize=9,
-              fontweight='bold', color=C['salt_bridge'])
+    # Qualitative caveat (consistent with manuscript §3.5)
+    ax_e.text(0.5, 0.02, 'Qualitative hypothesis only; pending solvated free-energy calculation and experimental validation',
+              transform=ax_e.transAxes, ha='center', va='center', fontsize=8,
+              fontstyle='italic', color='#666666')
 
     # Title
-    fig.suptitle('Structural Basis of Non-Canonical Peptide-MHC Anchoring\n'
-                 'KRAS G12V Neoepitope (YKLVVVGAV) · HLA-A*02:01 · K-E63 Salt Bridge',
-                 fontsize=14, fontweight='bold', y=0.995)
+    fig.suptitle('K-E63 Salt Bridge Structural Hypothesis (KRAS G12V YKLVVVGAV)',
+                 fontsize=13, fontweight='bold', y=0.995)
 
     # Save
     out_path = FIG_DIR / "Figure_Structure_K63_SaltBridge.png"
