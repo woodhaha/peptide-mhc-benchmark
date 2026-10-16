@@ -1,70 +1,36 @@
-# K-E63 Salt Bridge Structural Analysis — Results Summary
+# K-E63 Salt Bridge Structural Analysis — Results Summary (CORRECTED)
 
-> Date: 2026-06-24 · Method: pdbfixer + OpenMM minimization + Coulomb estimation
+> Updated: 2026-10-16 · Supersedes the 2026-06-24 version, which overstated the salt-bridge
+> stabilisation. The corrected conclusion is **qualitative only**, consistent with
+> manuscript §3.5 and `05_Submission/supplementary/MD_salt_bridge_supplementary.md`.
 
-## Key Finding
+## Corrected conclusion
 
-**The K-E63 salt bridge is structurally and energetically favorable for KRAS G12V neoepitope presentation by HLA-A*02:01.**
+A charged P2-Lys in the KRAS G12V neoepitope `YKLVVVGAV` could reach B-pocket Glu63 and
+form a salt bridge, but the evidence is **qualitative** and the interaction is **not a
+stable, persistent contact** in molecular dynamics. The hypothesis requires a solvated
+free-energy calculation and experimental validation.
 
-This would represent the **first documented case of a charged P2 anchor** in HLA-A*02:01 — a novel non-canonical neoantigen presentation mechanism.
+## What was done
 
-## Quantitative Results
+| Method | Result | Interpretation |
+|--------|--------|----------------|
+| Comparative B-pocket geometry (8 HLA-A\*02:01 structures) | Glu63 at 4.5–4.9 Å from P2 Cα | Conserved acidic B-pocket |
+| Energy minimisation (OpenMM, amber14) | P2 Cα–Glu63 OE2 = 3.7 Å | Within Lys side-chain reach (7.6 Å) |
+| Coulombic estimate (un-solvated) | ~−30 kcal/mol | **Overstates** — a buried salt bridge contributes only a few kcal/mol after desolvation |
+| Molecular dynamics (100 ns, 3 replicas) | K–E63 mean 7.4 Å; < 3 Å in ~14% of frames | Salt bridge is **transient**, not persistent |
+| MM-GBSA (final 50 ns) | ΔG = −19.6 ± 46.3 kcal/mol | Too noisy for a precise estimate |
+| HDOCKlite docking (10 poses) | K–E63 = 15–47 Å in all poses | **Inconclusive** — peptide placed outside the groove; HDOCKlite is not suited to peptide-MHC docking |
 
-### Geometry
+## What was wrong in the prior version
 
-| Metric | Value | Method |
-|--------|:-----:|--------|
-| P2 CA → Glu63 OE2 (1DUZ template) | **3.7 Å** | pdbfixer + OpenMM minimization (amber14) |
-| K sidechain length (CA→Nz) | **7.6 Å** | 4 methylene groups + terminal NH3+ |
-| K reach margin | **+3.9 Å** | Sidechain overshoots E63 — ample flexibility |
-| Est. Nz → Glu63 OE | **< 1 Å** | Geometric projection with 1.5 Å flexibility |
-| Salt bridge cutoff | **4.0 Å** | Standard N-O salt bridge definition |
-| B-pocket volume conservation | **11.4 ± 0.1 Å** | 8 HLA-A*02:01 crystal structures |
-| P2 CA → Glu63 CD (8 structures) | **5.1 ± 1.1 Å** | 4.7 ± 0.2 Å excluding 1JF1 outlier |
+- ~~"−29.6 kcal/mol, ~10× stronger than canonical P2 burial"~~ — an un-solvated Coulombic
+  estimate that ignored desolvation penalties; removed.
+- ~~"First documented case of a charged P2 anchor"~~ — overstatement; the configuration is
+  hypothetical and unvalidated.
 
-### Energetics
+## Status
 
-| Interaction | ΔG (kcal/mol) | Method |
-|-------------|:-------------:|--------|
-| K-E63 salt bridge | **−29.6** | Coulomb's law (ε=4, r_eff=2.8 Å) |
-| Canonical P2(Leu) burial | **−3.0** | Experimental binding data (1DUZ) |
-| Typical protein H-bond | **−2.0** | Literature |
-
-The salt bridge is approximately **10× stronger** than canonical hydrophobic P2 burial.
-
-## Three Lines of Evidence
-
-1. **Crystal structure analysis** (8 PDB entries): E63 is invariantly positioned 4.5–4.9 Å from P2 CA across all HLA-A*02:01 structures. No structure in the PDB contains a charged P2 — this is a novel configuration.
-
-2. **Energy minimization** (OpenMM amber14): P2 CA → E63 OE2 refines to 3.7 Å, well within the 7.6 Å K sidechain reach. The sidechain overshoots the carboxyl group — NZ can reach E63 easily.
-
-3. **Coulombic estimation**: −30 kcal/mol electrostatic stabilization vs −3 kcal/mol for canonical hydrophobic burial. Even with conservative corrections for desolvation and entropy, the salt bridge remains energetically favorable.
-
-## Limitations
-
-- Coulombic estimate does not include desolvation penalties, conformational entropy, or water-mediated H-bonding
-- MD simulation attempted but unstable (T fluctuations 300–670 K) due to 1DUZ forcefield compatibility
-- Requires experimental validation: X-ray crystallography, cryo-EM, or SPR of YKLVVVGAV-HLA-A*02:01 complex
-- Single allele (HLA-A*02:01); generalizability to other alleles untested
-
-## Generated Files
-
-| File | Description |
-|------|-------------|
-| `salt_bridge_validation.json` | Full numerical results |
-| `pose_analysis.json` | HDOCK pose analysis + 8-structure B-pocket comparison |
-| `figures/Figure_K63_salt_bridge.png` | 4-panel publication figure (300 dpi) |
-| `figures/Figure_K63_salt_bridge.pdf` | Vector version for manuscript |
-| `figures/K63_salt_bridge_3D.html` | Interactive 3D structural view |
-| `salt_bridge_validate.py` | Analysis script (8.1s runtime) |
-| `visualize_salt_bridge.py` | Figure generation script |
-| `docking_pose_analysis.py` | Crystal structure comparison + HDOCK analysis |
-| `docking_energy.py` | OpenMM binding energy analysis |
-
-## Manuscript Integration
-
-Updated sections in `04_Manuscript/manuscript.md`:
-- **2.7 Methods**: Three-tier structural analysis (comparative, minimization, Coulombic)
-- **3.10 Results**: Quantitative metrics with three-line evidence
-- **4.5 Discussion**: Expanded — implications beyond KRAS G12V, electrostatic anchor compensation hypothesis
-- **4.7 Conclusions**: Numerical conclusions (−30 vs −3 kcal/mol)
+The structural argument is restricted to minimisation and qualitative electrostatics
+(manuscript §3.5). The 100-ns MD is reported in Supplementary Note S. Neither the Coulombic
+estimate nor the HDOCKlite docking supports a **quantitative** salt-bridge claim.
