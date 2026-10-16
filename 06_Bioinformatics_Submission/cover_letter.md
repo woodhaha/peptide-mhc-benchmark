@@ -43,8 +43,9 @@ E-mail: zhouzhuha@wmu.edu.cn
 ORCID: 0009-0005-1818-4789
 
 On behalf of all authors:
-Yunshi Huang, Weisheng Chen, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou, Xiangyang Xue
+Yunshi Huang<sup>†</sup>, Weisheng Chen<sup>†</sup>, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou, Xiangyang Xue
 
+<sup>†</sup> These authors contributed equally to this work.
 <sup>*</sup> Corresponding Author
 
 ---

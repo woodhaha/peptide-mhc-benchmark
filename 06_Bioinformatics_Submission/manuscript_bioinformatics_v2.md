@@ -1,6 +1,6 @@
 # The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Multi-Architecture and Multi-Allele Benchmark
 
-**Authors**: Yunshi Huang<sup>1</sup>, Weisheng Chen<sup>2</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
+**Authors**: Yunshi Huang<sup>1,†</sup>, Weisheng Chen<sup>2,†</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
 
 **Word count**: ~4,400 (main text) | **Tables**: 7 | **Figures**: 9
 
@@ -10,6 +10,7 @@
 <sup>3</sup> Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China  
 <sup>4</sup> Zhejiang Key Laboratory of Intelligent Cancer Biomarker Discovery and Translation, The First Affiliated Hospital of Wenzhou Medical University, Wenzhou, China  
 
+<sup>†</sup> These authors contributed equally to this work.  
 <sup>*</sup> Corresponding authors: Xiangyang Xue, wzxxy@wmu.edu.cn, ORCID: 0000-0002-8670-2016; Zhuha Zhou, zhouzhuha@wmu.edu.cn, ORCID: 0009-0005-1818-4789  
 
 ---

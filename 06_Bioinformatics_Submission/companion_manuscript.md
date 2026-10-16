@@ -1,6 +1,6 @@
 # A Rebalanced Pan-Specific Model and the Non-Canonical Frontier: A Multi-Allele Benchmark of Peptide-MHC-I Binding Prediction
 
-**Authors**: Yunshi Huang<sup>1</sup>, Weisheng Chen<sup>2</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
+**Authors**: Yunshi Huang<sup>1,†</sup>, Weisheng Chen<sup>2,†</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
 
 **Affiliations**:  
 <sup>1</sup> Department of General Surgery, The First Affiliated Hospital of Wenzhou Medical University, Wenzhou, China  
@@ -8,6 +8,7 @@
 <sup>3</sup> Center for Bionanoengineering, College of Chemical and Biological Engineering, Zhejiang University, Hangzhou 310027, China  
 <sup>4</sup> Zhejiang Key Laboratory of Intelligent Cancer Biomarker Discovery and Translation, The First Affiliated Hospital of Wenzhou Medical University, Wenzhou, China  
 
+<sup>†</sup> These authors contributed equally to this work.  
 <sup>*</sup> Corresponding authors: Xiangyang Xue, wzxxy@wmu.edu.cn, ORCID: 0000-0002-8670-2016; Zhuha Zhou, zhouzhuha@wmu.edu.cn, ORCID: 0009-0005-1818-4789  
 
 ---
