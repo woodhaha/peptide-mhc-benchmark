@@ -47,75 +47,49 @@ C = {
 #  PANEL A: 2D Interaction Diagram — B-pocket + K(P2) + E63
 # ═══════════════════════════════════════════════════════════════════════════════
 def draw_interaction_diagram(ax):
-    """Schematic 2D diagram of the K-E63 salt bridge in the B-pocket."""
+    """Schematic 2D diagram of the K-E63 salt bridge in the B-pocket (clean)."""
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 8)
     ax.axis('off')
     ax.set_facecolor(C['bg'])
 
-    # Title
     ax.text(5, 7.6, 'A  B-Pocket Salt Bridge: K(P2) → Glu63', ha='center', fontsize=12,
-            fontweight='bold', fontfamily='sans-serif')
+            fontweight='bold', fontfamily='sans-serif', color='#222222')
 
-    # ── B-pocket cavity (oval) ──
-    pocket = FancyBboxPatch((1.5, 1.5), 7, 4.5, boxstyle="round,pad=0.6",
-                            facecolor='#FFF8E1', edgecolor=C['pocket'], linewidth=2, alpha=0.6)
+    pocket = FancyBboxPatch((1.8, 1.0), 6.4, 5.0, boxstyle="round,pad=0.5",
+                            facecolor='#FFF8E1', edgecolor=C['pocket'], linewidth=2, alpha=0.5)
     ax.add_patch(pocket)
-    ax.text(5, 5.8, 'B-Pocket (hydrophobic cavity)', ha='center', fontsize=9,
+    ax.text(5, 5.6, 'B-Pocket (hydrophobic cavity)', ha='center', fontsize=9,
             color=C['pocket'], style='italic')
 
-    # ── Pocket-lining residues ──
-    pocket_aa = ['Met5', 'Tyr7', 'Phe9', 'Met45', 'Glu63', 'Lys66', 'Val67', 'Tyr99', 'Tyr159']
-    y_positions = np.linspace(4.8, 2.2, len(pocket_aa))
-    for i, (aa, y) in enumerate(zip(pocket_aa, y_positions)):
-        x = 2.0 + (i % 3) * 3.0
-        color = C['salt_bridge'] if 'Glu63' in aa else C['pocket']
-        lw = 2 if 'Glu63' in aa else 0.8
-        ax.plot(x, y, 'o', color=color, markersize=10 if 'Glu63' in aa else 6, zorder=3)
-        ax.text(x + 0.4, y, aa, fontsize=7 if 'Glu63' not in aa else 8,
-                fontweight='bold' if 'Glu63' in aa else 'normal',
-                color=color, va='center')
+    ax.plot(3.2, 6.6, 'o', color=C['peptide'], markersize=13, zorder=4)
+    ax.text(3.7, 6.7, 'P2 (Lys)', fontsize=10, fontweight='bold', color=C['peptide'], va='center')
 
-    # ── K sidechain (P2 position → B-pocket) ──
-    # Lys backbone at P2
-    ax.plot(5, 6.5, 'o', color=C['peptide'], markersize=12, zorder=4)
-    ax.text(5.4, 6.5, 'P2 (Lys)', fontsize=9, fontweight='bold', color=C['peptide'], va='center')
+    ax.plot([3.2, 3.2, 4.3], [6.1, 4.6, 3.6], '-', color=C['peptide'], linewidth=2.5, zorder=2)
+    ax.plot(4.3, 3.6, 'o', color=C['salt_bridge'], markersize=11, zorder=5)
+    ax.text(4.0, 3.1, 'Nζ⁺', fontsize=9, color=C['salt_bridge'], ha='right', va='top')
 
-    # Sidechain reaching down into pocket
-    ax.plot([5, 5, 4.0], [6.2, 4.0, 3.2], '-', color=C['peptide'], linewidth=2.5, zorder=2)
-    # NZ atom
-    ax.plot(4.0, 3.2, 'o', color=C['salt_bridge'], markersize=10, zorder=5)
-    ax.text(3.6, 3.0, 'Nζ⁺', fontsize=8, color=C['salt_bridge'], ha='right')
+    ax.plot(6.7, 3.6, 'o', color=C['salt_bridge'], markersize=11, zorder=3)
+    ax.text(7.1, 3.7, 'Glu63', fontsize=9, fontweight='bold', color=C['salt_bridge'], va='center')
+    ax.plot([6.7, 5.9], [3.6, 3.6], '-', color=C['salt_bridge'], linewidth=2, zorder=2)
+    ax.plot(5.9, 3.6, 'o', color=C['salt_bridge'], markersize=10, zorder=5)
+    ax.text(6.2, 3.2, 'Oε⁻', fontsize=9, color=C['salt_bridge'], ha='left', va='top')
 
-    # ── E63 sidechain ──
-    ax.plot(6.5, 3.5, 'o', color=C['salt_bridge'], markersize=10, zorder=3)
-    ax.text(6.8, 3.35, 'Glu63', fontsize=8, fontweight='bold', color=C['salt_bridge'])
-    ax.plot([6.5, 5.5], [3.5, 3.2], '-', color=C['salt_bridge'], linewidth=2, zorder=2)
-    ax.plot(5.5, 3.2, 'o', color=C['salt_bridge'], markersize=9, zorder=5)
-    ax.text(5.8, 3.0, 'Oε⁻', fontsize=8, color=C['salt_bridge'], ha='left')
+    ax.plot([4.3, 5.9], [3.6, 3.6], '--', color=C['salt_bridge'], linewidth=1.5, alpha=0.8)
+    ax.text(5.1, 3.35, '3.7 Å', ha='center', fontsize=10, fontweight='bold', color=C['salt_bridge'],
+            bbox=dict(boxstyle='round,pad=0.25', facecolor='white', edgecolor=C['salt_bridge'], alpha=0.9))
 
-    # ── Salt bridge (dashed line with distance) ──
-    ax.plot([4.0, 5.5], [3.2, 3.2], '--', color=C['salt_bridge'], linewidth=1.5, alpha=0.7)
-    ax.text(4.75, 3.05, '3.7 Å', ha='center', fontsize=9, fontweight='bold', color=C['salt_bridge'],
-            bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=C['salt_bridge'], alpha=0.8))
+    ax.text(5, 1.6, 'ΔE ≈ −30 kcal/mol (un-solvated Coulombic; overestimates desolvation)',
+            ha='center', fontsize=8, color='#666666', style='italic',
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='#FAFAFA', edgecolor='#DDDDDD', alpha=0.9))
 
-    # ── Coulomb energy annotation ──
-    ax.text(4.75, 2.2, 'ΔE ≈ −30 kcal/mol (un-solvated, overestimates)', ha='center', fontsize=10, fontweight='bold',
-            color=C['salt_bridge'], bbox=dict(boxstyle='round,pad=0.3', facecolor='#FDEDEC',
-            edgecolor=C['salt_bridge'], alpha=0.9))
-
-    # Legend
     legend_elements = [
         Line2D([0], [0], marker='o', color='w', markerfacecolor=C['salt_bridge'], markersize=8, label='Salt bridge (K-E63)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor=C['pocket'], markersize=6, label='B-pocket residues'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor=C['peptide'], markersize=8, label='Peptide backbone'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor=C['peptide'], markersize=8, label='Peptide (P2 Lys)'),
+        Line2D([0], [0], marker='s', color='w', markerfacecolor='#FFF8E1', markeredgecolor=C['pocket'], markersize=10, label='B-pocket'),
     ]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=7, framealpha=0.9)
+    ax.legend(handles=legend_elements, loc='lower left', fontsize=7.5, framealpha=0.95)
 
-
-# ═══════════════════════════════════════════════════════════════════════════════
-#  PANEL B: B-Pocket Volume Conservation
-# ═══════════════════════════════════════════════════════════════════════════════
 def draw_pocket_conservation(ax):
     """B-pocket CA-CA distance across 8 reference HLA-A*02:01 structures."""
     refs = pa.get("reference_structures", [])
