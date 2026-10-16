@@ -79,7 +79,7 @@ def draw_interaction_diagram(ax):
     ax.text(5.1, 3.35, '3.7 Å', ha='center', fontsize=10, fontweight='bold', color=C['salt_bridge'],
             bbox=dict(boxstyle='round,pad=0.25', facecolor='white', edgecolor=C['salt_bridge'], alpha=0.9))
 
-    ax.text(5, 1.6, 'ΔE ≈ −30 kcal/mol (un-solvated Coulombic; overestimates desolvation)',
+    ax.text(5, 0.55, 'ΔE ≈ −30 kcal/mol (un-solvated Coulombic; overestimates desolvation)',
             ha='center', fontsize=8, color='#666666', style='italic',
             bbox=dict(boxstyle='round,pad=0.3', facecolor='#FAFAFA', edgecolor='#DDDDDD', alpha=0.9))
 
@@ -88,7 +88,7 @@ def draw_interaction_diagram(ax):
         Line2D([0], [0], marker='o', color='w', markerfacecolor=C['peptide'], markersize=8, label='Peptide (P2 Lys)'),
         Line2D([0], [0], marker='s', color='w', markerfacecolor='#FFF8E1', markeredgecolor=C['pocket'], markersize=10, label='B-pocket'),
     ]
-    ax.legend(handles=legend_elements, loc='lower left', fontsize=7.5, framealpha=0.95)
+    ax.legend(handles=legend_elements, loc='upper left', fontsize=7.5, framealpha=0.95)
 
 def draw_pocket_conservation(ax):
     """B-pocket CA-CA distance across 8 reference HLA-A*02:01 structures."""
