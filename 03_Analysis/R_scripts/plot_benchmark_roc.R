@@ -17,7 +17,7 @@ par(mar = c(4, 4, 3, 2))
 plot.roc(roc_obj,
          main = "ROC Curve -- IEDB Benchmark (HLA-A*02:01)",
          sub  = paste0("Deep FFN (MHCflurry-trained, 91.9% accuracy) | ",
-                       "49 POS + 20 NEG | AUC = ", round(auc(roc_obj), 3)),
+                       "48 POS + 20 NEG | AUC = ", round(auc(roc_obj), 3)),
          col = "#4472C4", lwd = 3,
          print.auc = TRUE, print.auc.cex = 1.5,
          print.auc.x = 0.45, print.auc.y = 0.35,
@@ -83,7 +83,7 @@ p_cm <- ggplot(cm_df, aes(x = Predicted, y = Actual)) +
   labs(
     title    = "Confusion Matrix -- IEDB Benchmark",
     subtitle = paste0(
-      "Sensitivity: 93.9% | Specificity: 75.0% | F1: 0.920 | AUC: 0.947\n",
+      "Sensitivity: 95.8% | Specificity: 75.0% | F1: 0.929 | AUC: 0.953\n",
       "SB + WB = Predicted Binder | NB = Predicted Non-Binder"
     ),
     x = "Predicted Class",
@@ -146,7 +146,7 @@ p_d <- ggplot(p_dots, aes(x = binding_score, y = reorder(peptide, binding_score)
   labs(
     title = "IEDB Benchmark -- Per-Epitope Binding Scores",
     subtitle = paste0("Green=TP, Red=FN, Blue=TN, Orange=FP | ",
-                      "Sensitivity: 93.9% | AUC: 0.947"),
+                      "Sensitivity: 95.8% | AUC: 0.953"),
     x = "Binding Score (SB*1.0 + WB*0.5)",
     y = NULL,
     color = "Outcome", shape = "True Label"

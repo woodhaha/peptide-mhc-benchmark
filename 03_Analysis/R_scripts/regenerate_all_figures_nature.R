@@ -154,7 +154,7 @@ png(file.path(outdir, "Figure3_iedb_benchmark.png"), width = 2000, height = 1800
 par(mar = c(4, 4, 3, 2), bg = "white")
 plot.roc(roc_obj,
          main = "IEDB Benchmark — HLA-A*02:01",
-         sub  = sprintf("Deep FFN | 49 POS + 20 NEG | AUC = %.3f | Sensitivity = 93.9%%", auc(roc_obj)),
+         sub  = sprintf("Deep FFN | 48 POS + 20 NEG | AUC = %.3f | Sensitivity = 95.8%%", auc(roc_obj)),
          col = npg_navy, lwd = 3,
          print.auc = TRUE, print.auc.cex = 1.5,
          print.auc.x = 0.45, print.auc.y = 0.35,
@@ -166,7 +166,7 @@ dev.off()
 pdf(file.path(outdir, "Figure3_iedb_benchmark.pdf"), width = 8, height = 7)
 par(mar = c(4, 4, 3, 2))
 plot.roc(roc_obj, main = "IEDB Benchmark — HLA-A*02:01",
-         sub = sprintf("Deep FFN | 49 POS + 20 NEG | AUC = %.3f | Sensitivity = 93.9%%", auc(roc_obj)),
+         sub = sprintf("Deep FFN | 48 POS + 20 NEG | AUC = %.3f | Sensitivity = 95.8%%", auc(roc_obj)),
          col = npg_navy, lwd = 3, print.auc = TRUE, print.auc.cex = 1.5,
          print.auc.x = 0.45, print.auc.y = 0.35,
          auc.polygon = TRUE, auc.polygon.col = paste0(npg_navy, "30"),
@@ -198,7 +198,7 @@ p3_cm <- ggplot(cm_df, aes(x = Predicted, y = Actual)) +
   geom_text(aes(label = label), size = 5.5, fontface = "bold") +
   scale_fill_gradient(low = "#F0F4FA", high = npg_navy, guide = "none") +
   labs(title = "Confusion Matrix — IEDB Benchmark",
-       subtitle = "Sensitivity: 93.9% | Specificity: 75.0% | F1: 0.920 | SB+WB = Predicted Binder") +
+       subtitle = "Sensitivity: 95.8% | Specificity: 75.0% | F1: 0.929 | SB+WB = Predicted Binder") +
   theme_minimal(base_size = 15) +
   theme(plot.title = element_text(face = "bold", size = 18),
         plot.subtitle = element_text(size = 11, color = "gray40"),
@@ -235,7 +235,7 @@ p_dots <- res %>%
   ) %>% arrange(desc(binding_score)) %>% mutate(idx = 1:n())
 
   fn_annotate <- p_dots %>% filter(outcome == "FN") %>% slice_head(n = 3)
-  p_dots_sub <- "Sensitivity: 93.9% | AUC: 0.947 | 49 POS + 20 NEG | FN labelled with non-canonical p9 anchor"
+  p_dots_sub <- "Sensitivity: 95.8% | AUC: 0.953 | 48 POS + 20 NEG | FN labelled with non-canonical p9 anchor"
 
 p3_dots <- ggplot(p_dots, aes(x = binding_score, y = reorder(peptide, binding_score))) +
   geom_point(aes(color = outcome), size = 2.5) +

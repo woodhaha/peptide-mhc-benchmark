@@ -11,11 +11,11 @@
 
 | Metric | Value | Grade |
 |--------|-------|:-----:|
-| **Sensitivity (Recall)** | **93.9%** (46/49) | A |
+| **Sensitivity (Recall)** | **95.8%** (46/48) | A |
 | **Specificity** | 75.0% (15/20) | B |
 | **Precision (PPV)** | 90.2% | A |
-| **F1 Score** | 0.920 | A |
-| **ROC AUC** | 0.947 | A |
+| **F1 Score** | 0.929 | A |
+| **ROC AUC** | 0.953 | A |
 | **Accuracy** | 88.4% | A- |
 
 ### Confusion Matrix
@@ -173,11 +173,11 @@ This binding-vs-immunogenicity distinction is a known limitation shared by ALL c
 
 ## Conclusions
 
-1. **93.9% sensitivity on 49 validated epitopes** -- the model is highly reliable for epitope screening
+1. **95.8% sensitivity on 48 validated epitopes** -- the model is highly reliable for epitope screening
 2. **All 3 false negatives have non-canonical p9 residues** (K, F, C) -- biologically justified misses
 3. **100% sensitivity on tumor antigens** -- excellent for cancer vaccine target discovery
 4. **Binding-vs-immunogenicity gap**: The model predicts MHC binding, not T-cell activation. Homopolymers with canonical anchors score high because they *would* bind MHC
-5. **ROC AUC 0.947** -- near state-of-the-art discrimination for a compact FFN architecture
+5. **ROC AUC 0.953** -- near state-of-the-art discrimination for a compact FFN architecture
 
 ---
 
