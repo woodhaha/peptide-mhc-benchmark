@@ -6,7 +6,7 @@
 *Bioinformatics*
 Oxford University Press
 
-**Re**: Submission of original paper — "The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Multi-Architecture and Multi-Allele Benchmark"
+**Re**: Submission of original paper — "The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Benchmark-Hygiene Case Study"
 
 ---
 
