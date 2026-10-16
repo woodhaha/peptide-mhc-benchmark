@@ -331,57 +331,19 @@ def generate_py3dmol_views():
 def main():
     print("Generating enhanced structural figure...")
 
-    fig = plt.figure(figsize=(10, 12), facecolor='white')
+    fig = plt.figure(figsize=(10, 7), facecolor='white')
 
     # 2×3 grid: A(top-left) B(top-right) C(middle-left) D(middle-right) E(bottom, full-width)
-    gs = fig.add_gridspec(3, 2, height_ratios=[1, 1, 0.6], hspace=0.35, wspace=0.3)
+    gs = fig.add_gridspec(2, 2, height_ratios=[1, 0.75], hspace=0.4, wspace=0.3)
 
     ax_a = fig.add_subplot(gs[0, 0])
     ax_b = fig.add_subplot(gs[0, 1])
-    ax_c = fig.add_subplot(gs[1, 0])
-    ax_d = fig.add_subplot(gs[1, 1])
-    ax_e = fig.add_subplot(gs[2, :])  # 3D placeholder / summary
+    ax_c = fig.add_subplot(gs[1, :])
 
     draw_interaction_diagram(ax_a)
     draw_pocket_conservation(ax_b)
     draw_anchor_comparison(ax_c)
-    draw_energy_decomposition(ax_d)
 
-    # Panel E: Summary table + key metrics
-    ax_e.axis('off')
-    ax_e.set_facecolor(C['bg'])
-    ax_e.text(0.5, 0.95, 'E  K-E63 Salt Bridge — Structural Evidence Summary', ha='center',
-              fontsize=12, fontweight='bold', transform=ax_e.transAxes)
-
-    metrics = [
-        ('Method', 'pdbfixer + OpenMM minimization (amber14, no cutoff)'),
-        ('Template', '1DUZ (HLA-A*02:01 + LLFGYPVYV, 1.80 Å)'),
-        ('P2 CA → Glu63 OE2', f'{sb["geometry"]["p2_ca_e63_oe2"]} Å'),
-        ('P2 CA → Glu63 OE1', f'{sb["geometry"]["p2_ca_e63_oe1"]} Å'),
-        ('Min OE distance', f'{sb["geometry"]["min_oe"]} Å'),
-        ('K sidechain reach (CA→Nz)', f'{sb["geometry"]["k_sidechain_reach_angstrom"]} Å'),
-        ('Salt bridge cutoff', '4.0 Å (standard N–O definition)'),
-        ('Coulomb ΔE (salt bridge, un-solvated)', f'{sb["salt_bridge_energy_kcal_per_mol"]:.1f} kcal/mol (overestimates)'),
-        ('Canonical Leu burial ΔG', '−3.0 kcal/mol (hydrophobic anchor)'),
-                ('B-pocket conservation (8 PDBs)', f'11.4 ± 0.1 Å'),
-        ('Verdict', 'Qualitative hypothesis — not quantified'),
-    ]
-
-    y = 0.82
-    for label, value in metrics:
-        color = C['salt_bridge'] if label == 'Verdict' else '#2C3E50'
-        weight = 'bold' if label == 'Verdict' else 'normal'
-        size = 9 if label == 'Verdict' else 8
-        ax_e.text(0.05, y, f'{label}:', fontsize=size, fontweight='bold', color='#555',
-                  transform=ax_e.transAxes)
-        ax_e.text(0.52, y, str(value), fontsize=size, fontweight=weight, color=color,
-                  transform=ax_e.transAxes)
-        y -= 0.06
-
-    # Qualitative caveat (consistent with manuscript §3.5)
-    ax_e.text(0.5, 0.02, 'Qualitative hypothesis only; pending solvated free-energy calculation and experimental validation',
-              transform=ax_e.transAxes, ha='center', va='center', fontsize=8,
-              fontstyle='italic', color='#666666')
 
     # Title
     fig.suptitle('K-E63 Salt Bridge Structural Hypothesis (KRAS G12V YKLVVVGAV)',
