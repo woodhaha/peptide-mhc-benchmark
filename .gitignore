@@ -39,3 +39,12 @@ data/
 .venv_*/
 *.log
 .munis_dl/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
