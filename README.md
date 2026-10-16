@@ -159,7 +159,7 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 ```bibtex
 @article{zhou2026benchmarking,
   title={The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Systematic Multi-Architecture and Multi-Allele Benchmark},
-  author={Zhou, Zhuha and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian},
+  author={Huang, Yunshi and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian and Xue, Xiangyang and Zhou, Zhuha},
   journal={Submitted},
   year={2026}
 }

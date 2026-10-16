@@ -60,7 +60,7 @@ We are submitting as: **Method Review / Original Research Article**
 - [x] Data availability statement
 - [x] Code availability statement
 - [x] AI usage disclosure (in cover letter and Methods)
-- [x] ORCID for corresponding author (0009-0005-1818-4789)
+- [x] ORCID for corresponding authors (Zhuha Zhou 0009-0005-1818-4789; Xiangyang Xue 0000-0002-8670-2016)
 - [ ] ORCID IDs for co-authors (recommended)
 - [x] Suggested reviewers (3, in cover letter)
 - [x] Main figures: 8 (Figure1–8, PNG + vector PDF)
@@ -93,7 +93,7 @@ We are submitting as: **Method Review / Original Research Article**
 | 5 | Code availability statement | ✅ | In manuscript §Declarations |
 | 6 | AI usage disclosure | ✅ | In cover letter + manuscript Methods |
 | 7 | ORCID: Zhuha Zhou | ✅ | 0009-0005-1818-4789 |
-| 8 | ORCID: other authors | ⚠️ | Not yet added — required for co-authors |
+| 8 | ORCID: Xiangyang Xue | ✅ | 0000-0002-8670-2016 |
 | 9 | Suggested reviewers (3) | ✅ | In cover letter |
 | 10 | Main figures (8 = Figure 1–8) | ✅ | `figures/Figure1–7.pdf` + `Figure8` (vector PDF) |
 | 11 | Supplementary figures (5 = S1–S5) | ✅ | `figures/FigureS1–S5.pdf` |
@@ -105,7 +105,7 @@ We are submitting as: **Method Review / Original Research Article**
 | 17 | All references verified | ⚠️ | Refs 21 (blog), 31 (preprint), 36 (PhD thesis) flagged; remainder not verified |
 | 18 | CrossCheck/iThenticate | ❌ | Not yet run |
 | 19 | Title matches manuscript | ✅ | "Systematic Benchmarking..." across all files |
-| 20 | Author name consistency | ✅ | 5-author list (Zhou, Chen, Cai, Bai, Zhuxian Zhou) consistent across all files |
+| 20 | Author name consistency | ✅ | 7-author list (Huang, Chen, Cai, Zhuang, Zhuxian Zhou, Xue, Zhuha Zhou) consistent across all files |
 | 21 | Funding declaration consistent | ✅ | "No specific grant" — no contradiction with Author Contributions |
 | 22 | Abstract word count ≤250 | ✅ | ~240 words |
 | 23 | References in Vancouver style | ✅ | Numbered, consistent format |

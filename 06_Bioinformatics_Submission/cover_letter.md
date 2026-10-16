@@ -35,7 +35,7 @@ We appreciate your consideration and look forward to your response.
 
 Respectfully,
 
-**Zhuha Zhou, MD**<sup>†,*</sup>
+**Zhuha Zhou, MD**<sup>*</sup>
 Department of Gastroenterology Surgery
 The First Affiliated Hospital of Wenzhou Medical University
 Nanbaixiang Street, Ouhai District, 325000 Wenzhou, Zhejiang, China
@@ -43,9 +43,8 @@ E-mail: zhouzhuha@wmu.edu.cn
 ORCID: 0009-0005-1818-4789
 
 On behalf of all authors:
-Weisheng Chen<sup>†</sup>, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou
+Yunshi Huang, Weisheng Chen, Yiqi Cai, Xiaopeng Zhuang, Zhuxian Zhou, Xiangyang Xue
 
-<sup>†</sup> These authors contributed equally to this work.
 <sup>*</sup> Corresponding Author
 
 ---
