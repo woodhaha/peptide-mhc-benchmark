@@ -35,7 +35,7 @@ Experimentally confirmed class I binders were curated from the IEDB [9] for five
 
 ### 2.2 Type A/B classification
 
-Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9. Type A carries broad-only tolerated anchors (residues that appear in binding motifs but are non-canonical); Type B carries non-canonical residues at anchor positions. This distinction matters because the two classes have different biological origins and, as we show, different prediction difficulty.
+Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9. Type A carries broad-only tolerated anchors (residues that appear in binding motifs but are non-canonical); Type B carries non-canonical residues at anchor positions. The two classes have different biological origins and, as we show, different prediction difficulty.
 
 ### 2.3 Pan model and per-allele comparators
 
@@ -139,7 +139,7 @@ Three findings emerge. First, a positive, replicable result: a single rebalanced
 
 Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity across three independent sequence-based predictors (our DFFN, MHCflurry, MUNIS), so the ceiling is shared across sequence architectures of varying complexity rather than specific to our simple network. Whether structure-based scoring (e.g. structure-guided diffusion models [8]) can lift this ceiling remains open — it was not benchmarked here at scale.
 
-Third, a caveat that strengthens the structural story: the extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63; Zhou et al., companion) is prediction-resistant to every method tested, yet structure-informed analysis predicts these peptides bind. The contrast argues for structure-based screening as a complement for the hardest cases, pending experimental validation.
+Third, the extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63; Zhou et al., companion) is prediction-resistant to every method tested, yet structure-informed analysis predicts these peptides bind. The contrast argues for structure-based screening as a complement for the hardest cases, pending experimental validation.
 
 ### 4.1 Methodological implications
 
