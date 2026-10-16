@@ -38,7 +38,7 @@ Weak tail = thin-training alleles (B*27:05 n=150, B*51:01 n=1,665) — data scar
 Post-2022 epitopes were published after MHCflurry's training cutoff (unseen by the
 labeler). Preserved/improved sensitivity = NOT overfit to the IEDB era.
 
-## Table 4. P2 virtual mutagenesis — sidechain reach to Glu63 (3.83 Å)
+## Table 4. P2 virtual mutagenesis — sidechain reach to Glu63
 
 | P2 residue | Reach (Å) | Electrostatics vs Glu63(−) | Can compensate? |
 |------------|:--:|:--:|:--:|
