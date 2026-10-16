@@ -26,6 +26,16 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+plt.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial", "Helvetica"],
+    "axes.edgecolor": "#555555",
+    "axes.labelcolor": "#444444",
+    "axes.titlecolor": "#222222",
+    "xtick.color": "#555555", "ytick.color": "#555555",
+    "axes.grid": True, "grid.color": "#E5E5E5", "grid.linewidth": 0.3,
+    "axes.facecolor": "white", "figure.facecolor": "white",
+})
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from blosum_utils import encode_blosum, AA
@@ -35,13 +45,14 @@ MODEL_PATH = "03_Analysis/models/Deep_FFN.keras"
 DATA_PATH = "02_Data/raw/real_peptides.csv"
 os.makedirs(OUTDIR, exist_ok=True)
 
-# ── Nature NPG Palette ──
-NPG = {
-    "red": "#E64B35", "blue": "#4DBBD5", "green": "#00A087",
-    "navy": "#3C5488", "pink": "#F39B7F", "grey": "#8491B4",
-    "orange": "#DC0000", "brown": "#7E6148", "purple": "#B09C85",
+# ── Nature palette (consistent with R figures) ──
+NATURE = {
+    "blue": "#377EB8", "red": "#E41A1C", "green": "#4DAF4A",
+    "orange": "#FF7F00", "purple": "#984EA3", "gray": "#999999",
 }
-CLASS_COLORS = [NPG["navy"], NPG["red"], NPG["green"]]  # NB, WB, SB
+CLASS_COLORS = [NATURE["blue"], NATURE["orange"], NATURE["green"]]  # NB, WB, SB
+from matplotlib.colors import LinearSegmentedColormap
+NATURE_CMAP = LinearSegmentedColormap.from_list("nature", ["#377EB8", "white", "#E41A1C"])
 CLASS_LABELS = ["Non-Binder", "Weak Binder", "Strong Binder"]
 
 # ══════════════════════════════════════════════════════════════
@@ -99,7 +110,7 @@ for cls in range(3):
                c=CLASS_COLORS[cls], label=CLASS_LABELS[cls],
                s=14, alpha=0.7, edgecolors="none")
 
-ax.set_title("t-SNE of Penultimate-Layer Features\nColored by True Class (SB / WB / NB)",
+ax.set_title("t-SNE by True Class",
              fontsize=13, fontweight="bold", pad=12)
 ax.set_xlabel("t-SNE Dimension 1", fontsize=11)
 ax.set_ylabel("t-SNE Dimension 2", fontsize=11)
@@ -116,7 +127,7 @@ print("  Saved Figure6B_tsne_by_class.{png,pdf}")
 # ══════════════════════════════════════════════════════════════
 print("Plotting Figure6C_tsne_by_accuracy ...")
 fig, ax = plt.subplots(figsize=(8, 6))
-colors_correct = [NPG["green"], NPG["red"]]
+colors_correct = [NATURE["green"], NATURE["red"]]
 labels_correct = ["Correct", "Incorrect"]
 for val in [1, 0]:
     mask = correct == val
@@ -125,7 +136,7 @@ for val in [1, 0]:
                s=14, alpha=0.7, edgecolors="none")
 
 # Also mark by symbol for class
-ax.set_title("t-SNE of Penultimate-Layer Features\nColored by Prediction Correctness",
+ax.set_title("t-SNE by Prediction Correctness",
              fontsize=13, fontweight="bold", pad=12)
 ax.set_xlabel("t-SNE Dimension 1", fontsize=11)
 ax.set_ylabel("t-SNE Dimension 2", fontsize=11)
@@ -176,7 +187,7 @@ print("Plotting FigureS6_anchor_attention_heatmap ...")
 fig, axes = plt.subplots(1, 3, figsize=(18, 5), sharey=True)
 
 for cls, (ax, title) in enumerate(zip(axes, CLASS_LABELS)):
-    im = ax.imshow(class_attn[cls].T, aspect="auto", cmap="YlOrRd",
+    im = ax.imshow(class_attn[cls].T, aspect="auto", cmap=NATURE_CMAP,
                    interpolation="nearest")
     ax.set_xticks(range(9))
     ax.set_xticklabels([f"p{i+1}" for i in range(9)], fontsize=10)
@@ -187,8 +198,6 @@ for cls, (ax, title) in enumerate(zip(axes, CLASS_LABELS)):
         ax.set_ylabel("Amino Acid", fontsize=11)
     ax.set_xlabel("Peptide Position", fontsize=11)
 
-fig.suptitle("Integrated Gradients — Per-Position × AA Attention by Class",
-             fontsize=14, fontweight="bold", y=1.02)
 fig.tight_layout()
 fig.savefig(os.path.join(OUTDIR, "FigureS6_anchor_attention_heatmap.png"), dpi=300, bbox_inches="tight")
 fig.savefig(os.path.join(OUTDIR, "FigureS6_anchor_attention_heatmap.pdf"), bbox_inches="tight")
@@ -206,7 +215,7 @@ for cls in range(3):
            label=CLASS_LABELS[cls], color=CLASS_COLORS[cls], alpha=0.85)
 ax.set_xticks(x + width)
 ax.set_xticklabels([f"p{i+1}" for i in range(9)], fontsize=10)
-ax.set_title("Per-Position Feature Importance by Class (Integrated Gradients)",
+ax.set_title("Per-Position Importance by Class",
              fontsize=13, fontweight="bold")
 ax.set_ylabel("Mean |Attribution| (sum over AAs)", fontsize=11)
 ax.set_xlabel("Peptide Position", fontsize=11)
