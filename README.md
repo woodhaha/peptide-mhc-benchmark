@@ -33,7 +33,7 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 |--------|:-----:|
 | Best architecture | CNN (1.05M parameters) |
 | IEDB sensitivity | **95.8%** (46/48) |
-| IEDB ROC AUC | **0.947** |
+| IEDB ROC AUC | **0.953** |
 | Anchor-rule baseline | sensitivity 1.0 on canonical peptides |
 | Non-canonical plateau | ~0.65 across 3 sequence predictors |
 | Cancer neoepitopes | p53 R248W (`MNWRPILTI`), KRAS G12V (`YKLVVVGAV`) |

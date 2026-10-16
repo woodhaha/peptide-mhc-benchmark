@@ -6,7 +6,7 @@
 | Specificity | 75.0% (15/20) | **100% (20/20)** |
 | Precision (PPV) | 90.2% | **100%** |
 | F1 Score | 0.920 | **0.968** |
-| ROC AUC | 0.947 | 0.947 |
+| ROC AUC | 0.953 | 0.953 |
 | Accuracy | 88.4% | **95.7%** |
 | False Positives | 5 | **0** |
 
