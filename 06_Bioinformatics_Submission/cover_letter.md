@@ -18,9 +18,11 @@ We are pleased to submit our manuscript for consideration as an Original Paper i
 
 **Label circularity, quantified.** An independent state-of-the-art predictor, NetMHCpan-4.1, agreed with the MHCflurry training labels on only 62.24% (323/519) of the same held-out test peptides, versus 90.6% for a model trained directly on those labels. This ~28-point gap shows that reported accuracies measure fidelity to a particular labeler rather than true binding — a caveat with direct implications for how peptide-MHC benchmarks should be reported.
 
+**Experimental validation.** We break this circularity with a label-independent benchmark of 6,524 experimentally measured binding affinities (IC50), on which the MHCflurry-trained model retains ROC AUC 0.942 — confirming that the reported performance reflects genuine binding prediction rather than mere fidelity to the labeler.
+
 **The non-canonical frontier.** A zero-parameter anchor rule matches the trained model on canonical IEDB peptides, while non-canonical binders plateau at ~0.65 sensitivity across three independent sequence predictors (a 15-allele panel) — identifying where the genuinely hard problem lies.
 
-We believe this work aligns with *Bioinformatics*' scope of methodological benchmarks and reproducible computational pipelines. All code, trained models, data, and re-analysis scripts (multi-seed and random-label null benchmarks, plus the NetMHCpan comparison via the IEDB API) are available at https://github.com/woodhaha/peptide-mhc-benchmark.
+We believe this work aligns with *Bioinformatics*' scope of methodological benchmarks and reproducible computational pipelines. All code, trained models, data, and re-analysis scripts are available at https://github.com/woodhaha/peptide-mhc-benchmark, and the predictor is released as the `pmhcbenchmark` Python package (pip-installable) with a command-line tool and a standalone Windows GUI.
 
 This manuscript has not been published previously and is not under consideration elsewhere. All authors have approved the manuscript and agree with its submission. The authors declare no competing interests. No specific grant funding was received.
 

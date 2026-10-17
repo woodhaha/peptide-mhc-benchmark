@@ -2,7 +2,7 @@
 
 **Authors**: Yunshi Huang<sup>1,†</sup>, Weisheng Chen<sup>2,†</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
 
-**Word count**: ~4,400 (main text) | **Tables**: 7 | **Figures**: 9
+**Word count**: ~4,900 (main text) | **Tables**: 7 | **Figures**: 9
 
 **Affiliations**:  
 <sup>1</sup> Department of General Surgery, The First Affiliated Hospital of Wenzhou Medical University, Wenzhou, China  
