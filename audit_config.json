@@ -1,0 +1,99 @@
+{
+  "root": ".",
+  "references": {
+    "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md": "authoryear",
+    "06_Bioinformatics_Submission/companion_manuscript.md": "numbered"
+  },
+  "figure_dirs": [
+    "06_Bioinformatics_Submission/latex_template/figures",
+    "06_Bioinformatics_Submission/companion_latex/figures"
+  ],
+  "tripwires": {
+    "must_contain": {
+      "46/48": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "95.8%": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "0.953": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "5,190": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+      ],
+      "12/15": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "0.819": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "MHCflurry 2.2.1": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md",
+        "README.md"
+      ],
+      "91.9": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md"
+      ],
+      "zhouzhuha@wmu.edu.cn": [
+        "06_Bioinformatics_Submission/cover_letter.md",
+        "06_Bioinformatics_Submission/companion_cover_letter.md"
+      ]
+    },
+    "must_not_contain": {
+      "46/49": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "93.9%": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "0.947": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "11/15": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "0.72": [
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "5,088": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ],
+      "94.8%": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "CLAUDE.md"
+      ],
+      "MHCflurry 2.2.0": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/companion_manuscript.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "Deep FFN best": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "CLAUDE.md"
+      ],
+      "blocked by the DTU license": [
+        "06_Bioinformatics_Submission/companion_manuscript.md"
+      ]
+    }
+  }
+}
