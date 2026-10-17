@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pmhcbenchmark"
+version = "1.0.0"
+description = "Peptide-MHC-I binding prediction with a per-allele Deep FFN (BLOSUM62)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+    "numpy>=1.21",
+    "keras>=3.0",
+    "tensorflow>=2.11",
+]
+
+[project.scripts]
+pmhc-predict = "pmhcbenchmark.cli:main"
+
+[tool.setuptools]
+packages = ["pmhcbenchmark"]

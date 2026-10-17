@@ -48,3 +48,8 @@ data/
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec

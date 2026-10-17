@@ -104,6 +104,23 @@ cd ../03_Analysis/Python_scripts && python mhcflurry_direct_compare.py
 
 ---
 
+## Software
+
+The trained per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package.
+
+```bash
+pip install -e .                          # from the repo root
+
+pmhc-predict YKLVVVGAV                    # score = P(weak binder) + P(strong binder)
+pmhc-predict YKLVVVGAV,GILGFVFTL --allele HLA-A*02:01
+pmhc-predict --file peptides.txt --allele HLA-B*07:02
+
+# or without installing
+python -m pmhcbenchmark YKLVVVGAV
+```
+
+Five HLA class I alleles are supported (A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03). Models are BLOSUM62-encoded per-allele Deep FFNs trained on IEDB positives with protein-background negatives; a score ≥ 0.5 is classified as a binder.
+
 ## Methodological Highlights
 
 ### Benchmark Artifacts (Methods Hygiene)
