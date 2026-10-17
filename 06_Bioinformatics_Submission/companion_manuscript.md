@@ -103,7 +103,7 @@ The two false negatives from our single-allele IEDB benchmark (`QYDPVAALF`, `TLG
 
 ### 3.6 Scaling: one model replaces a 15-allele panel
 
-The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with ~11/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08–0.20), B\*51:01 (0.36–0.52), B\*07:02 (0.60), A\*24:02 (0.72) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08–0.20), B\*51:01 (0.36–0.52), B\*07:02 (0.64), A\*24:02 (0.76) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
 
 **Table 4. Pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).**
 
@@ -150,7 +150,7 @@ The per-allele-versus-pan comparison illustrates how benchmark artifacts can man
 - The plateau and hard-tail estimates rest on IEDB-derived positives; experimental (non-IEDB) validation of the extreme tail is outstanding.
 - A pMHC-fine-tuned structure model (beyond generic AlphaFold-Multimer) might lift the Type B plateau; MUNIS is a sequence-based comparator and does not speak to this.
 - Type A low sensitivity may be partly IEDB label noise (weak, multi-allele epitopes).
-- NetMHCpan comparison was blocked by the DTU license; MHCflurry and MUNIS served as two independent sequence predictors.
+- NetMHCpan was not benchmarked on the multi-allele panel; the standalone NetMHCpan download is restricted by the DTU license, while the single-allele NetMHCpan-4.1 comparison (via the IEDB API) is reported in the sister study. MHCflurry and MUNIS served as two independent sequence predictors.
 
 ## 5 Conclusion
 

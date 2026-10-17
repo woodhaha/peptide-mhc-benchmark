@@ -1,22 +1,23 @@
-# Table 3: IEDB Benchmark Performance — 49 Validated HLA-A\*02:01 Epitopes
+# Table 3: IEDB Benchmark Performance — 48 Validated HLA-A\*02:01 Epitopes
 
 | Metric | Baseline | With Homopolymer Filter |
 |--------|:--------:|:-----------------------:|
-| Sensitivity (Recall) | 93.9% (46/49) | 93.9% (46/49) |
+| Sensitivity (Recall) | 95.8% (46/48) | 95.8% (46/48) |
 | Specificity | 75.0% (15/20) | **100% (20/20)** |
 | Precision (PPV) | 90.2% | **100%** |
-| F1 Score | 0.920 | **0.968** |
+| F1 Score | 0.929 | **0.979** |
 | ROC AUC | 0.953 | 0.953 |
-| Accuracy | 88.4% | **95.7%** |
+| Accuracy | 89.7% | **97.1%** |
 | False Positives | 5 | **0** |
 
-## False Negatives (n = 3, both versions)
+## False Negatives (n = 2, both versions)
 
 | Peptide | Source | p9 Anchor | Issue |
 |---------|--------|:---------:|-------|
-| ILRGSVAHK | NP 265–273 | K | Non-canonical lysine at p9 |
 | QYDPVAALF | pp65 341–349 | F | Non-canonical phenylalanine at p9 |
 | TLGIVCPIC | E7 86–94 | C | Non-canonical cysteine at p9 |
+
+*Note: `ILRGSVAHK` (NP 265–273) was excluded from the benchmark because it is HLA-B\*08:01-restricted, not HLA-A\*02:01.*
 
 ## False Positives Eliminated by Homopolymer Filter (n = 5)
 
@@ -32,4 +33,4 @@
 
 ## Domain Filter Validation
 
-All 49 true positive epitopes have ≥3 unique amino acids and are unaffected by the filter. The filter addresses the known binding-versus-immunogenicity distinction: homopolymers with canonical anchors may bind MHC-I molecules but cannot trigger T-cell responses.
+All 48 true positive epitopes have ≥3 unique amino acids and are unaffected by the filter. The filter addresses the known binding-versus-immunogenicity distinction: homopolymers with canonical anchors may bind MHC-I molecules but cannot trigger T-cell responses.

@@ -120,7 +120,7 @@ A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-tra
 
 ### MHCflurry Label Circularity
 
-When MHCflurry 2.2.0 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.1 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
+When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.1 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
 
 ### Three-Tier Neoantigen Screening Pipeline
 

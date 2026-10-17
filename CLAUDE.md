@@ -8,13 +8,13 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 
 ## Project Overview
 
-**Title**: Systematic Benchmarking of Deep Learning Architectures for Peptide-MHC Binding Prediction
+**Title**: The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Benchmark-Hygiene Case Study
 
 **Research question**: How do architecture choice, label quality, and peptide encoding affect peptide-MHC binding prediction performance?
 
 **Design type**: Systematic computational benchmark with external validation
 
-**Core finding**: Label quality, not architecture, defines the performance ceiling. Deep FFN achieves 91.9% accuracy (macro F1 0.921) with BLOSUM62; ESM-2 t6 embeddings modestly improve to 93.3%. IEDB benchmark: 93.9% sensitivity (46/49 epitopes), ROC AUC 0.947.
+**Core finding**: A CNN modestly outperforms a Deep FFN (91.9% ± 0.9% vs 90.6% ± 1.2%); canonical binding is solved by the anchor motif, while non-canonical binders plateau at ~0.65 sensitivity across three sequence predictors — the real frontier. IEDB benchmark: 95.8% sensitivity (46/48 epitopes), ROC AUC 0.953.
 
 **Target venues**: *Briefings in Bioinformatics* / *Bioinformatics* / *Frontiers in Immunology*
 
@@ -27,7 +27,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 | **Binding classes** | Strong Binder (SB, rank <0.5%), Weak Binder (WB, 0.5%≤rank<2.0%), Non-Binder (NB, rank≥2.0%) |
 | **Models** | Deep FFN (152K params) · FFN/Jessen (49K) · CNN (1.05M) · LSTM (24K) · ResNet (325K) · Random Forest |
 | **Encoding schemes** | BLOSUM62 (9×20) · ESM-2 t6 (2,880-dim) · ESM-2 t12 (4,320-dim) · ESM-2 mean-pooled (320-dim) |
-| **Label sources** | MHCflurry 2.2.0 · Deterministic PSSM · Random synthetic |
+| **Label sources** | MHCflurry 2.2.1 · Deterministic PSSM · Random synthetic |
 | **Cancer mutations** | KRAS G12V (`YKLVVVGAV`) · p53 R248W (`MNWRPILTI`) |
 | **Docking receptor** | HLA-A\*02:01 PDB 1DUZ (1.80Å, peptide LLFGYPVYV) |
 
@@ -38,7 +38,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 3. **Before any analysis**, check for missing values, outliers, and variable types.
 4. **Training/testing split** was stratified by class at 90/10 with seed=42.
 5. **External validation** uses IEDB-curated benchmark: 49 experimentally verified epitopes + 20 homopolymer negative controls.
-6. **Data provenance**: MHCflurry 2.2.0 labels are computational, not experimental. The manuscript explicitly quantifies label quality effects (PSSM 94.8% vs MHCflurry 91.9%).
+6. **Data provenance**: MHCflurry 2.2.1 labels are computational, not experimental. The manuscript quantifies label-source effects (PSSM 82.6% vs MHCflurry 90.6%; i.i.d. random null ~34.5%).
 
 ## Statistics
 
@@ -106,10 +106,10 @@ Peptide epitope/
 
 | Section | Key Content |
 |---------|-------------|
-| Abstract | 6-architecture benchmark; label quality > architecture; 91.9%→93.3% with ESM-2 t6; IEDB 93.9% sensitivity |
+| Abstract | 6-architecture benchmark; CNN > Deep FFN (91.9% vs 90.6%); non-canonical plateau ~0.65; IEDB 95.8% sensitivity |
 | Introduction | Gap: no controlled architecture comparison + no label quality quantification |
-| Methods | 100K random 9-mers → MHCflurry labeling → 5,088 balanced → 6 architectures + 3 encoding schemes |
-| Results | Deep FFN best (91.9%), PSSM labels 94.8%, ESM-2 t6 93.3%, IEDB 46/49, KRAS G12V neoepitope |
+| Methods | 100K random 9-mers → MHCflurry labeling → 5,190 balanced → 6 architectures + 3 encoding schemes + multi-allele extension |
+| Results | CNN best (91.9%), PSSM 82.6%, random null ~34.5%, IEDB 46/48 (95.8%), non-canonical plateau ~0.65, KRAS G12V neoepitope |
 | Discussion | Label quality dominates; K-E63 salt bridge hypothesis; limitations (single allele, TIP3P water model) |
 | Conclusion | Release open-source pipeline; structural hypotheses need experimental validation |
 
