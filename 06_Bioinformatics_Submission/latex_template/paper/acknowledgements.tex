@@ -5,3 +5,7 @@ Yunshi Huang and Weisheng Chen: conception, design, data analysis, manuscript wr
 \section*{Competing interests}
 
 The authors declare no competing interests.
+
+\section*{Data and code availability}
+
+All code, trained models (per-allele \texttt{deep\_ffn\_HLA-A\_*.keras} and pan \texttt{deep\_ffn\_pan\_seed*.keras}/\texttt{deep\_ffn\_pan16.keras}), feature matrices, prediction results, the curated multi-allele dataset (\texttt{type\_ab\_dataset.json}, 14,488 positives), and the experimental-label benchmark (6,524 measured IC50 values) are available at \href{https://github.com/woodhaha/peptide-mhc-benchmark}{github.com/woodhaha/peptide-mhc-benchmark}. The per-allele Deep FFN is distributed as the \texttt{pmhcbenchmark} Python package, with a \texttt{pmhc-predict} command-line tool and a standalone Windows GUI (\texttt{pmhc\_predict.exe}); exported weights (\texttt{pmhc\_models.npz}) enable tensorflow-free inference.

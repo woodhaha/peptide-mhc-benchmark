@@ -225,7 +225,7 @@ Architecture choice has a modest effect on peptide-MHC binding prediction: a CNN
 
 ## Data and code availability
 
-All code, trained models (including pan models `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), feature matrices, prediction results, and the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives) are available at github.com/woodhaha/peptide-mhc-benchmark.
+All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_pan_seed*.keras`/`deep_ffn_pan16.keras`), feature matrices, prediction results, the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives), and the experimental-label benchmark (6,524 measured IC50 values) are available at github.com/woodhaha/peptide-mhc-benchmark. The per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package, with a `pmhc-predict` command-line tool and a standalone Windows GUI (`pmhc_predict.exe`); exported weights (`pmhc_models.npz`) enable tensorflow-free inference.
 
 ## Author contributions
 
@@ -256,7 +256,7 @@ Kapoor S, Narayanan A. Leakage and the reproducibility crisis in machine-learnin
 Lin Z, Akin H, Rao R, et al. Evolutionary-scale prediction of atomic-level protein structure with a language model. Science 2023;379:1123-1130.
 Lundegaard C, Lund O, Nielsen M. State of the art and challenges in sequence based T-cell epitope prediction. Immunome Res 2011;6(Suppl 2):S3.
 Malekzadeh P, Yossef R, Cafri G, et al. Antigen experienced T cells from peripheral blood recognize p53 neoantigens. Clin Cancer Res 2020. doi:10.1158/1078-0432.CCR-19-1874.
-Mares SE, Espinoza Weinberger A, Ioannidis NM. Continued domain-specific pre-training of protein language models for pMHC-I binding prediction. arXiv:2507.13077 (2025).
+Mares SE, Espinoza Weinberger A, Ioannidis NM. Continued domain-specific pre-training of protein language models for pMHC-I binding prediction. Proc Mach Learn Res 2025;311:304-325.
 Nielsen M, Lundegaard C, Worning P, et al. Reliable prediction of T-cell epitopes using neural networks with novel sequence representations. Protein Sci 2003;12:1007-1017.
 O'Donnell TJ, Rubinsteyn A, Laserson U. MHCflurry 2.0: improved pan-allele prediction of MHC class I-presented peptides by incorporating antigen processing. Cell Syst 2020;11:42-48.
 Preibisch G, Tyrolski M, Kucharski P, et al. Resolution of recursive data corruption to transform T-cell epitope discovery. bioRxiv 2026.
