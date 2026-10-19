@@ -18,7 +18,7 @@ We are pleased to submit our manuscript for consideration as an Original Paper i
 
 **Label circularity, quantified.** An independent state-of-the-art predictor, NetMHCpan-4.1, agreed with the MHCflurry training labels on only 62.24% (323/519) of the same held-out test peptides, versus 90.6% for a model trained directly on those labels. This ~28-point gap shows that reported accuracies measure fidelity to a particular labeler rather than true binding — a caveat with direct implications for how peptide-MHC benchmarks should be reported.
 
-**Experimental validation.** We break this circularity with a label-independent benchmark of 6,524 experimentally measured binding affinities (IC50), on which the MHCflurry-trained model retains ROC AUC 0.942 — confirming that the reported performance reflects genuine binding prediction rather than mere fidelity to the labeler.
+**Experimental label validation.** A benchmark of 6,524 experimentally measured binding affinities (IC50) confirms the quality of the training labels (the MHCflurry-trained model retains ROC AUC 0.942 on this set), while a temporal holdout of post-2022 epitopes — unseen by the labeler — establishes generalisation beyond the training distribution.
 
 **The non-canonical frontier.** A zero-parameter anchor rule matches the trained model on canonical IEDB peptides, while non-canonical binders plateau at ~0.65 sensitivity across three independent sequence predictors (a 15-allele panel) — identifying where the genuinely hard problem lies.
 

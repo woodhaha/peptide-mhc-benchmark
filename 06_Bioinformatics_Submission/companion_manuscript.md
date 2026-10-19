@@ -168,7 +168,7 @@ A rebalanced pan-specific model matches per-allele specialists on four of five c
 
 ## Data and code availability
 
-All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark.
+All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark. This study is a companion to the single-allele benchmark-hygiene manuscript submitted separately to *Bioinformatics*; the shared multi-allele results are cross-referenced in both papers.
 
 ## Funding
 
