@@ -21,6 +21,12 @@
 
 ---
 
+## Author Summary
+
+Our immune system detects infected and cancerous cells by reading short protein fragments, called peptides, displayed on the cell surface. Computer programs that predict which peptides will be displayed are central to designing vaccines and cancer immunotherapies. Here we show that the standard way of testing these programs can make them appear more accurate than they really are — a subtle circularity in which a program is evaluated against data it helped generate. By re-running our own benchmarks under careful controls, we uncovered three ways this circularity produces misleading results. We then asked which peptides remain genuinely hard to predict. Peptides that follow the usual rules are now predicted almost perfectly, but a minority that breaks those rules remains a persistent blind spot for every method we tested. We distill our findings into a practical checklist to help researchers build more trustworthy prediction benchmarks, and we release all code, models, and data so the work can be verified and extended.
+
+---
+
 ## 1 Introduction
 
 MHC class I molecules present 8–11-mer peptides to CD8+ T cells, and accurate prediction of peptide–MHC-I binding underpins epitope discovery for vaccine design and cancer immunotherapy (Falk et al., 1991; Lundegaard et al., 2011). For HLA-A\*02:01 — the most prevalent class I allele globally — binding is dominated by two primary anchor positions: position 2 (p2, hydrophobic: Leu/Met/Ile/Val) and position 9 (p9, C-terminal, Val/Leu preferred) (Ruppert et al., 1993; Rammensee et al., 1995). Computational predictors have evolved from position-specific scoring matrices to neural networks and pan-specific tools such as NetMHCpan (Reynisson et al., 2020), MHCflurry (O'Donnell et al., 2020), BigMHC (Albert et al., 2023), and MUNIS (Wohlwend et al., 2025), increasingly using protein language model embeddings (Rives et al., 2021).
