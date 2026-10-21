@@ -239,6 +239,10 @@ The authors declare no competing interests.
 
 This research did not receive specific grant funding.
 
+## Ethics statement
+
+This study used only publicly available, de-identified data from the Immune Epitope Database (IEDB) and public protein databases; no human subjects, animals, or patient-derived samples were involved, and no ethics approval or informed consent was required.
+
 ## References
 
 Albert BA, Yang Y, Shao XM, et al. Deep neural networks predict class I major histocompatibility complex epitope presentation and transfer learn neoepitope immunogenicity. Nat Mach Intell 2023;5:861-872.

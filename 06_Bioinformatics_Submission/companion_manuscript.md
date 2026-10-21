@@ -174,6 +174,10 @@ All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.
 
 This research did not receive specific grant funding.
 
+## Ethics statement
+
+This study used only publicly available, de-identified data from the Immune Epitope Database (IEDB); no human subjects, animals, or patient-derived samples were involved, and no ethics approval or informed consent was required.
+
 ## Competing interests
 
 The authors declare no competing interests.
