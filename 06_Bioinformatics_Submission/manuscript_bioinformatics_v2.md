@@ -59,7 +59,7 @@ Experimentally confirmed class I binders were curated from IEDB (Vita et al., 20
 
 ### 3.1 Training data and architecture comparison
 
-MHCflurry labelling of 100,000 random 9-mers yielded 1.7% SB, 5.1% WB, 93.2% NB; after balancing, 5,190 peptides (1,730/class). Across five training seeds, the CNN achieved the highest accuracy (91.9% ± 0.9%; Table 1, Figure 1), modestly ahead of the Deep FFN (90.6% ± 1.2%), the FFN (89.8% ± 1.1%), and the LSTM (89.7% ± 0.9%) — the top four architectures within ~2 percentage points — while ResNet (87.6% ± 1.8%) and Random Forest (79.7% ± 0.4%) were clearly worse. MHCflurry itself scored 100% on the test set it labelled, quantifying label circularity (see Discussion). The WB class was consistently the most difficult (F1 0.752–0.880).
+MHCflurry labelling of 100,000 random 9-mers yielded 1.7% SB, 5.1% WB, 93.2% NB; after balancing, 5,190 peptides (1,730/class). Across five training seeds, the CNN achieved the highest accuracy (91.9% ± 0.9%; Table 1, Figure 1), modestly ahead of the Deep FFN (90.6% ± 1.2%), the FFN (89.8% ± 1.1%), and the LSTM (89.7% ± 0.9%) — the top four architectures within ~2 percentage points — while ResNet (87.6% ± 1.8%) and Random Forest (79.7% ± 0.4%) were clearly worse. MHCflurry itself scored 100% on the test set it labelled — an expected ceiling, since the labels are its own predictions — so the meaningful comparison is the 8.1-point gap between the labeler's decision boundary and the best finite-sample model that approximates it (91.9% for the CNN); independent-label circularity is instead quantified by the 62.24% NetMHCpan agreement (see Discussion). The WB class was consistently the most difficult (F1 0.752–0.880).
 
 **Table 1.** Model performance on the MHCflurry-labelled test set (mean ± SD across five training seeds, n=519).
 
@@ -72,7 +72,7 @@ MHCflurry labelling of 100,000 random 9-mers yielded 1.7% SB, 5.1% WB, 93.2% NB;
 | ResNet | 87.6 ± 1.8 | 324,931 |
 | Random Forest | 79.7 ± 0.4 | -- |
 
-† MHCflurry evaluated on its own training distribution scores 100%, reflecting label circularity, not superior performance.
+† MHCflurry evaluated on its own labels scores 100% — an expected ceiling, not evidence of superior performance; the 8.1-point gap to the CNN reflects the information loss of approximating the labeler's decision boundary from finite samples.
 
 The modest spread among the top four architectures reflects the positional nature of peptide–MHC binding: anchor positions p2/p9 dominate, so architectures that preserve positional information perform comparably. ResNet and the Random Forest were clearly worse, consistent with the absence of translation invariance in a 9×20 encoding and, for the Random Forest, the high dimensionality of the BLOSUM62 encoding.
 
