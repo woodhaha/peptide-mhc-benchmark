@@ -1,6 +1,6 @@
 # Peptide-MHC Binding Prediction — Data Package
 
-Accompanying data for "Label Quality Defines the Performance Ceiling for Peptide-MHC Binding Prediction: A Six-Architecture Benchmark with Multi-Allele Generalization" (submitted to *Bioinformatics*).
+Accompanying data for "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction" (submitted to *Bioinformatics*).
 
 ## Contents
 
@@ -9,7 +9,7 @@ Accompanying data for "Label Quality Defines the Performance Ceiling for Peptide
   - `type_ab_deepffn_scores.json` — Deep FFN binding scores per peptide
   - `type_ab_mhcflurry_scores.json` — MHCflurry affinity scores per peptide
   - `multiseed_results.json` — rebalanced pan model 5-seed non-canonical sensitivities
-  - `munis_typeab_scores.csv` — MUNIS (structure-based) scores
+  - `munis_typeab_scores.csv` — MUNIS (sequence-based) scores
 - `models/` — trained Keras models
   - `deep_ffn_pan_seed{0,1,42,123,2024}.keras` — rebalanced pan model (5 seeds)
   - `deep_ffn_pan16.keras` — 15-allele panel model
