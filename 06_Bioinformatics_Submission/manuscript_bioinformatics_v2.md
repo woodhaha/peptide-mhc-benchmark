@@ -271,7 +271,7 @@ Architecture choice has a modest effect on peptide-MHC binding prediction: a CNN
 
 ## Figure legends
 
-**Figure 1.** Model performance comparison across six architectures on the MHCflurry-labelled test set (accuracy, macro F1, WB F1).
+**Figure 1.** Model performance comparison across six architectures on the MHCflurry-labelled test set (accuracy, 5-seed mean ± SD).
 
 **Figure 2.** Architecture comparison (Table 1) and label-source controls: MHCflurry (90.6%), PSSM (82.6%), random labels at chance (~33%).
 

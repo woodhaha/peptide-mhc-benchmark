@@ -55,15 +55,15 @@ cat("\n── Figure 1: Model Comparison ──\n")
 
 mhcflurry <- tribble(
   ~Model, ~Accuracy, ~Macro_F1, ~NB_F1, ~WB_F1, ~SB_F1,
-  "MHCflurry 2.2.0†", 100.0, 1.000, 1.000, 1.000, 1.000,
-  "Deep FFN",        91.9, 0.921, 0.969, 0.880, 0.913,
-  "FFN (Jessen)",    90.9, 0.911, 0.969, 0.875, 0.891,
-  "CNN",             90.0, 0.901, 0.963, 0.860, 0.882,
-  "ResNet",          84.3, 0.847, 0.907, 0.792, 0.843,
-  "LSTM",            83.3, 0.836, 0.935, 0.752, 0.822,
-  "Random Forest",   81.1, 0.814, 0.927, 0.723, 0.793
+  "MHCflurry 2.2.1†", 100.0, 1.000, 1.000, 1.000, 1.000,
+  "CNN",            91.9, 0.921, 0.963, 0.860, 0.913,
+  "Deep FFN",       90.6, 0.911, 0.969, 0.880, 0.913,
+  "FFN (Jessen)",   89.8, 0.901, 0.969, 0.875, 0.891,
+  "LSTM",           89.7, 0.847, 0.935, 0.752, 0.843,
+  "ResNet",         87.6, 0.836, 0.907, 0.792, 0.822,
+  "Random Forest",  79.7, 0.814, 0.927, 0.723, 0.793
 ) %>% mutate(Model = factor(Model, levels = rev(c(
-  "MHCflurry 2.2.0†", "Deep FFN", "FFN (Jessen)", "CNN", "ResNet", "LSTM", "Random Forest"
+  "MHCflurry 2.2.1†", "CNN", "Deep FFN", "FFN (Jessen)", "LSTM", "ResNet", "Random Forest"
 ))))
 
 # Panel A: Accuracy bar chart
@@ -79,7 +79,7 @@ p1a <- ggplot(mhcflurry, aes(x = Accuracy, y = Model, fill = Model)) +
             hjust = -0.15, size = 3.8, fontface = "bold") +
   scale_fill_manual(values = setNames(nature_7, levels(mhcflurry$Model)), guide = "none") +
   labs(title = "Model Accuracy — HLA-A*02:01 Peptide-MHC Binding",
-       subtitle = "MHCflurry 2.2.0 labels, BLOSUM62 encoding, 5,088 balanced 9-mers\n†MHCflurry evaluated on its own training distribution (label circularity — see Section 4.6)",
+       subtitle = "MHCflurry 2.2.1 labels, BLOSUM62 encoding, 5,190 balanced 9-mers\n†MHCflurry evaluated on its own training distribution (label circularity)",
        x = "Accuracy (%)", y = NULL) +
   xlim(0, 105) +
   theme_minimal(base_size = 13) +
