@@ -1,4 +1,4 @@
-# Benchmark Hygiene and the Non-Canonical Frontier in Peptide-MHC-I Binding Prediction
+# Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction
 
 **Authors**: Yunshi Huang<sup>1,†</sup>, Weisheng Chen<sup>2,†</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
 

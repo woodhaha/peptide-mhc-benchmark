@@ -5,7 +5,7 @@
 **To**: The Editors
 *PLOS Computational Biology*
 
-**Re**: Submission of research article — "Benchmark Hygiene and the Non-Canonical Frontier in Peptide-MHC-I Binding Prediction"
+**Re**: Submission of research article — "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction"
 
 ---
 
