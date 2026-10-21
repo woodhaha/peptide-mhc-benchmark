@@ -6,6 +6,7 @@
 \usepackage{fontspec}
 \setmainfont{Arial}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{setspace}
 \usepackage{lineno}
 \doublespacing
@@ -907,67 +908,67 @@ a reusable safeguard. Experimental validation of the non-canonical tail
 is the decisive next step.
 
 \section*{Figures}
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure1.pdf}
 \caption{Model performance comparison across six architectures on the MHCflurry-labelled test set (accuracy, macro F1, WB F1).}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure2.pdf}
 \caption{Architecture comparison (Table 1) and label-source controls: MHCflurry (90.6\%), PSSM (82.6\%), random labels at chance ($\sim$33\%).}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure3.pdf}
 \caption{IEDB benchmark: ROC curve (AUC 0.953), confusion matrix, per-epitope scores.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure4.pdf}
 \caption{Protein epitope scanning: SB/WB/NB distribution across 10 proteins and top epitope candidates.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure5.pdf}
 \caption{Cancer hotspot mutation analysis: delta scores and wild-type/mutant pairs for 7 epitope-altering mutations.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure6.pdf}
 \caption{t-SNE of the Deep FFN 45-dimensional penultimate-layer representation, coloured by binding class (SB/WB/NB).}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure7.pdf}
 \caption{ESM-2 embedding comparison across five encoding strategies.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure8.pdf}
 \caption{Rebalanced pan model non-canonical sensitivity (5-seed mean $\pm$ SD) across five common HLA-I alleles. Per-allele values are tabulated in Table 6 rather than overlaid, as the per-allele benchmark (n=25 broad-motif) is not directly comparable to the large non-canonical set.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure9.pdf}
 \caption{Predictor plateau: canonical versus Type B (non-canonical) sensitivity for Deep FFN, MHCflurry, and MUNIS (sequence); dashed line marks the $\sim$0.65 Type B plateau.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure10.pdf}
 \caption{Pan16: per-allele non-canonical sensitivity for the 15-allele panel, sorted ascending; dashed line marks the pooled 0.819.}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/Figure11.pdf}
 \caption{Temporal holdout: non-canonical sensitivity at threshold 0.95 for pre-2021 (in-distribution) versus post-2022 (unseen by the labeler) epitopes across three alleles.}
