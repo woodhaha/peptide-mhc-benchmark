@@ -111,30 +111,24 @@ save_both(p1b, "Figure1_per_class_f1", w = 7, h = 5)
 # ============================================================
 cat("\n── Figure 2: Label Quality ──\n")
 
-pssm <- tribble(
-  ~Model, ~Accuracy,
-  "Deep FFN",        94.8,
-  "FFN (Jessen)",    93.2,
-  "CNN",             93.2,
-  "ResNet",          88.4,
-  "LSTM",            87.8,
-  "Random Forest",   87.3
-) %>% mutate(Model = factor(Model, levels = rev(c(
-  "Deep FFN", "FFN (Jessen)", "CNN", "ResNet", "LSTM", "Random Forest"
+label_df <- tribble(
+  ~Label_Source, ~Accuracy,
+  "MHCflurry 2.2.1", 90.6,
+  "PSSM (biophysics)", 82.6,
+  "Random (i.i.d.)", 34.5
+) %>% mutate(Label_Source = factor(Label_Source, levels = rev(c(
+  "MHCflurry 2.2.1", "PSSM (biophysics)", "Random (i.i.d.)"
 ))))
 
-gap_df <- pssm %>% rename(PSSM = Accuracy) %>%
-  left_join(mhcflurry %>% select(Model, Accuracy) %>% rename(MHCflurry = Accuracy), by = "Model") %>%
-  mutate(Gap = PSSM - MHCflurry)
-
-p2 <- ggplot(gap_df, aes(x = Gap, y = Model)) +
-  geom_col(fill = npg_red, alpha = 0.8, width = 0.55) +
-  geom_text(aes(label = sprintf("+%.1f%%", Gap)), hjust = -0.15,
-            size = 4.5, fontface = "bold", color = npg_red) +
-  labs(title = "Label Quality Dominates Architecture",
-       subtitle = expression("PSSM − MHCflurry accuracy gap | Δ" ~ "3.0 pp > any architectural improvement"),
-       x = "Accuracy Gap (pp)", y = NULL) +
-  xlim(0, 8) +
+p2 <- ggplot(label_df, aes(x = Accuracy, y = Label_Source, fill = Label_Source)) +
+  geom_col(width = 0.5, alpha = 0.9) +
+  geom_text(aes(label = sprintf("%.1f%%", Accuracy)), hjust = -0.15,
+            size = 4.5, fontface = "bold") +
+  scale_fill_manual(values = c(npg_navy, npg_red, "grey60"), guide = "none") +
+  labs(title = "Label Source Sets the Practical Ceiling",
+       subtitle = "PSSM on a separate 15,000-peptide pool (not a clean head-to-head)",
+       x = "Accuracy (%)", y = NULL) +
+  xlim(0, 100) +
   theme_minimal(base_size = 13) +
   theme(plot.title = element_text(face = "bold"),
         panel.grid.major.y = element_blank())
@@ -486,7 +480,7 @@ p7 <- ggplot(esm_data, aes(x = Accuracy, y = Encoding, fill = Type)) +
   scale_fill_manual(values = c("Baseline" = npg_grey, "Per-position" = npg_navy,
                                 "Pooled" = npg_red)) +
   labs(title = "ESM-2 Embedding Strategies — Accuracy Comparison",
-       subtitle = "t6 per-position (2,880-dim): +1.4 pp over BLOSUM62 | Mean-pooled collapses to 65.9%",
+       subtitle = "t6 per-position (2,880-dim): 93.3% single-split but 82.2% under CV | Mean-pooled collapses to 65.9%",
        x = "Accuracy (%)", y = NULL, fill = "Encoding Type") +
   xlim(0, 100) +
   theme_minimal(base_size = 13) +
