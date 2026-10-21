@@ -8,7 +8,7 @@
 
 Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 49 IEDB epitopes, and a data-integrity re-analysis that corrected three benchmark artifacts.
 
-**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (29 references, ~4,900 words, 9 figures, 7 tables) · companion `06_Bioinformatics_Submission/companion_manuscript.md` (PLOS Comput Biol target)
+**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (28 references, ~4,900 words, 8 figures, 7 tables) · companion `06_Bioinformatics_Submission/companion_manuscript.md` (PLOS Comput Biol target)
 
 ---
 
@@ -37,7 +37,6 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 | Anchor-rule baseline | sensitivity 1.0 on canonical peptides |
 | Non-canonical plateau | ~0.65 across 3 sequence predictors |
 | Cancer neoepitopes | p53 R248W (`MNWRPILTI`), KRAS G12V (`YKLVVVGAV`) |
-| Salt bridge | K-E63, qualitative hypothesis (not quantified) |
 
 ---
 
@@ -61,7 +60,7 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 │   └── cover_letter_bioinformatics.md
 ├── 06_Logs/                 # Decisions + change log
 ├── docking/                 # Structural analysis (separate workflow)
-│   ├── salt_bridge_validate.py    # K-E63 validation
+│   ├── salt_bridge_validate.py    # K-E63 (withdrawn)
 │   ├── md_salt_bridge.py          # MD simulation
 │   ├── visualize_salt_bridge.py   # Publication figures
 │   ├── 1DUZ.pdb                   # Template structure
@@ -94,11 +93,7 @@ cd 03_Analysis/R_scripts && Rscript run_main_pipeline.R
 # Step 2: Regenerate all figures (Nature Publishing Group palette)
 Rscript regenerate_all_figures_nature.R
 
-# Step 3: Run structural analysis
-cd ../../docking && python salt_bridge_validate.py
-python visualize_salt_bridge.py
-
-# Step 4: MHCflurry direct comparison
+# Step 3: MHCflurry direct comparison
 cd ../03_Analysis/Python_scripts && python mhcflurry_direct_compare.py
 ```
 
@@ -139,20 +134,6 @@ A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-tra
 
 When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.1 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
 
-### Three-Tier Neoantigen Screening Pipeline
-
-Proposed integration of structural information to capture non-canonical binding configurations:
-
-| Tier | Method | Purpose |
-|:----:|--------|---------|
-| 1 | Sequence-based binding prediction | High-throughput initial filtering |
-| 2 | AlphaFold3 pMHC structural scoring | Structure-conditioned assessment |
-| 3 | Template-based energy minimisation | Structural plausibility validation |
-
-### K-E63 Salt Bridge: A Predictor Blind Spot
-
-The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a non-canonical anchor configuration. Template-based structural analysis and energy minimisation suggest a possible K-E63 salt bridge (qualitative, un-solvated electrostatic estimate only), a prediction-resistant configuration (cf. Mares et al., ICML 2025, AUROC 0.06–0.22).
-
 ---
 
 ## Figures
@@ -166,8 +147,7 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 | **Figure 5** | Cancer hotspot mutation analysis — p53 + KRAS |
 | **Figure 6** | BLOSUM62 encoding heatmaps + learned feature representations |
 | **Figure 7** | ESM-2 embedding comparison — 5 encoding strategies |
-| **Figure 8** | K-E63 salt bridge structural hypothesis |
-| **Figure 9** | Multi-allele generalization: rebalanced pan model non-canonical sensitivity across five HLA-I alleles |
+| **Figure 8** | Multi-allele generalization: rebalanced pan model non-canonical sensitivity across five HLA-I alleles |
 
 ---
 

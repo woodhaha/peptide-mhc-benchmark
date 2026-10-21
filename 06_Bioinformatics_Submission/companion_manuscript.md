@@ -139,7 +139,7 @@ Three findings emerge. First, a positive, replicable result: a single rebalanced
 
 Second, a negative, cross-predictor result: non-canonical (Type B) binders plateau at ~0.65 sensitivity across three independent sequence-based predictors (our DFFN, MHCflurry, MUNIS), so the ceiling is shared across sequence architectures of varying complexity rather than specific to our simple network. Whether structure-based scoring (e.g. fine-tuned AlphaFold [8]) can lift this ceiling remains open — it was not benchmarked here at scale.
 
-Third, the extreme energy-compensated tail (P2-Lys/Arg/His reaching B-pocket Glu63; Zhou et al., companion) is prediction-resistant to every method tested, yet structure-informed analysis predicts these peptides bind. The contrast argues for structure-based screening as a complement for the hardest cases, pending experimental validation.
+Third, the extreme energy-compensated tail is prediction-resistant to every method tested, yet experimental evidence shows these peptides elicit cytotoxic T-cell responses. The contrast argues that sequence-based prediction alone is insufficient for the hardest cases, pending experimental validation.
 
 ### 4.1 Methodological implications
 

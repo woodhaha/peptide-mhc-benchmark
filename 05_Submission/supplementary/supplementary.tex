@@ -71,26 +71,6 @@ HLA-B*07:02 & 0.898 (n=2315) & 0.973 (n=865) & \textbf{+0.075} \\
 Post-2022 epitopes were published after MHCflurry's training cutoff (unseen by the
 labeler). Preserved/improved sensitivity = NOT overfit to the IEDB era.
 
-\subsection*{Table S4. P2 virtual mutagenesis --- sidechain reach to Glu63}
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
-P2 residue & Reach (\AA{}) & Electrostatics vs Glu63($-$) & Can compensate? \\
-\midrule
-Lys (K) & 7.6 & +1 (salt bridge) & Yes \\
-Arg (R) & 7.3 & +1 (salt bridge) & Yes \\
-His (H) & 4.4 & +0.5 (partial) & Yes \\
-Asp (D) & 3.0 & $-1$ (repulsive) & No \\
-Glu (E) & 4.4 & $-1$ (repulsive) & No \\
-Others (W/Y/Q/M/F\ldots) & 2.0--5.3 & neutral/weak & partial \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-K-E63 salt bridge is one instance of a general principle: positively charged P2 residues
-(K/R/H) can electrostatically compensate the acidic B-pocket.
-
 \subsection*{Table S5. Falsified vs surviving claims}
 \begin{table}[h]
 \centering
@@ -102,10 +82,8 @@ Claim & Verdict \\
 ``Canonical 100\% / 97--99\% spec'' & Falsified --- n=25 + motif tautology (anchor-checker = 1.0 F1) \\
 ``Type A easy (0.92--0.98)'' & Falsified --- n=25 cherry-pick; real 0.48 \\
 ``Non-canonical systematically missed'' & Moderate penalty ($\sim$0.65), not catastrophic \\
-``Three-tier pipeline rescues non-canonical'' & Hypothesis only; MUNIS does NOT lift plateau \\
 ``One rebalanced pan replaces 15-allele panel'' & Survives --- pooled 0.819 \\
 ``Temporal generalization (breaks circularity)'' & Survives --- post-2022 preserved \\
-``K-E63 salt-bridge is a general P2 principle'' & Survives --- K/R/H all reach Glu63 \\
 \bottomrule
 \end{tabular}
 \end{table}

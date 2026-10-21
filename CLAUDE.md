@@ -53,7 +53,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 
 - Scientific computational biology style: precise, quantitative, evidence-bound.
 - **Results**: Report findings, no mechanistic speculation.
-- **Discussion**: Interpret findings in context of prior literature, acknowledge limitations honestly, propose testable hypotheses (e.g., K-E63 salt bridge).
+- **Discussion**: Interpret findings in context of prior literature, acknowledge limitations honestly, propose testable hypotheses.
 - **Avoid**: Overstatement ("revolutionary", "breakthrough"), unsupported clinical claims, AI-inflated language.
 - **Preferred**: "our results suggest", "consistent with", "warrants experimental validation".
 
@@ -62,8 +62,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 1. **No fabricated references.** Every citation must have a verifiable DOI or PMID.
 2. **No fabricated data.** All numbers must come from actual model outputs or published sources.
 3. **Distinguish computational predictions from experimental facts.** MHCflurry labels are predictions, not ground truth. IEDB epitopes with experimental evidence are labeled as such.
-4. **Structural hypotheses** (K-E63 salt bridge) are explicitly marked as testable, not confirmed.
-5. **Clinical claims**: This is a computational benchmark. Do not make therapeutic claims without experimental validation.
+4. **Clinical claims**: This is a computational benchmark. Do not make therapeutic claims without experimental validation.
 
 ## Directory Map
 
@@ -110,8 +109,8 @@ Peptide epitope/
 | Introduction | Gap: no controlled architecture comparison + no label quality quantification |
 | Methods | 100K random 9-mers → MHCflurry labeling → 5,190 balanced → 6 architectures + 3 encoding schemes + multi-allele extension |
 | Results | CNN best (91.9%), PSSM 82.6%, random null ~34.5%, IEDB 46/48 (95.8%), non-canonical plateau ~0.65, KRAS G12V neoepitope |
-| Discussion | Label source sets the practical ceiling; K-E63 salt bridge hypothesis (qualitative, untested); limitations (single-allele design) |
-| Conclusion | Release open-source pipeline; structural hypotheses need experimental validation |
+| Discussion | Label source sets the practical ceiling; limitations (single-allele design) |
+| Conclusion | Release open-source pipeline; translational predictions need experimental validation |
 
 ## Quick Commands
 
