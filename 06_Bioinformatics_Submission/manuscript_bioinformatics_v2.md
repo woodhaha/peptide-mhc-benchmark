@@ -293,7 +293,7 @@ All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_
 
 ## Author contributions
 
-Yunshi Huang and Weisheng Chen: conception, design, data analysis, manuscript writing. Yiqi Cai: data analysis, manuscript writing. Xiaopeng Zhuang: data interpretation, manuscript revision. Zhuxian Zhou: data interpretation, manuscript revision. Xiangyang Xue and Zhuha Zhou: supervision, manuscript revision. All authors read and approved the final manuscript.
+Conceptualization: Yunshi Huang, Weisheng Chen, Zhuha Zhou. Methodology: Yunshi Huang, Weisheng Chen. Formal analysis: Yunshi Huang, Weisheng Chen, Yiqi Cai. Investigation: Yunshi Huang, Weisheng Chen, Yiqi Cai. Validation: Xiaopeng Zhuang, Zhuxian Zhou. Writing – original draft: Yunshi Huang, Weisheng Chen, Yiqi Cai. Writing – review & editing: Xiaopeng Zhuang, Zhuxian Zhou, Xiangyang Xue, Zhuha Zhou. Supervision: Xiangyang Xue, Zhuha Zhou.
 
 ## Competing interests
 
