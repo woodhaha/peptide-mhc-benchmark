@@ -167,6 +167,7 @@ The KRAS G12V neoepitope (YKLVVVGAV) carries a **charged lysine at P2** — a no
 | **Figure 6** | BLOSUM62 encoding heatmaps + learned feature representations |
 | **Figure 7** | ESM-2 embedding comparison — 5 encoding strategies |
 | **Figure 8** | K-E63 salt bridge structural hypothesis |
+| **Figure 9** | Multi-allele generalization: rebalanced pan model non-canonical sensitivity across five HLA-I alleles |
 
 ---
 

@@ -110,7 +110,7 @@ Peptide epitope/
 | Introduction | Gap: no controlled architecture comparison + no label quality quantification |
 | Methods | 100K random 9-mers → MHCflurry labeling → 5,190 balanced → 6 architectures + 3 encoding schemes + multi-allele extension |
 | Results | CNN best (91.9%), PSSM 82.6%, random null ~34.5%, IEDB 46/48 (95.8%), non-canonical plateau ~0.65, KRAS G12V neoepitope |
-| Discussion | Label quality dominates; K-E63 salt bridge hypothesis; limitations (single allele, TIP3P water model) |
+| Discussion | Label source sets the practical ceiling; K-E63 salt bridge hypothesis (qualitative, untested); limitations (single-allele design) |
 | Conclusion | Release open-source pipeline; structural hypotheses need experimental validation |
 
 ## Quick Commands
