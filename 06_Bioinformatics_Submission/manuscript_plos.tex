@@ -141,7 +141,7 @@ controlled conditions (identical training data, encoding, evaluation)
 are uncommon. The impact of training-label quality on downstream
 performance is seldom quantified, despite evidence that \textgreater55\%
 of IEDB entries are computationally rather than experimentally labelled
-\cite{Preibisch26}. And the translation of binding prediction to
+\cite{Preibisch26}. Whether a single pan-specific model can replace per-allele specialists, and how hard non-canonical binders are across alleles, remains unsettled. And the translation of binding prediction to
 real-world epitope discovery is rarely demonstrated in a unified,
 reproducible pipeline.
 
@@ -465,7 +465,7 @@ ightarrow$  non-binder) removed all five, but we
 report 75.0\% as the primary, unfiltered specificity to avoid post-hoc
 inflation. To break this circularity, we additionally scored the Deep
 FFN against a large label-independent set of experimentally measured
-affinities --- 3,438 unique 9-mers with measured IC50 \textless500 nM
+affinities (IEDB binding-affinity corpus, accessed 2026-08-02) --- 3,438 unique 9-mers with measured IC50 \textless500 nM
 and 3,086 with IC50 \textgreater5,000 nM (the 500--5,000 nM grey zone
 was excluded to yield unambiguous binders and non-binders), restricted
 to direct binding assays (competitive fluorescence/radioactivity) and
@@ -550,7 +550,7 @@ non-canonical sensitivity A*02:01 0.84, A*01:01 0.88, A*03:01 1.00,
 B*07:02 0.96, B*44:03 0.96 (Table 6; Figure 8). The rebalanced pan model
 matched this on four of five alleles (A*02:01 0.84, A*01:01 0.88,
 A*03:01 1.00, B*44:03 1.00), but B*07:02 was a notable exception: the
-pan model dropped to 0.60 versus 0.96 per-allele (Wilson 95\% CIs
+pan model dropped to 0.60 versus 0.96 per-allele (0.64 in the 15-allele pan16 panel; Wilson 95\% CIs
 {[}0.41, 0.77{]} vs {[}0.81, 0.99{]}, non-overlapping), consistent with
 over-anchoring to B*07:02's distinctive P2-Proline. The earlier
 observation that per-allele models outperform pan models on
