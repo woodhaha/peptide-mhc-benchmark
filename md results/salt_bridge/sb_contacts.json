@@ -2,5 +2,6 @@
   "e63_k2_dist_mean": null,
   "e63_k2_dist_std": null,
   "sb_pct": null,
-  "n_ac_hbonds": 22
+  "n_ac_hbonds": 22,
+  "_note": "WITHDRAWN 2026-10-21: e63_k2_dist_* are null because the trajectory is the template peptide LLFGYPVYV (P2=Leu), not the K-at-P2 mutant. No N-zeta--OE2 distance exists. See docking/RESULTS.md."
 }

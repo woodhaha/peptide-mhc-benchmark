@@ -14,48 +14,6 @@
 \begin{document}
 \maketitle
 
-\section*{Supplementary Note S --- Molecular Dynamics of the K-E63 Salt Bridge}
-
-This note reports the molecular-dynamics (MD) analysis referenced in the main text
-(\S 2.4), which is deliberately excluded from the primary structural argument and
-presented here for completeness.
-
-\subsection*{S.1 Methods}
-The KRAS G12V neoepitope YKLVVVGAV was modelled into the HLA-A*02:01 peptide-binding
-groove using the 1DUZ template (template peptide LLFGYPVYV replaced in silico). The
-complex was solvated and equilibrated, then simulated for 100 ns with OpenMM 8.5.2 and
-the amber14 force field. Three independent replicas (seeds 42 and 99) were run to assess
-convergence. MM-GBSA binding energies were computed over the final 50 ns (200 frames).
-
-\subsection*{S.2 Results}
-\textbf{System stability.} The complex remained stable over 100 ns: the MHC $\alpha$-chain,
-$\beta$2-microglobulin, and peptide backbone RMSDs converged to 0.15, 0.09, and 0.07 \AA{},
-respectively (Fig.~S-MD2). Whole-complex backbone RMSD reached 6.1 \AA{}, reflecting
-flexible regions outside the peptide-binding groove.
-
-\textbf{The K-E63 salt bridge is transient, not persistent.} The P2-Lys--Glu63 minimum
-distance fluctuated between 3.6 and 5.9 \AA{} across the three replicas (mean $\approx$ 4.1 \AA{}),
-with transient close contacts ($<$ 3 \AA{}) in $\sim$14\% of frames in the primary trajectory
-(Fig.~S-MD3; Fig.~S-MD1). The salt bridge therefore forms intermittently but does not
-persist as a stable interaction over the simulated timescale.
-
-\textbf{Binding energy.} MM-GBSA over the final 50 ns gave $\Delta G = -19.6 \pm 46.3$ kcal/mol
-(mean $\pm$ SD, n = 200), dominated by gas-phase electrostatics ($\Delta E = -19.5$ kcal/mol) with a
-negligible solvation term. The large variance precludes a precise binding estimate
-(Fig.~S-MD4).
-
-\textbf{Hydrogen bonding.} 3,574 unique hydrogen bonds were observed across the trajectory,
-with 14 persistent pairs (occupancy $>$ 30\%).
-
-\subsection*{S.3 Interpretation}
-The MD is consistent with the conservative framing in the main text (\S 3.5): a charged
-P2-Lys can transiently reach Glu63, but the K-E63 salt bridge is not a stable, persistent
-interaction over the simulated timescale. These data support treating the salt-bridge
-hypothesis as qualitative, pending a more rigorous free-energy calculation (e.g.,
-alchemical transformation or umbrella sampling) and experimental validation (e.g., X-ray
-crystallography or cryo-EM of the YKLVVVGAV--HLA-A*02:01 complex).
-
-\newpage
 \section*{Supplementary Tables --- Findings Summary}
 All numbers are validated, cross-predictor, seed-robust, temporal-holdout-checked.
 
@@ -154,30 +112,6 @@ Claim & Verdict \\
 
 \newpage
 \section*{Supplementary Figures}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/FigS_MD1_100ns_summary.pdf}
-\caption{Fig. S-MD1. 100-ns summary panel (system overview).}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/FigS_MD2_rmsd.pdf}
-\caption{Fig. S-MD2. Backbone RMSD over 100 ns (system stability).}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/FigS_MD3_saltbridge_distance.pdf}
-\caption{Fig. S-MD3. P2-Lys--Glu63 distance time series (transient salt-bridge contacts).}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/FigS_MD4_mmgbsa.pdf}
-\caption{Fig. S-MD4. MM-GBSA binding-energy distribution.}
-\end{figure}
 
 \begin{figure}[h]
 \centering

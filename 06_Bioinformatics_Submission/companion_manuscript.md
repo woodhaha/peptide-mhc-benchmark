@@ -103,7 +103,7 @@ The two false negatives from our single-allele IEDB benchmark (`QYDPVAALF`, `TLG
 
 ### 3.6 Scaling: one model replaces a 15-allele panel
 
-The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08–0.20), B\*51:01 (0.36–0.52), B\*07:02 (0.64), A\*24:02 (0.76) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08), B\*51:01 (0.52), B\*07:02 (0.64), A\*24:02 (0.76) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
 
 **Table 4. Pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).**
 
@@ -150,7 +150,7 @@ The per-allele-versus-pan comparison illustrates how benchmark artifacts can man
 - The plateau and hard-tail estimates rest on IEDB-derived positives; experimental (non-IEDB) validation of the extreme tail is outstanding.
 - A pMHC-fine-tuned structure model (beyond generic AlphaFold-Multimer) might lift the Type B plateau; MUNIS is a sequence-based comparator and does not speak to this.
 - Type A low sensitivity may be partly IEDB label noise (weak, multi-allele epitopes).
-- NetMHCpan was not benchmarked on the multi-allele panel; the standalone NetMHCpan download is restricted by the DTU license, while the single-allele NetMHCpan-4.1 comparison (via the IEDB API) is reported in the sister study. MHCflurry and MUNIS served as two independent sequence predictors.
+- NetMHCpan was not benchmarked on the multi-allele panel; the single-allele NetMHCpan-4.1 comparison (via the IEDB API) is reported in the sister study. MHCflurry and MUNIS served as two independent sequence predictors.
 
 ## 5 Conclusion
 
@@ -168,7 +168,7 @@ A rebalanced pan-specific model matches per-allele specialists on four of five c
 
 ## Data and code availability
 
-All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark. This study is a companion to the single-allele benchmark-hygiene manuscript submitted separately to *Bioinformatics*; the shared multi-allele results are cross-referenced in both papers.
+All code, trained models (including `deep_ffn_pan_seed*.keras`, `deep_ffn_pan16.keras`), and curated datasets (`type_ab_dataset.json`, `type_ab_*_scores.json`, MUNIS scores) are available at https://github.com/woodhaha/peptide-mhc-benchmark. This study's primary contribution is the multi-allele pan-vs-per-allele benchmark; it is a companion to the single-allele benchmark-hygiene manuscript submitted separately to *Bioinformatics*, which covers the six-architecture comparison, label-source controls, and experimental-label validation. The shared multi-allele results are cross-referenced in both papers, with no duplicated figures or tables between them.
 
 ## Funding
 

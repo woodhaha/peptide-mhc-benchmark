@@ -3,5 +3,6 @@
   "sb_pct": 100.0,
   "ca_mean": 4.004880905151367,
   "ca_min": 3.5937278270721436,
-  "stable": true
+  "stable": false,
+  "_note": "WITHDRAWN 2026-10-21: this trajectory is the template peptide LLFGYPVYV (P2=Leu), not the K-at-P2 mutant. sb_pct/ca_* are P2 C-alpha distances on the wrong peptide; no K-E63 salt-bridge data exists here. See docking/RESULTS.md."
 }
