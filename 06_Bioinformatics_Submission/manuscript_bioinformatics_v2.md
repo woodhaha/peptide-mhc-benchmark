@@ -209,7 +209,7 @@ Architecture choice has a modest effect on peptide-MHC binding prediction: a CNN
 
 **Figure 5.** Cancer hotspot mutation analysis: delta scores and wild-type/mutant pairs for 7 epitope-altering mutations.
 
-**Figure 6.** Learned feature representations: integrated-gradients anchor attention by class, anchor-relevant BLOSUM62 residues, t-SNE by class, and t-SNE by prediction correctness.
+**Figure 6.** t-SNE of the Deep FFN 45-dimensional penultimate-layer representation, coloured by binding class (SB/WB/NB).
 
 **Figure 7.** ESM-2 embedding comparison across five encoding strategies.
 

@@ -37,7 +37,7 @@ nature_6 <- c(npg_navy, npg_red, npg_green, npg_orange, npg_blue, npg_purple)
 # Helper: save both PNG + PDF
 save_both <- function(p, name, w = 10, h = 6, dpi = 300) {
   ggsave(file.path(outdir, paste0(name, ".png")), p, width = w, height = h, dpi = dpi)
-  ggsave(file.path(outdir, paste0(name, ".pdf")), p, width = w, height = h, device = "pdf")
+  ggsave(file.path(outdir, paste0(name, ".pdf")), p, width = w, height = h, device = cairo_pdf)
   cat(sprintf("  ✓ %s.{png,pdf}\n", name))
 }
 
@@ -163,7 +163,7 @@ plot.roc(roc_obj,
          legacy.axes = TRUE)
 dev.off()
 # PDF version
-pdf(file.path(outdir, "Figure3_iedb_benchmark.pdf"), width = 8, height = 7)
+cairo_pdf(file.path(outdir, "Figure3_iedb_benchmark.pdf"), width = 8, height = 7)
 par(mar = c(4, 4, 3, 2))
 plot.roc(roc_obj, main = "IEDB Benchmark — HLA-A*02:01",
          sub = sprintf("Deep FFN | 48 POS + 20 NEG | AUC = %.3f | Sensitivity = 95.8%%", auc(roc_obj)),
@@ -447,7 +447,7 @@ grid.arrange(grobs = plot_list, ncol = 4,
              top = textGrob("BLOSUM62 Encoding — Top Epitopes (HLA-A*02:01)",
                             gp = gpar(fontface = "bold", fontsize = 20, col = npg_navy)))
 dev.off()
-pdf(file.path(outdir, "Figure6_blosum62_heatmap.pdf"), width = 19, height = 19)
+cairo_pdf(file.path(outdir, "Figure6_blosum62_heatmap.pdf"), width = 19, height = 19)
 grid.arrange(grobs = plot_list, ncol = 4,
              top = textGrob("BLOSUM62 Encoding — Top Epitopes (HLA-A*02:01)",
                             gp = gpar(fontface = "bold", fontsize = 20, col = npg_navy)))

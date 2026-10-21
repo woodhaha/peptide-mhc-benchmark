@@ -18,6 +18,8 @@ import numpy as np
 
 # Match R figure font (redraw_all_nature.R uses family='sans' = Arial on Windows)
 plt.rcParams["font.family"] = "Arial"
+plt.rcParams["pdf.fonttype"] = 42
+plt.rcParams["ps.fonttype"] = 42
 
 os.makedirs("03_Analysis/figures", exist_ok=True)
 

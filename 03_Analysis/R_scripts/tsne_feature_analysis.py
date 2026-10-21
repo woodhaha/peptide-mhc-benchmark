@@ -29,6 +29,7 @@ import matplotlib.patches as mpatches
 plt.rcParams.update({
     "font.family": "sans-serif",
     "font.sans-serif": ["Arial", "Helvetica"],
+    "pdf.fonttype": 42, "ps.fonttype": 42,
     "axes.edgecolor": "#555555",
     "axes.labelcolor": "#444444",
     "axes.titlecolor": "#222222",
