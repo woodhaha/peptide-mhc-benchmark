@@ -101,7 +101,7 @@ On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669 (MUNIS was 
 
 The two false negatives from our single-allele IEDB benchmark (`QYDPVAALF`, `TLGIVCPIC`) and the KRAS G12V P2-Lys epitope `YKLVVVGAV` were scored as non-binders by all three predictors (MHCflurry 3.8–13.8 µM; DFFN 0.000–0.254; MUNIS 3/4 low). A single counterexample — `QYDPVAALF` rescued by MUNIS (0.972 vs. sequence 0.000 / 6,199 nM) — is encouraging but n = 1.
 
-### 3.6 Scaling: one model replaces a 15-allele panel
+### 3.6 Scaling: one model approximates a 15-allele panel
 
 The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 4; Figure 3). The weak tail — B\*27:05 (0.08), B\*51:01 (0.52), B\*07:02 (0.64), A\*24:02 (0.76) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
 
