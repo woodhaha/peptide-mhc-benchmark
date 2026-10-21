@@ -147,32 +147,33 @@ cat("\n── Figure 3: IEDB Benchmark ──\n")
 
 res <- read_csv("02_Data/cleaned/iedb_benchmark_results.csv", show_col_types = FALSE)
 
-# ROC curve (base R plot → wrap in grid)
+# ROC curve (ggplot2, unified with other figures)
 roc_obj <- roc(res$true_binary, res$pred_binary)
+auc_val <- as.numeric(auc(roc_obj))
+roc_df <- data.frame(fpr = 1 - roc_obj$specificities, tpr = roc_obj$sensitivities)
 
-png(file.path(outdir, "Figure3_iedb_benchmark.png"), width = 2000, height = 1800, res = 250)
-par(mar = c(4, 4, 3, 2), bg = "white")
-plot.roc(roc_obj,
-         main = "IEDB Benchmark — HLA-A*02:01",
-         sub  = sprintf("Deep FFN | 48 POS + 20 NEG | AUC = %.3f | Sensitivity = 95.8%%", auc(roc_obj)),
-         col = npg_navy, lwd = 3,
-         print.auc = TRUE, print.auc.cex = 1.5,
-         print.auc.x = 0.45, print.auc.y = 0.35,
-         auc.polygon = TRUE, auc.polygon.col = paste0(npg_navy, "30"),
-         grid = TRUE, grid.col = "gray90",
-         legacy.axes = TRUE)
-dev.off()
-# PDF version
-cairo_pdf(file.path(outdir, "Figure3_iedb_benchmark.pdf"), width = 8, height = 7)
-par(mar = c(4, 4, 3, 2))
-plot.roc(roc_obj, main = "IEDB Benchmark — HLA-A*02:01",
-         sub = sprintf("Deep FFN | 48 POS + 20 NEG | AUC = %.3f | Sensitivity = 95.8%%", auc(roc_obj)),
-         col = npg_navy, lwd = 3, print.auc = TRUE, print.auc.cex = 1.5,
-         print.auc.x = 0.45, print.auc.y = 0.35,
-         auc.polygon = TRUE, auc.polygon.col = paste0(npg_navy, "30"),
-         grid = TRUE, grid.col = "gray90", legacy.axes = TRUE)
-dev.off()
-cat("  ✓ Figure3_iedb_benchmark.{png,pdf}\n")
+p3_roc <- ggplot(roc_df, aes(x = fpr, y = tpr)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray70", linewidth = 0.5) +
+  geom_ribbon(aes(ymin = 0, ymax = tpr), fill = npg_navy, alpha = 0.10) +
+  geom_line(color = npg_navy, linewidth = 1.15) +
+  annotate("text", x = 0.68, y = 0.16, label = sprintf("AUC = %.3f", auc_val),
+           size = 5.5, fontface = "bold", color = npg_navy, hjust = 0) +
+  annotate("text", x = 0.68, y = 0.06, label = "Sensitivity 95.8%  ·  Specificity 75.0%",
+           size = 4, color = "gray45", hjust = 0) +
+  labs(x = "1 − Specificity (false positive rate)",
+       y = "Sensitivity (true positive rate)") +
+  coord_equal() +
+  scale_x_continuous(limits = c(0, 1), expand = c(0, 0.01)) +
+  scale_y_continuous(limits = c(0, 1), expand = c(0, 0.01)) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major = element_line(color = "gray92", linewidth = 0.3),
+    panel.grid.minor = element_blank(),
+    axis.text = element_text(size = 11, color = "gray25"),
+    axis.title = element_text(size = 12.5),
+    plot.margin = margin(8, 10, 8, 8)
+  )
+save_both(p3_roc, "Figure3_iedb_benchmark", w = 6, h = 6)
 
 # Confusion matrix
 cm <- res %>%
