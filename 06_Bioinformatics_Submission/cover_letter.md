@@ -1,6 +1,6 @@
 # Cover Letter — Submission to *Bioinformatics* (Oxford)
 
-**Date**: October 17, 2026
+**Date**: October 21, 2026
 
 **To**: The Editors
 *Bioinformatics*
