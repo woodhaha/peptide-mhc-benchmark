@@ -14,6 +14,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 plt.rcParams["font.family"] = "Arial"
+plt.rcParams["pdf.fonttype"] = 42
+plt.rcParams["ps.fonttype"] = 42
 os.makedirs("06_Bioinformatics_Submission/companion_figures", exist_ok=True)
 
 # ---- Fig 2: predictor plateau ----

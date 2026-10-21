@@ -1,4 +1,4 @@
-# The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Benchmark-Hygiene Case Study
+# Benchmark Hygiene and the Non-Canonical Frontier in Peptide-MHC-I Binding Prediction
 
 **Authors**: Yunshi Huang<sup>1,†</sup>, Weisheng Chen<sup>2,†</sup>, Yiqi Cai<sup>2</sup>, Xiaopeng Zhuang<sup>2</sup>, Zhuxian Zhou<sup>3</sup>, Xiangyang Xue<sup>4,*</sup>, Zhuha Zhou<sup>2,*</sup>
 
@@ -17,7 +17,7 @@
 
 ## Abstract
 
-**Motivation**: Peptide-MHC-I binding-prediction benchmarks can manufacture false conclusions when confounders are uncontrolled. **Results**: We benchmarked six architectures on 5,190 MHCflurry-labelled HLA-A\*02:01 9-mers with multi-seed estimates and re-analysed three apparent findings under controlled conditions. A convolutional network was modestly best (91.9% ± 0.9% vs 90.6% ± 1.2% for a deep feed-forward network); random labels fell to chance (~33%); and a claimed 'label quality dominates architecture' result dissolved once the degenerate null control was removed. A zero-parameter anchor rule matched the trained model on canonical peptides, while non-canonical binders plateaued at ~0.65 sensitivity across three independent predictors — the true frontier. A temporal holdout of post-2022 epitopes preserved recognition, and a benchmark of 6,524 experimentally measured affinities (ROC AUC 0.942) confirmed the training labels' quality. We distil the artifacts into a benchmark-hygiene checklist applicable beyond peptide-MHC. **Availability**: Code, models, and data at github.com/woodhaha/peptide-mhc-benchmark. **Contact**: zhouzhuha@wmu.edu.cn.
+**Motivation**: Peptide-MHC-I binding-prediction benchmarks can manufacture false conclusions when confounders are uncontrolled. **Results**: We benchmarked six architectures on 5,190 MHCflurry-labelled HLA-A\*02:01 9-mers with multi-seed estimates and re-analysed three apparent findings under controlled conditions. A convolutional network was modestly best (91.9% ± 0.9% vs 90.6% ± 1.2% for a deep feed-forward network); random labels fell to chance (~33%); and a claimed 'label quality dominates architecture' result dissolved once the degenerate null control was removed. A zero-parameter anchor rule matched the trained model on canonical peptides, while non-canonical binders plateaued at ~0.65 sensitivity across three independent predictors — the true frontier. Extending to five common HLA-I alleles and a 15-allele panel (14,488 curated IEDB positives), a rebalanced pan-specific model matched per-allele specialists on four of five alleles and reached 0.819 pooled non-canonical sensitivity. A temporal holdout of post-2022 epitopes preserved recognition, and a benchmark of 6,524 experimentally measured affinities (ROC AUC 0.942) confirmed the training labels' quality. We distil the artifacts into a benchmark-hygiene checklist applicable beyond peptide-MHC. **Availability**: Code, models, and data at github.com/woodhaha/peptide-mhc-benchmark. **Contact**: zhouzhuha@wmu.edu.cn.
 
 ---
 
@@ -27,7 +27,7 @@ MHC class I molecules present 8–11-mer peptides to CD8+ T cells, and accurate 
 
 Several gaps remain. Head-to-head architecture comparisons under fully controlled conditions (identical training data, encoding, evaluation) are uncommon. The impact of training-label quality on downstream performance is seldom quantified, despite evidence that >55% of IEDB entries are computationally rather than experimentally labelled (Preibisch et al., 2026). And the translation of binding prediction to real-world epitope discovery is rarely demonstrated in a unified, reproducible pipeline.
 
-We address these gaps through a systematic benchmark designed to isolate the effects of architecture choice, label quality, and encoding. Our contributions are: (i) a controlled six-architecture comparison with multi-seed uncertainty estimates, showing a modest but measurable architecture effect; (ii) a label-source control confirming that random labels fall to chance; (iii) evaluation of ESM-2 embeddings against BLOSUM62 with a mean-pooled ablation; (iv) held-out validation against 49 IEDB epitopes (44 of which overlap the labeler's training corpus); (v) translational application through protein scanning and cancer mutation analysis; and (vi) a multi-allele extension testing whether the recipe generalizes across common HLA-I alleles and how hard non-canonical binders are for three independent sequence-based predictors.
+We address these gaps through a systematic benchmark designed to isolate the effects of architecture choice, label quality, and encoding. Our contributions are: (i) a controlled six-architecture comparison with multi-seed uncertainty estimates, showing a modest but measurable architecture effect; (ii) a label-source control confirming that random labels fall to chance; (iii) evaluation of ESM-2 embeddings against BLOSUM62 with a mean-pooled ablation; (iv) held-out validation against 49 IEDB epitopes (44 of which overlap the labeler's training corpus); (v) translational application through protein scanning and cancer mutation analysis; and (vi) a multi-allele extension across five common HLA-I alleles and a 15-allele panel, testing whether a single rebalanced pan-specific model matches per-allele specialists and quantifying how hard non-canonical binders are for three independent sequence predictors.
 
 ## 2 Methods
 
@@ -53,7 +53,29 @@ Learned features were extracted from the penultimate dense layer via truncated m
 
 ### 2.6 Multi-allele extension
 
-Experimentally confirmed class I binders were curated from IEDB (Vita et al., 2019) for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n=14,488 positives (canonical 11,225; Type A 151; Type B 3,112). Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9. Protein-background negatives were sampled from natural proteomes. A rebalanced pan-specific DFFN (B\*07:02 upsampled 4×) was trained on pooled data with five seeds (0, 1, 42, 123, 2024). MHCflurry 2.2.1 (affinity <500 nM) and MUNIS (Wohlwend et al., 2025; ESM-2-based sequence model) served as independent comparators on the n=3,112 Type B population plus canonical controls. A 15-allele panel (pan16: 11 additional alleles) tested scaling with per-allele minimum sample (2,000) upsampling. To address the label-circularity concern, temporal holdout compared IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training) against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95. A broad-motif retraining control (extending the canonical anchor set to include tolerated residues) tested whether Type A under-recovery reflects missing training coverage.
+#### 2.6.1 Multi-allele data curation
+
+Experimentally confirmed class I binders were curated from the IEDB (Vita et al., 2019) for five common alleles (HLA-A\*02:01, A\*01:01, A\*03:01, B\*07:02, B\*44:03), yielding n = 14,488 positives (canonical 11,225; Type A 151; Type B 3,112). A 15-allele panel (pan16: 11 additional alleles — A\*11:01, A\*24:02, B\*08:01, B\*15:01, B\*27:05, B\*35:01, B\*40:01, B\*49:01, B\*51:01, B\*57:01) was curated for generalisation testing. Protein-background negatives were sampled from natural proteomes to avoid the uniform-random decoys used in earlier evaluations. IEDB data were queried live from query-api.iedb.org (accessed 2026-08-02); the 15-allele and temporal-holdout estimates are therefore snapshot-dependent and drift slightly as the IEDB grows.
+
+#### 2.6.2 Type A/B classification
+
+Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) were defined by whether the peptide violates the allele's canonical anchor motif at p2/p9. Type A carries broad-only tolerated anchors (residues that appear in binding motifs but are non-canonical); Type B carries non-canonical residues at anchor positions. The two classes have different biological origins and, as we show, different prediction difficulty.
+
+#### 2.6.3 Pan model and per-allele comparators
+
+The pan-specific DFFN uses BLOSUM62 encoding (Henikoff and Henikoff, 1992) through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe.
+
+#### 2.6.4 Comparator predictors
+
+MHCflurry 2.2.1 (O'Donnell et al., 2020) served as an independent sequence predictor (affinity threshold 500 nM). MUNIS (Wohlwend et al., 2025) — a second sequence-based predictor using ESM-2 embeddings (Rives et al., 2021) — served as an independent sequence comparator, run on the n = 3,112 Type B population plus canonical controls.
+
+#### 2.6.5 Temporal holdout
+
+To address label circularity (Preibisch et al., 2026), IEDB epitopes published after 2022 (post-2022, unseen by MHCflurry's ~pre-2021 training data) were compared against pre-2021 (in-distribution) epitopes at sensitivity threshold 0.95.
+
+#### 2.6.6 Evaluation
+
+Sensitivity was computed with protein-background negatives and fixed thresholds (0.95 for the pan model; 500 nM for MHCflurry; 5th percentile of canonical scores for MUNIS). Wilson 95% confidence intervals are reported for pooled estimates.
 
 ## 3 Results
 
@@ -104,7 +126,7 @@ On the FFN (the architecture used for all encoding comparisons), BLOSUM62 genera
 
 ### 3.4 Held-out validation and translation
 
-The Deep FFN achieved 95.8% sensitivity (46/48), 75.0% specificity (15/20), ROC AUC 0.953 against IEDB epitopes (Table 5, Figure 3), after excluding `ILRGSVAHK` (influenza NP 265–273), which is HLA-B\*08:01- rather than A\*02:01-restricted. The two remaining false negatives (`QYDPVAALF`, `TLGIVCPIC`) carried non-canonical p9 anchors (F, C). An independent predictor, NetMHCpan-4.1 (queried through the IEDB web API, which does not pin a reproducible tool version), achieved 83.3% sensitivity (40/48) on the same set. This gap partly reflects label circularity (44/49 of the epitopes overlap MHCflurry's training corpus), but NetMHCpan's pan-specific training on MS-elution-based labels makes this an indicative rather than clean comparison; the more direct circularity evidence is the 62.24% label agreement (323/519 test peptides) reported in the Discussion. To contextualise the benchmark, we include a zero-parameter anchor-checker baseline (a rule classifying any 9-mer with canonical p2/p9 residues as a binder): it achieves sensitivity 1.0 on this canonical-motif-dominated set, matching the trained model (a comparison with only 3 discordant peptides, too low-powered for a formal test); the anchor rule has no tunable score threshold, so its precision—and hence F1—is fixed by the test-set composition rather than a free parameter — confirming that the canonical set overstates generalisation and that the informative signal lies in the non-canonical/hard-tail sensitivity. The five false positives were homopolymers (≤2 unique amino acids) with canonical anchors — biologically implausible binders whose low sequence complexity the classifier fails to penalise. A domain-knowledge filter (≤2 unique amino acids → non-binder) removed all five, but we report 75.0% as the primary, unfiltered specificity to avoid post-hoc inflation. To break this circularity, we additionally scored the Deep FFN against a large label-independent set of experimentally measured affinities — 3,438 unique 9-mers with measured IC50 <500 nM and 3,086 with IC50 >5,000 nM (the 500–5,000 nM grey zone was excluded to yield unambiguous binders and non-binders), restricted to direct binding assays (competitive fluorescence/radioactivity) and excluding MS-elution-derived, predictor-dependent entries. The MHCflurry-trained Deep FFN recognised 94.4% of the experimental binders and rejected 74.5% of the non-binders (threshold 0.5; ROC AUC 0.942); the rebalanced per-allele model reached 89.8% sensitivity and 89.1% specificity (AUC 0.945). This benchmark validates the quality of the training labels — that MHCflurry's computational labels agree with experimentally measured binding — rather than generalisation to unseen peptides, since the peptides are drawn from the same IEDB binding-affinity corpus on which the labeler was trained; generalisation to unseen peptides is instead established by the temporal holdout (§3.5). Protein scanning of 10 proteins (3,536 windows) recovered 10/11 known epitopes (91%; Figure 4), including immunodominant `GILGFVFTL` (M1), `NLVPMVATV` (pp65), and `SLLMWITQC` (NY-ESO-1); the single miss was the MART-1 clinical variant `ELAGIGILTV`, whose P2 leucine is a non-natural anchor-modified residue. Mutation scanning of 16 hotspot mutations identified 7 epitope-altering events (Table 4, Figure 5). p53 R248W created the neoepitope `MNWRPILTI` (R→W at p3 introduces a bulky hydrophobic residue improving groove fit); KRAS G12V created `YKLVVVGAV` via G→V at p9 creating a canonical C-terminal anchor. p53 R248W is among the most frequent TP53 missense mutations across cancers (~3.5% of somatic TP53 mutations, IARC), and mutation-specific T-cell responses have been documented in patients and in HLA-A2/DRB1-transgenic mice (Malekzadeh et al., 2020; Quandt et al., 2018); KRAS G12C enhanced an existing epitope (WB→SB), suggesting synergy with pharmacological G12C inhibition. Three mutations (KRAS G13D, KRAS A146T, p53 R249S) destroyed existing epitopes, representing potential immune-evasion mechanisms.
+The Deep FFN achieved 95.8% sensitivity (46/48), 75.0% specificity (15/20), ROC AUC 0.953 against IEDB epitopes (Table 5, Figure 3), after excluding `ILRGSVAHK` (influenza NP 265–273), which is HLA-B\*08:01- rather than A\*02:01-restricted. The two remaining false negatives (`QYDPVAALF`, `TLGIVCPIC`) carried non-canonical p9 anchors (F, C). An independent predictor, NetMHCpan-4.1 (queried through the IEDB web API, which does not pin a reproducible tool version), achieved 83.3% sensitivity (40/48) on the same set. This gap partly reflects label circularity (44/49 of the epitopes overlap MHCflurry's training corpus), but NetMHCpan's pan-specific training on MS-elution-based labels makes this an indicative rather than clean comparison; the more direct circularity evidence is the 62.24% label agreement (323/519 test peptides) reported in the Discussion. To contextualise the benchmark, we include a zero-parameter anchor-checker baseline (a rule classifying any 9-mer with canonical p2/p9 residues as a binder): it achieves sensitivity 1.0 on this canonical-motif-dominated set, matching the trained model (a comparison with only 3 discordant peptides, too low-powered for a formal test); the anchor rule has no tunable score threshold, so its precision—and hence F1—is fixed by the test-set composition rather than a free parameter — confirming that the canonical set overstates generalisation and that the informative signal lies in the non-canonical/hard-tail sensitivity. The five false positives were homopolymers (≤2 unique amino acids) with canonical anchors — biologically implausible binders whose low sequence complexity the classifier fails to penalise. A domain-knowledge filter (≤2 unique amino acids → non-binder) removed all five, but we report 75.0% as the primary, unfiltered specificity to avoid post-hoc inflation. To break this circularity, we additionally scored the Deep FFN against a large label-independent set of experimentally measured affinities — 3,438 unique 9-mers with measured IC50 <500 nM and 3,086 with IC50 >5,000 nM (the 500–5,000 nM grey zone was excluded to yield unambiguous binders and non-binders), restricted to direct binding assays (competitive fluorescence/radioactivity) and excluding MS-elution-derived, predictor-dependent entries. The MHCflurry-trained Deep FFN recognised 94.4% of the experimental binders and rejected 74.5% of the non-binders (threshold 0.5; ROC AUC 0.942); the rebalanced per-allele model reached 89.8% sensitivity and 89.1% specificity (AUC 0.945). This benchmark validates the quality of the training labels — that MHCflurry's computational labels agree with experimentally measured binding — rather than generalisation to unseen peptides, since the peptides are drawn from the same IEDB binding-affinity corpus on which the labeler was trained; generalisation to unseen peptides is instead established by the temporal holdout (§3.11). Protein scanning of 10 proteins (3,536 windows) recovered 10/11 known epitopes (91%; Figure 4), including immunodominant `GILGFVFTL` (M1), `NLVPMVATV` (pp65), and `SLLMWITQC` (NY-ESO-1); the single miss was the MART-1 clinical variant `ELAGIGILTV`, whose P2 leucine is a non-natural anchor-modified residue. Mutation scanning of 16 hotspot mutations identified 7 epitope-altering events (Table 4, Figure 5). p53 R248W created the neoepitope `MNWRPILTI` (R→W at p3 introduces a bulky hydrophobic residue improving groove fit); KRAS G12V created `YKLVVVGAV` via G→V at p9 creating a canonical C-terminal anchor. p53 R248W is among the most frequent TP53 missense mutations across cancers (~3.5% of somatic TP53 mutations, IARC), and mutation-specific T-cell responses have been documented in patients and in HLA-A2/DRB1-transgenic mice (Malekzadeh et al., 2020; Quandt et al., 2018); KRAS G12C enhanced an existing epitope (WB→SB), suggesting synergy with pharmacological G12C inhibition. Three mutations (KRAS G13D, KRAS A146T, p53 R249S) destroyed existing epitopes, representing potential immune-evasion mechanisms.
 
 **Table 4.** Epitope-altering cancer hotspot mutations.
 
@@ -129,13 +151,57 @@ The Deep FFN achieved 95.8% sensitivity (46/48), 75.0% specificity (15/20), ROC 
 | F1 | 0.929 |
 | ROC AUC | 0.953 |
 
-### 3.5 Multi-allele generalization
+### 3.5 A rebalanced pan model matches per-allele specialists on four of five alleles
 
-With protein-background negatives, per-allele models reached non-canonical sensitivity 0.84–0.96, and a rebalanced pan model matched them on four of five alleles (A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*44:03 1.00; each per-allele estimate rests on n=25 non-canonical binders, so individual-allele parity is underpowered); B\*07:02 was a notable exception (pan 0.60 vs per-allele 0.96; 0.64 in the 15-allele pan16 panel, Table 6), consistent with over-anchoring to P2-Proline (Figure 8). This corrects an earlier observation that per-allele models outperform pan models on non-canonical binders: that apparent advantage was a 10.6× training-data-size artifact, not biology.
+With protein-background negatives and a fixed threshold (n=25 non-canonical binders per allele), per-allele models reached non-canonical sensitivity A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*07:02 0.96, B\*44:03 0.96 (Table 6; Figure 8). The rebalanced pan model matched this on four of five alleles (A\*02:01 0.84, A\*01:01 0.88, A\*03:01 1.00, B\*44:03 1.00), but B\*07:02 was a notable exception: the pan model dropped to 0.60 versus 0.96 per-allele (Wilson 95% CIs [0.41, 0.77] vs [0.81, 0.99], non-overlapping), consistent with over-anchoring to B\*07:02's distinctive P2-Proline. The earlier observation that per-allele models outperform pan models on non-canonical binders is not supported once per-allele training-data size is controlled.
 
-On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (307/375), with 12/15 alleles at 0.76–1.0 (Table 6). The weak tail (B\*27:05, B\*51:01, B\*07:02, A\*24:02) reflected data scarcity and, for B\*07:02, over-anchoring, not architecture. Temporal holdout (three alleles with sufficient post-2022 data) confirmed preserved recognition of epitopes published after the labeler's training cutoff at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 (versus pre-2021 0.879/0.905/0.898), indicating the model is not overfit to a single training-data era.
+**Table 6. Non-canonical sensitivity by allele (protein-background negatives, n=25 per allele, @0.95).**
 
-**Table 6.** Rebalanced pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).
+| Allele | Per-allele | Pan |
+|--------|:----------:|:---:|
+| A\*02:01 | 0.84 | 0.84 |
+| A\*01:01 | 0.88 | 0.88 |
+| A\*03:01 | 1.00 | 1.00 |
+| B\*07:02 | 0.96 | **0.60** |
+| B\*44:03 | 0.96 | 1.00 |
+
+### 3.6 Canonical binders are recognized at ~0.98 by every predictor
+
+On n = 11,225 canonical positives, all three predictors were saturated: DFFN 0.979, MHCflurry 0.986, MUNIS 0.950 (Table 7). The canonical binder problem is effectively solved by all current methods.
+
+### 3.7 Non-canonical (Type B) binders plateau at ~0.65 across predictor classes
+
+On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 7; Figure 9). The three values fall within a narrow band (0.607–0.668), far below the ~0.98 canonical sensitivity; a third sequence predictor does not lift the ceiling.
+
+**Table 7. Predictor sensitivity by binder class (pooled, 5 alleles).**
+
+| Predictor | Canonical (n=11,225) | Type A (n=151) | Type B (n=3,112) |
+|-----------|:--------------------:|:--------------:|:----------------:|
+| DFFN (sequence) | 0.979 | 0.477 | 0.607 |
+| MHCflurry (sequence) | 0.986 | 0.669 | 0.668 |
+| MUNIS (sequence) | 0.950 | — | 0.647 |
+
+### 3.8 Type A (tolerated weak anchors) is inherently hard
+
+On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669 (MUNIS was not evaluated on this small set). Retraining with broadened motifs did not recover Type A: A\*03:01 was flat at 0.634, and B\*07:02 Type B sensitivity dropped from 0.680 to 0.341 (Table 8). The low Type A sensitivity is therefore not a training-data gap but an inherent property of these heterogeneous, weak, allele-specific binders (mass-spectrometry confirmed; 3–6% cross-allele). The canonical-motif bias is what makes the model work.
+
+**Table 8. Broad-motif retraining does not recover Type A.**
+
+| Allele | Type A before | Type A after | Type B after |
+|--------|:------------:|:------------:|:------------:|
+| A\*03:01 | — | 0.634 | — |
+| A\*02:01 | 0.08 | 0.24 | — |
+| B\*07:02 | — | — | 0.341 (from 0.680) |
+
+### 3.9 The extreme tail is prediction-resistant, cross-predictor
+
+The two false negatives from our single-allele IEDB benchmark (QYDPVAALF, TLGIVCPIC) and the KRAS G12V P2-Lys epitope YKLVVVGAV were scored as non-binders by all three predictors (MHCflurry 3.8–13.8 µM; DFFN 0.000–0.254; MUNIS 3/4 low), despite experimental evidence of peptide-induced HLA-A\*02:01-restricted cytotoxic T-cell responses — albeit the weakest of the three mutants screened in that study (Wu et al., 2020). A single counterexample — QYDPVAALF rescued by MUNIS (0.972 vs. sequence 0.000 / 6,199 nM) — is encouraging but n = 1.
+
+### 3.10 Scaling: one model approximates a 15-allele panel
+
+The rebalanced pan16 reached pooled non-canonical sensitivity 0.819 (307/375, @0.95), with 12/15 alleles at 0.76–1.0 (Table 9; Figure 10). The weak tail — B\*27:05 (0.08), B\*51:01 (0.52), B\*07:02 (0.64), A\*24:02 (0.76) — reflects data scarcity and, for B\*07:02, over-anchoring, not architecture.
+
+**Table 9. Pan16 non-canonical sensitivity by allele (15-allele panel, @0.95).**
 
 | Allele | Sens | Allele | Sens |
 |--------|:----:|--------|:----:|
@@ -151,19 +217,19 @@ On the 15-allele panel, pooled non-canonical sensitivity was 0.819 (307/375), wi
 | | | B\*57:01 | 0.92 |
 | **Pooled** | **0.819** | | |
 
-### 3.6 Non-canonical plateau
+### 3.11 Temporal holdout breaks the label-circularity concern
 
-Canonical binders were recognized at ~0.98 by every predictor class: DFFN 0.979, MHCflurry 0.986, MUNIS 0.950. Non-canonical (Type B) binders plateaued at ~0.65: DFFN 0.607, MHCflurry 0.668, MUNIS 0.647 (Table 7) — a second, ESM-2-based sequence model did not lift the ceiling. Type A (tolerated weak anchors) binders were inherently hard (DFFN 0.477, MHCflurry 0.669) and not recovered by broad-motif retraining (A\*03:01 flat at 0.634; B\*07:02 Type B dropped 0.680→0.341). The extreme energy-compensated tail (e.g., KRAS G12V P2-Lys) was scored as non-binder by all three predictors, despite experimental evidence of peptide-induced HLA-A\*02:01-restricted cytotoxic T-cell responses — albeit the weakest of the three mutants screened in that study (Wu et al., 2020). Note that Table 4's "CREATED" label for KRAS G12V refers to the motif-level creation of a canonical P9 anchor (G→V) relative to wild-type, not to a predicted binder: the mutant's absolute score remains below the binding threshold owing to the non-canonical P2-Lys.
+Post-2022 epitopes (unseen by the labeler) were recognized at sens@0.95: A\*02:01 0.824, A\*03:01 0.936, B\*07:02 0.973 — preserved versus pre-2021 (0.879/0.905/0.898), with no systematic drop in the post-2022 era (Table 10; Figure 11). The model is not overfit to a single training-data era.
 
-**Table 7.** Non-canonical (Type B) sensitivity by predictor class.
+**Table 10. Temporal holdout: pre-2021 vs. post-2022 sensitivity (@0.95).**
 
-| Predictor | Canonical | Type B |
-|-----------|:---------:|:------:|
-| Deep FFN (sequence) | 0.979 | 0.607 |
-| MHCflurry (sequence) | 0.986 | 0.668 |
-| MUNIS (sequence) | 0.950 | 0.647 |
+| Allele | Pre-2021 (in-distribution) | Post-2022 (unseen) |
+|--------|:--------------------------:|:------------------:|
+| A\*02:01 | 0.879 | 0.824 |
+| A\*03:01 | 0.905 | 0.936 |
+| B\*07:02 | 0.898 | 0.973 |
 
-### 3.7 Learned feature representations
+### 3.12 Learned feature representations
 
 Feature extraction from the Deep FFN penultimate dense layer revealed biologically meaningful structure (Figure 6). t-SNE visualisation of its 45-dimensional penultimate representation showed partial class separation: SB peptides clustered distinctly (91% of SB peptides fell within the SB cluster), while WB peptides formed a continuous transition zone between SB and NB clusters — consistent with the graded affinity boundary in the 50–500 nM range. Misclassified peptides (primarily WB–NB boundary cases) mapped to the cluster overlap region, confirming that representation quality degrades in the same ambiguity zone where label contamination has the greatest impact. Integrated-gradients analysis identified position-specific anchor contributions: p9 dominated SB predictions, p2 and p3 contributed most to WB predictions, and NB predictions were driven by the absence of anchor-characteristic patterns. Hierarchical clustering separated validated epitopes into coherent clusters, with false negatives forming a distinct branch characterised by absent anchor-position activation. Five features showed Pearson r > 0.7 with binding score; by a 1,000-iteration permutation test, approximately 0.3 features would exceed this threshold by chance, suggesting these represent genuine binding-relevant representations rather than spurious correlations.
 
@@ -213,11 +279,17 @@ Architecture choice has a modest effect on peptide-MHC binding prediction: a CNN
 
 **Figure 7.** ESM-2 embedding comparison across five encoding strategies.
 
-**Figure 8.** Multi-allele generalization: rebalanced pan model non-canonical sensitivity (5-seed mean ± SD) across five common HLA-I alleles.
+**Figure 8.** Rebalanced pan model non-canonical sensitivity (5-seed mean ± SD) across five common HLA-I alleles. Per-allele values are tabulated in Table 6 rather than overlaid, as the per-allele benchmark (n=25 broad-motif) is not directly comparable to the large non-canonical set.
+
+**Figure 9.** Predictor plateau: canonical versus Type B (non-canonical) sensitivity for Deep FFN, MHCflurry, and MUNIS (sequence); dashed line marks the ~0.65 Type B plateau.
+
+**Figure 10.** Pan16: per-allele non-canonical sensitivity for the 15-allele panel, sorted ascending; dashed line marks the pooled 0.819.
+
+**Figure 11.** Temporal holdout: non-canonical sensitivity at threshold 0.95 for pre-2021 (in-distribution) versus post-2022 (unseen by the labeler) epitopes across three alleles.
 
 ## Data and code availability
 
-All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_pan_seed*.keras`/`deep_ffn_pan16.keras`), feature matrices, prediction results, the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives), and the experimental-label benchmark (6,524 measured IC50 values) are available at github.com/woodhaha/peptide-mhc-benchmark. The per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package, with a `pmhc-predict` command-line tool and a standalone Windows GUI (`pmhc_predict.exe`); exported weights (`pmhc_models.npz`) enable tensorflow-free inference. The single-allele benchmark-hygiene analysis is the primary contribution of this manuscript; the multi-allele benchmark reported in §3.5–3.6 is shared with a companion manuscript submitted separately to *PLOS Computational Biology*, which presents the pan-vs-per-allele comparison in full, with no duplicated figures or tables between the two papers.
+All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_pan_seed*.keras`/`deep_ffn_pan16.keras`), feature matrices, prediction results, the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives), and the experimental-label benchmark (6,524 measured IC50 values) are available at github.com/woodhaha/peptide-mhc-benchmark. The per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package, with a `pmhc-predict` command-line tool and a standalone Windows GUI (`pmhc_predict.exe`); exported weights (`pmhc_models.npz`) enable tensorflow-free inference. The single-allele benchmark-hygiene analysis and the multi-allele pan-vs-per-allele benchmark (§3.5–3.11) together constitute the complete study.
 
 ## Author contributions
 
