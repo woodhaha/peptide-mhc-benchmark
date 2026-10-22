@@ -49,6 +49,12 @@
       ],
       "zhouzhuha@wmu.edu.cn": [
         "06_Bioinformatics_Submission/cover_letter.md"
+      ],
+      "BigMHC": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+      ],
+      "92.4": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
       ]
     },
     "must_not_contain": {
@@ -83,6 +89,14 @@
       "Deep FFN best": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
         "CLAUDE.md"
+      ],
+      "0.0006": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/cover_letter.md"
+      ],
+      "significantly outperformed": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/cover_letter.md"
       ]
     }
   }
