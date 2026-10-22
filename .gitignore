@@ -53,3 +53,6 @@ data/
 build/
 dist/
 *.spec
+
+# cloud helper (contains pod password — never commit)
+cloud_exec.py
