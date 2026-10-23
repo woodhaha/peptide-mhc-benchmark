@@ -8,7 +8,7 @@
 
 Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 49 IEDB epitopes, and a data-integrity re-analysis that corrected three benchmark artifacts.
 
-**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (29 references, ~4,700 words, 11 figures, 10 tables)
+**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (32 references, ~4,700 words, 11 figures, 10 tables)
 
 ---
 
