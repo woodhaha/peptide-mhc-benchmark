@@ -297,7 +297,7 @@ Architecture choice has a modest effect on peptide-MHC binding prediction: a CNN
 
 ## Data and code availability
 
-All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_pan_seed*.keras`/`deep_ffn_pan16.keras`), feature matrices, prediction results, the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives), and the experimental-label benchmark (6,524 measured IC50 values) are available at github.com/woodhaha/peptide-mhc-benchmark. The per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package, with a `pmhc-predict` command-line tool and a standalone Windows GUI (`pmhc_predict.exe`); exported weights (`pmhc_models.npz`) enable tensorflow-free inference. The single-allele benchmark-hygiene analysis and the multi-allele pan-vs-per-allele benchmark (§3.5–3.11) together constitute the complete study.
+All code, trained models (per-allele `deep_ffn_HLA-A_*.keras` and pan `deep_ffn_pan_seed*.keras`/`deep_ffn_pan16.keras`), feature matrices, prediction results, the curated multi-allele dataset (`type_ab_dataset.json`, 14,488 positives), and the experimental-label benchmark (`experimental_label_scores.json`: 6,524 peptides — 3,438 binders with measured IC50 <500 nM and 3,086 non-binders with IC50 >5,000 nM) are available at github.com/woodhaha/peptide-mhc-benchmark. The per-allele Deep FFN is distributed as the `pmhcbenchmark` Python package, with a `pmhc-predict` command-line tool and a standalone Windows GUI (`pmhc_predict.exe`); exported weights (`pmhc_models.npz`) enable tensorflow-free inference. The single-allele benchmark-hygiene analysis and the multi-allele pan-vs-per-allele benchmark (§3.5–3.11) together constitute the complete study.
 
 ## Author contributions
 
@@ -314,6 +314,10 @@ This research did not receive specific grant funding.
 ## Ethics statement
 
 This study used only publicly available, de-identified data from the Immune Epitope Database (IEDB) and public protein databases; no human subjects, animals, or patient-derived samples were involved, and no ethics approval or informed consent was required.
+
+## AI use disclosure
+
+AI-assisted tools (Claude Code, Anthropic) were used for code development and manuscript editing. All scientific content, interpretations, and conclusions were authored and approved by the human authors, who take full responsibility for the manuscript's content. No AI tools were listed as authors.
 
 ## References
 
