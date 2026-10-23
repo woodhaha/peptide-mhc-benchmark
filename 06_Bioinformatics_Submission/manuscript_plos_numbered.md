@@ -63,7 +63,7 @@ Type A (tolerated weak anchors) and Type B (energy-compensated non-canonical) we
 
 #### 2.6.3 Pan model and per-allele comparators
 
-The pan-specific DFFN uses BLOSUM62 encoding [11] through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe.
+The pan-specific DFFN uses BLOSUM62 encoding [11] through a 360–180–90–45 hidden stack with batch normalisation and dropout. Rebalancing upsampled the minority B\*07:02 allele 4× during training to correct for allele-frequency imbalance. Five seeds (0, 1, 42, 123, 2024) were used; per-seed variation arises from data-sampling RNG. Per-allele models (one per allele) and a pan16 model (15 alleles, per-allele minimum 2,000 upsampling) were trained with the same recipe. All per-allele and pan models were trained on synthetic motif-biased and random 9-mers labelled by MHCflurry (50/50 mix, seed 42), not on the IEDB positives; the 14,488 experimentally confirmed IEDB positives therefore constitute a held-out evaluation set unseen during training.
 
 #### 2.6.4 Comparator predictors
 
@@ -176,7 +176,7 @@ On n = 11,225 canonical positives, all four predictors were saturated: DFFN 0.97
 
 ### 3.7 Non-canonical (Type B) binders plateau at ~0.65 across predictor classes
 
-On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647, and BigMHC 0.660 (Table 7; Figure 9). The four values fall within a narrow band (0.607–0.668), far below the ~0.98 canonical sensitivity, and the attention-based BigMHC does not lift the ceiling either. This convergence is, however, partly a threshold artifact: the predictors operate at different points (DFFN at a fixed 0.95 score, MHCflurry at 500 nM, MUNIS and BigMHC at the 5th percentile of canonical scores), and when aligned to matched canonical sensitivity (0.95) the Type B sensitivities diverge — DFFN 0.454, MHCflurry 0.497, MUNIS 0.647, BigMHC 0.653. The apparent plateau therefore overstates the degree to which the non-canonical ceiling is shared across architectures.
+On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNIS 0.647, and BigMHC 0.660 (Table 7; Figure 9). The four values fall within a narrow band (0.607–0.668), far below the ~0.98 canonical sensitivity, and the attention-based BigMHC does not lift the ceiling either. This convergence is, however, partly a threshold artifact: the predictors operate at different points (DFFN at a fixed 0.95 score, MHCflurry at 500 nM, MUNIS and BigMHC at the 5th percentile of canonical scores), and when aligned to matched canonical sensitivity (0.90/0.95/0.98) the Type B sensitivities diverge monotonically — DFFN 0.369/0.454/0.610, MHCflurry 0.385/0.497/0.628, MUNIS 0.521/0.647/0.773, BigMHC 0.555/0.653/0.740. The apparent plateau therefore overstates the degree to which the non-canonical ceiling is shared across architectures.
 
 **Table 7. Predictor sensitivity by binder class (pooled, 5 alleles).**
 
