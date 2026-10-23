@@ -8,7 +8,7 @@
 
 Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 49 IEDB epitopes, and a data-integrity re-analysis that corrected three benchmark artifacts.
 
-**Manuscript**: `06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md` (32 references, ~4,700 words, 11 figures, 10 tables)
+**Manuscript**: `06_Bioinformatics_Submission/manuscript_plos_numbered.md` (32 numbered references, ~4,700 words, 11 figures, 10 tables) — targeting *PLOS Computational Biology*
 
 ---
 
@@ -57,7 +57,7 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 │   ├── tables/              # Tables 1-5
 │   └── reports/             # 10 analysis reports
 ├── 05_Submission/           # Supplementary figures, tables, MD notes
-├── 06_Bioinformatics_Submission/  # Current submission (manuscript, cover letter, figures, LaTeX, data package)
+├── 06_Bioinformatics_Submission/  # Current submission — PLOS Comput Biol (manuscript, cover letter, figures, data package)
 ├── 06_Logs/                 # Decisions + change log
 ├── docking/                 # Structural analysis (withdrawn — not in submission)
 │   ├── salt_bridge_validate.py    # K-E63 (withdrawn)
