@@ -187,9 +187,9 @@ On n = 3,112 Type B positives, sensitivity was DFFN 0.607, MHCflurry 0.668, MUNI
 | MUNIS (sequence) | 0.950 | — | 0.647 |
 | BigMHC (sequence) | 0.950 | 0.600 | 0.660 |
 
-### 3.8 Type A (tolerated weak anchors) is inherently hard
+### 3.8 Type A (tolerated weak anchors) is under-represented in training
 
-On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669 (MUNIS not evaluated). Broad-motif retraining did not recover Type A (Table 8); the low sensitivity is inherent to these heterogeneous, weak binders, not a training gap.
+On n = 151 Type A positives, DFFN achieved 0.477 and MHCflurry 0.669 (MUNIS not evaluated). Broad-motif retraining did not recover Type A (Table 8); the low sensitivity reflects under-representation of these heterogeneous, weak binders in the training data (independent predictors MHCflurry 0.669 and BigMHC 0.600 outperform DFFN 0.477 on the same set).
 
 **Table 8. Broad-motif retraining does not recover Type A.**
 
