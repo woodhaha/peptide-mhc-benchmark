@@ -9,17 +9,17 @@
   ],
   "tripwires": {
     "must_contain": {
-      "46/48": [
+      "41/42": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
         "README.md",
         "CLAUDE.md"
       ],
-      "95.8%": [
+      "97.6%": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
         "README.md",
         "CLAUDE.md"
       ],
-      "0.953": [
+      "0.970": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
         "README.md",
         "CLAUDE.md"
@@ -60,6 +60,21 @@
     "must_not_contain": {
       "46/49": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+      ],
+      "46/48": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "95.8%": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
+      ],
+      "0.953": [
+        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "README.md",
+        "CLAUDE.md"
       ],
       "93.9%": [
         "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",

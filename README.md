@@ -32,9 +32,9 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 | Metric | Value |
 |--------|:-----:|
 | Best architecture | CNN (1.05M parameters) |
-| IEDB sensitivity | **95.8%** (46/48) |
-| IEDB ROC AUC | **0.953** |
-| Anchor-rule baseline | sensitivity 1.0 on canonical peptides |
+| IEDB sensitivity | **97.6%** (41/42) |
+| IEDB ROC AUC | **0.970** |
+| Anchor-rule baseline | sensitivity 0.79 on canonical peptides |
 | Non-canonical plateau | ~0.65 across 4 sequence predictors |
 | Cancer neoepitopes | p53 R248W (`MNWRPILTI`), KRAS G12V (`YKLVVVGAV`) |
 
@@ -142,7 +142,7 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 |--------|-------------|
 | **Figure 1** | Model performance comparison across six architectures (accuracy, 5-seed mean ± SD) |
 | **Figure 2** | Architecture comparison + label-source controls — MHCflurry (90.6%), PSSM (82.6%), random (chance ~33%) |
-| **Figure 3** | IEDB benchmark — ROC curve (AUC 0.953), confusion matrix, per-epitope scores |
+| **Figure 3** | IEDB benchmark — ROC curve (AUC 0.970), confusion matrix, per-epitope scores |
 | **Figure 4** | Protein epitope scanning — SB/WB/NB distribution across 10 proteins |
 | **Figure 5** | Cancer hotspot mutation analysis — delta scores for 7 epitope-altering mutations |
 | **Figure 6** | t-SNE of the Deep FFN 45-dim penultimate layer, coloured by binding class |
