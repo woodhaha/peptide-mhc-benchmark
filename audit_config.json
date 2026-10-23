@@ -1,7 +1,7 @@
 {
   "root": ".",
   "references": {
-    "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md": "authoryear"
+    "06_Bioinformatics_Submission/manuscript_plos_numbered.md": "numbered"
   },
   "figure_dirs": [
     "06_Bioinformatics_Submission/figures",
@@ -10,108 +10,108 @@
   "tripwires": {
     "must_contain": {
       "41/42": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "97.6%": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "0.970": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "0.942": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "6,524": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "5,190": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "12/15": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "0.819": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "MHCflurry 2.2.1": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md"
       ],
       "91.9": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md"
       ],
       "zhouzhuha@wmu.edu.cn": [
-        "06_Bioinformatics_Submission/cover_letter.md"
+        "06_Bioinformatics_Submission/cover_letter_plos.md"
       ],
       "BigMHC": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "92.4": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ]
     },
     "must_not_contain": {
       "46/49": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "46/48": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "95.8%": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "0.953": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "93.9%": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "0.947": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "11/15": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "5,088": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "94.8%": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "CLAUDE.md"
       ],
       "MHCflurry 2.2.0": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md",
         "CLAUDE.md"
       ],
       "Deep FFN best": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "CLAUDE.md"
       ],
       "0.0006": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
-        "06_Bioinformatics_Submission/cover_letter.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
+        "06_Bioinformatics_Submission/cover_letter_plos.md"
       ],
       "significantly outperformed": [
-        "06_Bioinformatics_Submission/manuscript_bioinformatics_v2.md",
-        "06_Bioinformatics_Submission/cover_letter.md"
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
+        "06_Bioinformatics_Submission/cover_letter_plos.md"
       ]
     }
   }
