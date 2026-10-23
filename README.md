@@ -23,7 +23,7 @@ Systematic benchmarking of six deep-learning architectures (with multi-seed esti
 | ResNet | 87.6% ± 1.8% |
 | Random Forest | 79.7% ± 0.4% |
 
-Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it plateaus at ~0.65 sensitivity across three independent sequence predictors (15-allele panel), defining the current frontier.
+Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it plateaus at ~0.65 sensitivity across four independent sequence predictors (15-allele panel), defining the current frontier.
 
 ---
 
@@ -35,7 +35,7 @@ Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Ran
 | IEDB sensitivity | **95.8%** (46/48) |
 | IEDB ROC AUC | **0.953** |
 | Anchor-rule baseline | sensitivity 1.0 on canonical peptides |
-| Non-canonical plateau | ~0.65 across 3 sequence predictors |
+| Non-canonical plateau | ~0.65 across 4 sequence predictors |
 | Cancer neoepitopes | p53 R248W (`MNWRPILTI`), KRAS G12V (`YKLVVVGAV`) |
 
 ---
@@ -148,7 +148,7 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 | **Figure 6** | t-SNE of the Deep FFN 45-dim penultimate layer, coloured by binding class |
 | **Figure 7** | ESM-2 embedding comparison — 5 encoding strategies |
 | **Figure 8** | Rebalanced pan model non-canonical sensitivity across five HLA-I alleles |
-| **Figure 9** | Predictor plateau — canonical vs Type B sensitivity for Deep FFN, MHCflurry, MUNIS |
+| **Figure 9** | Predictor plateau — canonical vs Type B sensitivity for Deep FFN, MHCflurry, MUNIS, BigMHC |
 | **Figure 10** | Pan16 — per-allele non-canonical sensitivity for the 15-allele panel (pooled 0.819) |
 | **Figure 11** | Temporal holdout — pre-2021 vs post-2022 sensitivity across three alleles |
 
