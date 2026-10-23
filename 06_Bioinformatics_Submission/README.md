@@ -6,17 +6,20 @@ Single manuscript: **"Benchmark Hygiene Reveals Label Circularity in Peptide-MHC
 
 | File | Description |
 |------|-------------|
-| `manuscript_bioinformatics.pdf` | 主稿最终 PDF（LaTeX, `bioinfo.cls`） |
-| `manuscript_bioinformatics_v2.md` | 主稿 Markdown（权威内容源） |
-| `cover_letter.md` | 投稿信 |
+| `manuscript_plos_numbered.md` | PLOS 投稿主稿（权威内容源，数字引用 [1–32]） |
+| `manuscript_plos.docx` | PLOS 投稿 DOCX |
+| `manuscript_plos.pdf` | PLOS 投稿 PDF |
+| `cover_letter_plos.md` | PLOS 投稿信 |
 | `manuscript_data_package.tar.gz` | 数据包（code / data / figures / models） |
 | `../05_Submission/supplementary/supplementary.pdf` | 补充材料 PDF |
 
-## LaTeX source
+> 旧 Bioinformatics 目标（已弃用，仅存档）：`manuscript_bioinformatics_v2.md` / `manuscript_bioinformatics.pdf` / `cover_letter.md`。
+
+## LaTeX source（legacy — OUP Bioinformatics 目标，已弃用）
 
 | Directory | Template |
 |-----------|----------|
-| `latex_template/` | 主稿 LaTeX（官方 OUP `bioinfo.cls`）→ 生成 `manuscript_bioinformatics.pdf` |
+| `latex_template/` | 旧 OUP `bioinfo.cls` 模板 → 生成 `manuscript_bioinformatics.pdf`（仅存档） |
 
 ## Figures
 

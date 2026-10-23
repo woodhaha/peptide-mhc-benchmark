@@ -17,7 +17,7 @@ Our study is a **benchmark-hygiene case study** in immunoinformatics, and its ce
 
 1. **We quantify label circularity.** Peptide-MHC-I predictors are routinely trained on computationally labelled data, yet scores that merely reproduce the labeler's decision boundary are rarely distinguished from true binding accuracy. We quantify this failure mode, *label circularity*, and distill the lessons into a reusable benchmark-hygiene checklist (Box 1).
 
-2. **The framework caught its own ground truth.** During re-analysis we found that seven of our 49 "HLA-A\*02:01" benchmark epitopes were mis-annotated — two with no IEDB record, and five restricted to other alleles, including the classic CMV pp65 A\*24:02 epitope `QYDPVAALF`, which we had mis-read as a non-canonical A\*02:01 false negative. Correcting this changed the headline sensitivity from 95.8% to 97.6%, and removed a spurious "non-canonical" data point from our argument.
+2. **The framework caught its own ground truth.** During re-analysis we found that seven of our 49 "HLA-A\*02:01" benchmark epitopes were mis-annotated — two with no IEDB record, four restricted to other alleles, and one with no positive A\*02:01 record — including the classic CMV pp65 A\*24:02 epitope `QYDPVAALF`, which we had mis-read as a non-canonical A\*02:01 false negative. Correcting this changed the headline sensitivity from 95.8% to 97.6%, and removed a spurious "non-canonical" data point from our argument.
 
 3. **A threshold-sensitivity analysis qualified our own headline.** The apparent ~0.65 "non-canonical plateau" across four predictors is partly a threshold artifact: at matched operating points the predictors diverge (Type B sensitivity 0.45–0.65), rather than converging on a shared ceiling.
 
