@@ -1,0 +1,28 @@
+
+=== DFFN: canonical n=11225, typeB n=3112 ===
+  MANUSCRIPT thr=0.95: canon-sens=0.979, TypeB sens=0.607
+  aligned sweep (same canonical sensitivity):
+    canon-sens=0.90  TypeB sens=0.369
+    canon-sens=0.95  TypeB sens=0.454
+    canon-sens=0.98  TypeB sens=0.610
+
+=== MHCflurry(nM): canonical n=11225, typeB n=3112 ===
+  MANUSCRIPT thr=500: canon-sens=0.986, TypeB sens=0.668
+  aligned sweep (same canonical sensitivity):
+    canon-sens=0.90  TypeB sens=0.385
+    canon-sens=0.95  TypeB sens=0.497
+    canon-sens=0.98  TypeB sens=0.628
+
+=== MUNIS: canonical n=3112, typeB n=3112 ===
+  MANUSCRIPT 5th-pctile thr=0.8848: canon-sens=0.950, TypeB sens=0.647
+  aligned sweep (same canonical sensitivity):
+    canon-sens=0.90  TypeB sens=0.521
+    canon-sens=0.95  TypeB sens=0.647
+    canon-sens=0.98  TypeB sens=0.773
+
+=== BigMHC_EL: canonical n=11225, typeB n=3112 ===
+  MANUSCRIPT 5th-pctile thr=0.3066: canon-sens=0.950, TypeB sens=0.653
+  aligned sweep (same canonical sensitivity):
+    canon-sens=0.90  TypeB sens=0.555
+    canon-sens=0.95  TypeB sens=0.653
+    canon-sens=0.98  TypeB sens=0.740
