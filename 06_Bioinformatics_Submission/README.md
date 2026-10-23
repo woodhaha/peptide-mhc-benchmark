@@ -1,6 +1,6 @@
 # Submission Package — Bioinformatics (Oxford)
 
-Single manuscript: **"Benchmark Hygiene Reveals Label Circularity and Ground-Truth Contamination in Peptide-MHC-I Binding Prediction"**.
+Single manuscript: **"Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction"**.
 
 ## Final deliverables
 

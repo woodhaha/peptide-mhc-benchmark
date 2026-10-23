@@ -6,7 +6,7 @@
 *Bioinformatics*
 Oxford University Press
 
-**Re**: Submission of original paper — "Benchmark Hygiene Reveals Label Circularity and Ground-Truth Contamination in Peptide-MHC-I Binding Prediction"
+**Re**: Submission of original paper — "Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction"
 
 ---
 
