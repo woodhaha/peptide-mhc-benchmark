@@ -1,4 +1,4 @@
-# Submission Package — Bioinformatics (Oxford)
+# Submission Package — PLOS Computational Biology
 
 Single manuscript: **"Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction"**.
 
@@ -43,5 +43,5 @@ Single manuscript: **"Benchmark Hygiene Reveals Label Circularity in Peptide-MHC
 
 ## 投稿清单
 
-1. **Bioinformatics**：`manuscript_bioinformatics.pdf` + `cover_letter.md` + 主稿 Fig 1–11
+1. **PLOS Computational Biology**：`manuscript_plos_numbered.md` + `cover_letter_plos.md` + 主稿 Fig 1–11
 2. 附件：`../05_Submission/supplementary/supplementary.pdf`

@@ -56,3 +56,6 @@ dist/
 
 # cloud helper (contains pod password — never commit)
 cloud_exec.py
+
+# DTU standalone NetMHCpan (non-redistributable academic license)
+netmhcpan_dl/
