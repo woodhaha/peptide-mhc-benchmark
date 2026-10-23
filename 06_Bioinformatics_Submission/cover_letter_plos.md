@@ -5,7 +5,7 @@
 **To**: The Editors
 *PLOS Computational Biology*
 
-**Re**: Submission of a Research Article — "Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction"
+**Re**: Submission of a Research Article — "Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking"
 
 ---
 
@@ -13,15 +13,15 @@ Dear Editors,
 
 We are pleased to submit our manuscript for consideration as a Research Article in *PLOS Computational Biology*.
 
-Our study is a **benchmark-hygiene case study** in immunoinformatics, and its central finding is that benchmark composition can manufacture false conclusions — including, crucially, within our own analysis. Three points summarise the contribution:
+Our study is a **benchmark-hygiene case study** in immunoinformatics that names a failure mode — *label circularity* — distinct from the data leakage now widely documented, and demonstrates its countermeasures by turning them on our own prior analysis. Three points summarise the contribution:
 
-1. **We quantify label circularity.** Peptide-MHC-I predictors are routinely trained on computationally labelled data, yet scores that merely reproduce the labeler's decision boundary are rarely distinguished from true binding accuracy. We quantify this failure mode, *label circularity*, and distill the lessons into a reusable benchmark-hygiene checklist (Box 1).
+1. **We name label circularity as a failure mode distinct from data leakage.** Leakage is the same data reappearing in train and test; label circularity is subtler — peptide-MHC-I predictors are trained on computationally labelled data, so reported accuracy can reproduce the labeler's decision boundary rather than measure true binding. We separate a labelling scheme's two orthogonal properties — *label self-consistency* versus *cross-labeler transferability* (an independent state-of-the-art predictor, NetMHCpan-4.1, agrees on only 62.24% of the same test peptides) — and distil the countermeasures into a concrete, reusable benchmark-hygiene checklist (Box 1): equalised training data, a true i.i.d. random-label null, frozen snapshots with multi-seed confidence intervals, label provenance with a temporal holdout and a pinned state-of-the-art comparator, and reporting under the natural class prior.
 
 2. **The framework caught its own ground truth.** During re-analysis we found that seven of our 49 "HLA-A\*02:01" benchmark epitopes were mis-annotated — two with no IEDB record, four restricted to other alleles, and one with no positive A\*02:01 record — including the classic CMV pp65 A\*24:02 epitope `QYDPVAALF`, which we had mis-read as a non-canonical A\*02:01 false negative. Correcting this changed the headline sensitivity from 95.8% to 97.6%, and removed a spurious "non-canonical" data point from our argument.
 
 3. **A threshold-sensitivity analysis qualified our own headline.** The apparent ~0.65 "non-canonical plateau" across four predictors is partly a threshold artifact: at matched operating points the predictors diverge (Type B sensitivity 0.45–0.65), rather than converging on a shared ceiling.
 
-We deliberately report these self-corrections because they are the point: a benchmark-hygiene framework should catch its own artifacts, and transparently reporting them is more useful than a clean but overstated narrative. This negative-result-leaning, methodologically rigorous case study complements existing work on data leakage (Kapoor & Narayanan, *Patterns* 2023; Bernett et al., *Nat Methods* 2024), which focuses on leakage from training-data contamination, whereas we focus on the subtler failure of label circularity specific to peptide-MHC benchmarks.
+The self-corrections are the point. Prior work (Kapoor & Narayanan, *Patterns* 2023; Bernett et al., *Nat Methods* 2024) established that training-data contamination drives the reproducibility crisis; we extend this taxonomy to the subtler, peptide-MHC-specific failure of label circularity. Rather than asserting a checklist in the abstract, we demonstrate that it works by letting it catch real errors in our own prior analysis — a benchmark-hygiene framework that detects its own artifacts is one others can adopt.
 
 All code, trained models, data, and re-analysis scripts are available at https://github.com/woodhaha/peptide-mhc-benchmark, and the predictor is released as the pip-installable `pmhcbenchmark` package. A data availability statement, CRediT author contributions, and competing-interests declaration are included.
 

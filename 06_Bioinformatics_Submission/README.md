@@ -1,6 +1,6 @@
 # Submission Package — PLOS Computational Biology
 
-Single manuscript: **"Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction"**.
+Single manuscript: **"Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking"**.
 
 ## Final deliverables
 

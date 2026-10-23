@@ -8,7 +8,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 
 ## Project Overview
 
-**Title**: Benchmark Hygiene Reveals Label Circularity in Peptide-MHC-I Binding Prediction
+**Title**: Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking
 
 **Research question**: How do architecture choice, label quality, and peptide encoding affect peptide-MHC binding prediction performance?
 
