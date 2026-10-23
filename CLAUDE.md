@@ -14,9 +14,9 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 
 **Design type**: Systematic computational benchmark with external validation
 
-**Core finding**: A CNN modestly outperforms a Deep FFN (91.9% ± 0.9% vs 90.6% ± 1.2%); canonical binding is solved by the anchor motif, while non-canonical binders plateau at ~0.65 sensitivity across three sequence predictors — the real frontier. IEDB benchmark: 97.6% sensitivity (41/42 epitopes), ROC AUC 0.970.
+**Core finding**: A CNN modestly outperforms a Deep FFN (91.9% ± 0.9% vs 90.6% ± 1.2%); canonical binding is largely captured by the anchor motif, while non-canonical binders reach ~0.65 sensitivity across four sequence predictors (partly a threshold artifact). IEDB benchmark: 97.6% sensitivity (41/42 epitopes), ROC AUC 0.970.
 
-**Target venues**: *Briefings in Bioinformatics* / *Bioinformatics* / *Frontiers in Immunology*
+**Target venue**: *PLOS Computational Biology*
 
 ## Key Entities
 
@@ -25,7 +25,7 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 | **MHC allele** | HLA-A\*02:01 (most prevalent human MHC-I globally) |
 | **Peptide length** | 9-mer (canonical MHC-I binding) |
 | **Binding classes** | Strong Binder (SB, rank <0.5%), Weak Binder (WB, 0.5%≤rank<2.0%), Non-Binder (NB, rank≥2.0%) |
-| **Models** | Deep FFN (152K params) · FFN/Jessen (49K) · CNN (1.05M) · LSTM (24K) · ResNet (325K) · Random Forest |
+| **Models** | Deep FFN (152K params) · FFN/Nielsen (49K) · CNN (1.05M) · LSTM (24K) · ResNet (325K) · Random Forest |
 | **Encoding schemes** | BLOSUM62 (9×20) · ESM-2 t6 (2,880-dim) · ESM-2 t12 (4,320-dim) · ESM-2 mean-pooled (320-dim) |
 | **Label sources** | MHCflurry 2.2.1 · Deterministic PSSM · Random synthetic |
 | **Cancer mutations** | KRAS G12V (`YKLVVVGAV`) · p53 R248W (`MNWRPILTI`) |

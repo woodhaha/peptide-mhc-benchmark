@@ -1,0 +1,296 @@
+[
+ [
+  "GILGFVFTL",
+  "97/131",
+  "HLA-A*02:01:84,HLA-A2:17",
+  "Immunodominant, 100+ studies"
+ ],
+ [
+  "FMYSDFHFI",
+  "17/26",
+  "HLA-A*02:01:8,HLA-A*02:02:3",
+  "Validated A*02:01 epitope"
+ ],
+ [
+  "YVKQNTLKL",
+  "0/2",
+  "HLA-B*07:02:2",
+  "NP validated epitope"
+ ],
+ [
+  "KLGEFYNQM",
+  "2/2",
+  "HLA-A*02:01:2",
+  "PB1 validated"
+ ],
+ [
+  "ILRGSVAHK",
+  "0/7",
+  "HLA-A*03:01:4,HLA-A3:2",
+  "NP validated (also B*08:01)"
+ ],
+ [
+  "NLVPMVATV",
+  "53/63",
+  "HLA-A*02:01:47,HLA-A2:4",
+  "Immunodominant CMV"
+ ],
+ [
+  "RIFAELEGV",
+  "2/3",
+  "HLA-A*02:01:2,HLA-A2:1",
+  "Validated pp65 epitope"
+ ],
+ [
+  "VLEETSVML",
+  "4/6",
+  "HLA-A*02:01:4,HLA-A2:2",
+  "IE1 validated"
+ ],
+ [
+  "YILEETSVM",
+  "0/1",
+  "HLA-A2:1",
+  "IE1 validated"
+ ],
+ [
+  "QYDPVAALF",
+  "0/11",
+  "HLA-A*24:02:8,HLA-A24:2",
+  "pp65 validated"
+ ],
+ [
+  "GLCTLVAML",
+  "9/16",
+  "HLA-A*02:01:8,HLA-A2:6",
+  "Immunodominant EBV"
+ ],
+ [
+  "CLGGLLTMV",
+  "21/42",
+  "HLA-A2:14,HLA-A*02:01:11",
+  "LMP2 validated"
+ ],
+ [
+  "FLYALALLL",
+  "2/3",
+  "HLA-A*02:01:2,HLA-C*06:02:1",
+  "LMP2 validated"
+ ],
+ [
+  "LLWTLVVLL",
+  "0/1",
+  "HLA-A2:1",
+  "LMP1 validated"
+ ],
+ [
+  "YLLEMLWRL",
+  "6/11",
+  "HLA-A2:4,HLA-A*02:01:3",
+  "LMP1 validated"
+ ],
+ [
+  "WLSLLVPFV",
+  "38/51",
+  "HLA-A*02:01:25,HLA-A*02:02:4",
+  "HBsAg validated"
+ ],
+ [
+  "LLCLIFLLV",
+  "7/12",
+  "HLA-A*02:01:4,HLA-A*02:02:1",
+  "HBsAg validated"
+ ],
+ [
+  "CINGVCWTV",
+  "13/16",
+  "HLA-A*02:01:10,HLA-A2:2",
+  "HCV validated"
+ ],
+ [
+  "SLYNTVATL",
+  "40/45",
+  "HLA-A*02:01:30,HLA-A*02:02:2",
+  "HIV immunodominant"
+ ],
+ [
+  "ILKEPVHGV",
+  "47/59",
+  "HLA-A*02:01:35,HLA-A*02:02:4",
+  "HIV RT validated"
+ ],
+ [
+  "VIYQYMDDL",
+  "4/5",
+  "HLA-A*02:01:1,HLA-A*02:02:1",
+  "HIV RT validated"
+ ],
+ [
+  "YLQPRTFLL",
+  "24/32",
+  "HLA-A*02:01:24,HLA-E:1",
+  "Immunodominant Spike"
+ ],
+ [
+  "LLFDRFENL",
+  "0/0",
+  "",
+  "RdRp validated"
+ ],
+ [
+  "ALNTLVKQL",
+  "7/9",
+  "HLA-A*02:01:7,HLA-E*01:03:1",
+  "Spike fusion peptide"
+ ],
+ [
+  "YMLDLQPET",
+  "16/20",
+  "HLA-A*02:01:16,HLA-A2:1",
+  "HPV16 E7 validated"
+ ],
+ [
+  "LLMGTLGIV",
+  "15/16",
+  "HLA-A*02:01:15,HLA-A2:1",
+  "HPV16 E7 validated"
+ ],
+ [
+  "TLGIVCPIC",
+  "5/7",
+  "HLA-A*02:01:5,H2-Kb:1",
+  "HPV16 E7 validated"
+ ],
+ [
+  "ILTVILGVL",
+  "4/4",
+  "HLA-A*02:01:4",
+  "MART-1 validated"
+ ],
+ [
+  "IMDQVPFSV",
+  "10/10",
+  "HLA-A*02:01:10",
+  "gp100 validated"
+ ],
+ [
+  "YLEPGPVTA",
+  "14/15",
+  "HLA-A*02:01:14,human:1",
+  "gp100 validated"
+ ],
+ [
+  "KTWGQYWQV",
+  "11/17",
+  "HLA-A*02:01:11,human:3",
+  "gp100 validated"
+ ],
+ [
+  "YMDGTMSQV",
+  "13/14",
+  "HLA-A*02:01:13,human:1",
+  "Tyrosinase validated"
+ ],
+ [
+  "SLLMWITQC",
+  "19/21",
+  "HLA-A*02:01:19,HLA-A2:2",
+  "Immunodominant NY-ESO-1"
+ ],
+ [
+  "SLLMWITQV",
+  "17/17",
+  "HLA-A*02:01:17",
+  "NY-ESO-1 enhanced variant"
+ ],
+ [
+  "RMFPNAPYL",
+  "10/28",
+  "human:15,HLA-A*02:01:10",
+  "WT1 validated"
+ ],
+ [
+  "CMTWNQMNL",
+  "0/1",
+  "HLA-A*24:02:1",
+  "WT1 validated"
+ ],
+ [
+  "LLGRNSFEV",
+  "16/21",
+  "HLA-A*02:01:14,HLA-A*02:02:1",
+  "p53 validated"
+ ],
+ [
+  "RMPEAAPPV",
+  "9/10",
+  "HLA-A*02:01:8,HLA-A*02:07:1",
+  "p53 TAD validated"
+ ],
+ [
+  "GLAPPQHLI",
+  "2/11",
+  "human:7,HLA-A*02:01:2",
+  "p53 validated"
+ ],
+ [
+  "KVLEYVIKV",
+  "17/32",
+  "HLA-A*02:01:17,human:14",
+  "MAGE validated"
+ ],
+ [
+  "FLWGPRALV",
+  "21/25",
+  "HLA-A*02:01:14,HLA-A*02:02:2",
+  "MAGE-A3 validated"
+ ],
+ [
+  "KVAELVHFL",
+  "17/30",
+  "HLA-A*02:01:11,HLA-B*57:01:3",
+  "MAGE-A3 validated"
+ ],
+ [
+  "IMIGVLVGV",
+  "11/13",
+  "HLA-A*02:01:5,HLA-A*02:02:2",
+  "CEA validated"
+ ],
+ [
+  "YLSGANLNL",
+  "21/23",
+  "HLA-A*02:01:15,HLA-A*02:02:2",
+  "CEA validated"
+ ],
+ [
+  "KIFGSLAFL",
+  "22/25",
+  "HLA-A*02:01:16,HLA-A*02:02:2",
+  "HER2 validated (E75)"
+ ],
+ [
+  "LLFGYPVYV",
+  "36/39",
+  "HLA-A*02:01:27,HLA-A2:3",
+  "HTLV validated"
+ ],
+ [
+  "SVYDFFVWL",
+  "6/10",
+  "HLA-A*02:01:6,H2-Kb:2",
+  "TRP2 validated"
+ ],
+ [
+  "ALMPVLNQV",
+  "81/264",
+  "human:171,HLA-A*02:01:66",
+  "PSMA prostate cancer"
+ ],
+ [
+  "LLHHAFDSL",
+  "0/0",
+  "",
+  "PSA prostate cancer"
+ ]
+]

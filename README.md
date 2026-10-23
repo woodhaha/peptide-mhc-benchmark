@@ -1,12 +1,12 @@
 # Peptide-MHC Binding Prediction Benchmark
 
-> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that the non-canonical tail defines the real prediction frontier.**
+> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that label circularity is a named failure mode in peptide-MHC-I benchmarking.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![R 4.6.0+](https://img.shields.io/badge/R-4.6.0%2B-blue)
 ![Python 3.13+](https://img.shields.io/badge/Python-3.13%2B-blue)
 
-Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 49 IEDB epitopes, and a data-integrity re-analysis that corrected three benchmark artifacts.
+Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 42 IEDB epitopes (after re-verification excluded seven mis-annotated peptides), and a data-integrity re-analysis that corrected three benchmark artifacts.
 
 **Manuscript**: `06_Bioinformatics_Submission/manuscript_plos_numbered.md` (32 numbered references, ~4,700 words, 11 figures, 10 tables) — targeting *PLOS Computational Biology*
 
@@ -18,12 +18,12 @@ Systematic benchmarking of six deep-learning architectures (with multi-seed esti
 |-------|:---------------------------:|
 | CNN | **91.9% ± 0.9%** |
 | Deep FFN | 90.6% ± 1.2% |
-| FFN (Jessen) | 89.8% ± 1.1% |
+| FFN (Nielsen) | 89.8% ± 1.1% |
 | LSTM | 89.7% ± 0.9% |
 | ResNet | 87.6% ± 1.8% |
 | Random Forest | 79.7% ± 0.4% |
 
-Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it plateaus at ~0.65 sensitivity across four independent sequence predictors (15-allele panel), defining the current frontier.
+Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it reaches ~0.65 sensitivity across four sequence predictors (15-allele panel), though this convergence is partly a threshold artifact.
 
 ---
 
