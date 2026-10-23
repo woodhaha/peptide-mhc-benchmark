@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or benchmark in your research, please cite it as below."
-title: "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction"
+title: "Benchmark Hygiene Reveals Label Circularity and Ground-Truth Contamination in Peptide-MHC-I Binding Prediction"
 type: software
 authors:
   - family-names: Huang

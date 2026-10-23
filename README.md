@@ -158,7 +158,7 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 
 ```bibtex
 @article{zhou2026benchmarking,
-  title={The Non-Canonical Frontier in Peptide-MHC-I Binding Prediction: A Benchmark-Hygiene Case Study},
+  title={Benchmark Hygiene Reveals Label Circularity and Ground-Truth Contamination in Peptide-MHC-I Binding Prediction},
   author={Huang, Yunshi and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian and Xue, Xiangyang and Zhou, Zhuha},
   journal={Submitted},
   year={2026}
