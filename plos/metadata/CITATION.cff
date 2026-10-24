@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software or benchmark in your research, please cite it as below."
+title: "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction"
+type: software
+authors:
+  - family-names: Huang
+    given-names: Yunshi
+  - family-names: Chen
+    given-names: Weisheng
+  - family-names: Cai
+    given-names: Yiqi
+  - family-names: Zhuang
+    given-names: Xiaopeng
+  - family-names: Zhou
+    given-names: Zhuxian
+  - family-names: Xue
+    given-names: Xiangyang
+  - family-names: Zhou
+    given-names: Zhuha
+year: 2026
+abstract: "Systematic benchmark of six deep-learning architectures for peptide-MHC-I binding prediction, quantifying cutpoint sensitivity (a ~4-fold calibration offset between two high-fidelity predictors that rank peptides near-identically) and the non-canonical binding frontier."
+keywords:
+  - peptide-MHC
+  - binding prediction
+  - benchmark
+  - immunoinformatics
+  - HLA
+license: MIT
+repository-code: "https://github.com/woodhaha/peptide-mhc-benchmark"
+url: "https://github.com/woodhaha/peptide-mhc-benchmark"

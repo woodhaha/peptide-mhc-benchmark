@@ -42,7 +42,7 @@ for i in range(n):
         mat[i, j] = abs(spearmanr(data[names[i]], data[names[j]])[0])
 
 fig, ax = plt.subplots(figsize=(3.8, 3.2))
-im = ax.imshow(mat, cmap="viridis", vmin=0.70, vmax=1.0)
+im = ax.imshow(mat, cmap="viridis", vmin=0.70, vmax=1.0, origin="lower")
 ax.set_xticks(range(n)); ax.set_xticklabels(names, rotation=45, ha="right")
 ax.set_yticks(range(n)); ax.set_yticklabels(names)
 for i in range(n):
@@ -51,7 +51,7 @@ for i in range(n):
                 color="white" if mat[i,j] < 0.85 else "black", fontsize=8)
 # outline the two within-objective blocks
 for rect in [(0.5, 0.5), (2.5, 2.5)]:
-    ax.add_patch(plt.Rectangle((rect[0]-0.5, rect[1]-0.5), 2, 2,
+    ax.add_patch(plt.Rectangle((rect[0]-1, rect[1]-1), 2, 2,
                  fill=False, edgecolor="white", lw=1.5))
 ax.set_title("|Spearman ρ| across predictors", fontsize=9, pad=8)
 cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)

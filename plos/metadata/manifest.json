@@ -1,0 +1,54 @@
+{
+  "02_Data/raw/real_peptides.csv": {
+    "sha256": "b86773bb957ce8c109dc19dd7c3913a9344875783bdcce6f8c5a0661d2b016ef",
+    "bytes": 298344
+  },
+  "02_Data/cleaned/iedb_epitope_verification.csv": {
+    "sha256": "6e249fa1096b517d3aab429fa34d7d1e8bdcd9f7f97a59417f521aa716773409",
+    "bytes": 3166
+  },
+  "02_Data/cleaned/iedb_benchmark_results_v2.csv": {
+    "sha256": "4fa96ed1721515f3f39093a1214d85d37d42ffbfe0b5639ef90fe48e538ce4b7",
+    "bytes": 11378
+  },
+  "02_Data/cleaned/netmhcpan_results.csv": {
+    "sha256": "e8edf7ac02ef9ac04a06adeea21a9d9e46591563d89ddd61845affb59e1d14d2",
+    "bytes": 10234
+  },
+  "02_Data/cleaned/multiseed_results.json": {
+    "sha256": "78341e630908067c48b464eb6b713e38a90dfe9b1d617f51e96702752f0d3ec1",
+    "bytes": 953
+  },
+  "experimental_label_scores.json": {
+    "sha256": "27a502fb9390cb2e380f6e7709bc71d0a498fed2ac401cd5d968c9e2761fbd65",
+    "bytes": 146497
+  },
+  "netmhcpan_dl/netmhcpan_42_standalone.xls": {
+    "sha256": "85b2b085778b0f77a6bce0e9bf79c72e0785aa4e47cda5fb35a2149dfc47c52d",
+    "bytes": 7221
+  },
+  "netmhcpan_dl/netmhcpan_6524.xls": {
+    "sha256": "f6553758f375525796d76215919a89fa3c5b74f517dc56ee7ee609340d54de72",
+    "bytes": 1112654
+  },
+  "bigmhc_519.prd": {
+    "sha256": "d601e40594c2f07b18af00083114c174495110678cecaa04fb3c1a2f841be15b",
+    "bytes": 19313
+  },
+  ".munis_dl/predictions/pep519_munis_predictions.csv": {
+    "sha256": "0e102442b78e5d8b2f3e45725b692fae273d81bc730a0fa812767a30ee35b678",
+    "bytes": 25501
+  },
+  "scripts/convert_refs_numbered.py": {
+    "sha256": "a427cc3bd363fec2838a1b2e04d9c6123f95d3bb758df794f2887df6d11cecd4",
+    "bytes": 3635
+  },
+  "scripts/regenerate_figure8.py": {
+    "sha256": "6f1a84c83b937fc23f5c5c4229399df733d11b1f114b8063f02be83c557dc26b",
+    "bytes": 2827
+  },
+  "scripts/build_release.py": {
+    "sha256": "fe3a43ebc238128377ab1bc0fb60d417dd0f48ac5418ea48d7a85ed7a0c1ec03",
+    "bytes": 4745
+  }
+}

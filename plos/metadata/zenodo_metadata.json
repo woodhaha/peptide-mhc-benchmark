@@ -1,0 +1,38 @@
+{
+  "title": "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction",
+  "creators": [
+    {
+      "name": "Yunshi Huang"
+    },
+    {
+      "name": "Weisheng Chen"
+    },
+    {
+      "name": "Yiqi Cai"
+    },
+    {
+      "name": "Xiaopeng Zhuang"
+    },
+    {
+      "name": "Zhuxian Zhou"
+    },
+    {
+      "name": "Xiangyang Xue"
+    },
+    {
+      "name": "Zhuha Zhou"
+    }
+  ],
+  "description": "Systematic benchmark of six deep-learning architectures for peptide-MHC-I binding prediction, quantifying cutpoint sensitivity (a ~4-fold calibration offset between two high-fidelity predictors that rank peptides near-identically) and the non-canonical binding frontier.",
+  "keywords": [
+    "peptide-MHC",
+    "binding prediction",
+    "benchmark",
+    "immunoinformatics",
+    "HLA"
+  ],
+  "upload_type": "software",
+  "license": "MIT",
+  "access_right": "open",
+  "publication_date": "2026-10-24"
+}

@@ -46,7 +46,7 @@ ax.set_title("(a)", loc="left", fontsize=9)
 
 # (b) confusion matrix
 ax = axes[1]
-im = ax.imshow(cm, cmap="Blues", vmin=0, vmax=cm.max())
+im = ax.imshow(cm, cmap="Blues", vmin=0, vmax=cm.max(), origin="lower")
 labels = [["TN\n%d" % cm[0, 0], "FP\n%d" % cm[0, 1]],
           ["FN\n%d" % cm[1, 0], "TP\n%d" % cm[1, 1]]]
 ax.set_xticks([0, 1]); ax.set_yticks([0, 1])
