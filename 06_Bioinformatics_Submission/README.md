@@ -1,6 +1,6 @@
 # Submission Package — PLOS Computational Biology
 
-Single manuscript: **"Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking"**.
+Single manuscript: **"Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking"**.
 
 ## Final deliverables
 
@@ -11,9 +11,8 @@ Single manuscript: **"Label-Fidelity Decomposition Reveals Label Circularity in 
 | `manuscript_plos.pdf` | PLOS 投稿 PDF |
 | `cover_letter_plos.md` | PLOS 投稿信 |
 | `manuscript_data_package.tar.gz` | 数据包（code / data / figures / models） |
-| `../05_Submission/supplementary/supplementary.pdf` | 补充材料 PDF |
 
-> 旧 Bioinformatics 目标（已弃用，仅存档）：`manuscript_bioinformatics_v2.md` / `manuscript_bioinformatics.pdf` / `cover_letter.md`。
+> 旧 Bioinformatics 目标（已弃用，仅存档）：`manuscript_bioinformatics_v2.md` / `manuscript_bioinformatics.pdf` / `cover_letter.md` / `../05_Submission/supplementary/`。
 
 ## LaTeX source（legacy — OUP Bioinformatics 目标，已弃用）
 
@@ -27,7 +26,7 @@ Single manuscript: **"Label-Fidelity Decomposition Reveals Label Circularity in 
 |----------|---------|
 | `figures/` | 主稿 Fig 1–11 |
 | `data_package/figures/` | 数据包内嵌图（Fig 1–9 + S1–S6） |
-| `../05_Submission/supplementary/figures/` | 补充图 S1–S5 |
+| `../05_Submission/supplementary/figures/` | 补充图 S1–S5（已撤回，不随主稿提交） |
 
 ## Data package
 
@@ -36,15 +35,14 @@ Single manuscript: **"Label-Fidelity Decomposition Reveals Label Circularity in 
 | `manuscript_data_package.tar.gz` | 主稿数据包 |
 | `data_package/` | 解包后的数据包（`code/` `data/` `figures/` `models/`） |
 
-## Supplementary text
+## Supplementary text（已撤回，不随主稿提交）
 
-`../05_Submission/supplementary/` 含：
-- `supplementary.tex` + `supplementary.pdf`（已编译）
+`../05_Submission/supplementary/` 为旧 Bioinformatics 时代遗留（旧标题「The Non-Canonical Frontier…」+ 缺 Table S4 + 缺 BigMHC + 含 meta 表），已从投稿清单移除，仅存档：
+- `supplementary.tex` + `supplementary.pdf`（旧标题，已过时）
 - `findings_summary_tables.md`（发现汇总表）
 - `iedb_benchmark_results_v2.csv`（IEDB 基准数据）
-- `MD_salt_bridge_supplementary.md`（MD 盐桥分析 — **已撤回，不随主稿提交**）
+- `MD_salt_bridge_supplementary.md`（MD 盐桥分析 — 已撤回）
 
 ## 投稿清单
 
-1. **PLOS Computational Biology**：`manuscript_plos_numbered.md` + `cover_letter_plos.md` + 主稿 Fig 1–11
-2. 附件：`../05_Submission/supplementary/supplementary.pdf`
+1. **PLOS Computational Biology**：`manuscript_plos_numbered.md` + `cover_letter_plos.md` + 主稿 Fig 1–11 + `manuscript_data_package.tar.gz`

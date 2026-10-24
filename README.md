@@ -1,6 +1,6 @@
 # Peptide-MHC Binding Prediction Benchmark
 
-> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that label circularity is a named failure mode in peptide-MHC-I benchmarking.**
+> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that label-definition divergence, distinct from label circularity, is a named failure mode in peptide-MHC-I benchmarking.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![R 4.6.0+](https://img.shields.io/badge/R-4.6.0%2B-blue)
@@ -16,7 +16,7 @@ Systematic benchmarking of six deep-learning architectures (with multi-seed esti
 
 | Model | Accuracy (5-seed mean ± SD) |
 |-------|:---------------------------:|
-| CNN | **91.9% ± 0.9%** |
+| CNN | **91.5% ± 0.8%** |
 | Deep FFN | 90.6% ± 1.2% |
 | FFN (Nielsen) | 89.8% ± 1.1% |
 | LSTM | 89.7% ± 0.9% |
@@ -130,9 +130,9 @@ Deep FFN > CNN           → stale-checkpoint artifact
 
 A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-training shows a CNN modestly outperforms the Deep FFN.
 
-### MHCflurry Label Circularity
+### MHCflurry Label-Definition Divergence
 
-When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.1 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
+When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.5 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
 
 ---
 
@@ -158,7 +158,7 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 
 ```bibtex
 @article{zhou2026benchmarking,
-  title={Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking},
+  title={Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking},
   author={Huang, Yunshi and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian and Xue, Xiangyang and Zhou, Zhuha},
   journal={Submitted},
   year={2026}

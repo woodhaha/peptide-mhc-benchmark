@@ -14,10 +14,22 @@
         "README.md",
         "CLAUDE.md"
       ],
-      "36/42": [
+      "38/42": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "85.7%": [
+      "90.5%": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "40 of the 42": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "McNemar": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "label-definition divergence": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "0.937": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "97.6%": [
@@ -39,7 +51,7 @@
       "5,190": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "12/15": [
+      "12 of 15": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "0.819": [
@@ -49,7 +61,7 @@
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md"
       ],
-      "91.9": [
+      "91.5": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md"
       ],
@@ -67,10 +79,13 @@
       "46/49": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "38/42": [
+      "36/42": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "90.5%": [
+      "85.7%": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "large majority": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "46/48": [
@@ -124,6 +139,9 @@
       "significantly outperformed": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "06_Bioinformatics_Submission/cover_letter_plos.md"
+      ],
+      "Reveals Label Circularity": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ]
     }
   }

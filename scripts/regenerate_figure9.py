@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Regenerate Figure 9 (predictor plateau) with BigMHC added.
+"""Regenerate Figure 9 — non-canonical (Type B) sensitivity at matched canonical
+operating points (0.90 / 0.95 / 0.98).
 
-Canonical vs Type B sensitivity across 4 predictors; dashed line marks
-the ~0.65 Type B plateau. Publication-style matplotlib (figures4papers).
+Shows that the apparent ~0.65 "plateau" is a threshold artifact: aligned to the
+same canonical sensitivity, the four predictors diverge (0.37–0.77). Data from
+02_Data/cleaned/threshold_sensitivity_results.txt. Publication-style matplotlib.
 """
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-# figures4papers-style rcParams
 plt.rcParams.update({
     "font.family": "Arial",
     "font.size": 9,
@@ -22,37 +23,37 @@ plt.rcParams.update({
     "figure.dpi": 350,
 })
 
-predictors = ["Deep FFN", "MHCflurry", "MUNIS", "BigMHC"]
-canonical = [0.979, 0.986, 0.950, 0.950]
-type_b = [0.607, 0.668, 0.647, 0.660]
+# matched canonical operating points -> Type B sensitivity (from threshold_sensitivity_results.txt)
+op_points = [0.90, 0.95, 0.98]
+data = {
+    "Deep FFN":  [0.369, 0.454, 0.610],
+    "MHCflurry": [0.385, 0.497, 0.628],
+    "MUNIS":     [0.521, 0.647, 0.773],
+    "BigMHC":    [0.555, 0.653, 0.740],
+}
 
-x = np.arange(len(predictors))
-w = 0.35
+# semantic palette (gray-safe)
+colors = {
+    "Deep FFN":  "#4C72B0",
+    "MHCflurry": "#DD8452",
+    "MUNIS":     "#55A868",
+    "BigMHC":    "#C44E52",
+}
+markers = {"Deep FFN": "o", "MHCflurry": "s", "MUNIS": "^", "BigMHC": "D"}
 
-fig, ax = plt.subplots(figsize=(4.5, 3.2))
+fig, ax = plt.subplots(figsize=(4.8, 3.4))
 
-# semantic palette, gray-safe
-c_canon = "#4C72B0"   # blue
-c_typeb = "#DD8452"   # orange
+for name, vals in data.items():
+    ax.plot(op_points, vals, marker=markers[name], ms=4.5, lw=1.5,
+            color=colors[name], label=name, zorder=3)
 
-b1 = ax.bar(x - w/2, canonical, w, label="Canonical", color=c_canon)
-b2 = ax.bar(x + w/2, type_b, w, label="Type B (non-canonical)", color=c_typeb)
-
-ax.axhline(0.65, ls="--", lw=0.9, color="gray", zorder=3)
-ax.text(len(predictors) - 0.5, 0.665, "~0.65 plateau", fontsize=7, color="gray", ha="right")
-
-ax.set_ylabel("Sensitivity")
-ax.set_xticks(x)
-ax.set_xticklabels(predictors)
-ax.set_ylim(0, 1.05)
-ax.set_yticks(np.arange(0, 1.05, 0.2))
-ax.legend(frameon=False, loc="lower left")
-
-# value labels
-for bars in (b1, b2):
-    for r in bars:
-        ax.text(r.get_x() + r.get_width()/2, r.get_height() + 0.02,
-                f"{r.get_height():.2f}", ha="center", va="bottom", fontsize=7)
+ax.set_xlabel("Matched canonical sensitivity (operating point)")
+ax.set_ylabel("Type B (non-canonical) sensitivity")
+ax.set_xlim(0.89, 0.99)
+ax.set_ylim(0.30, 0.85)
+ax.set_xticks(op_points)
+ax.set_yticks(np.arange(0.3, 0.9, 0.1))
+ax.legend(frameon=False, loc="upper left")
 
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)

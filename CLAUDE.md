@@ -8,13 +8,13 @@ You are a computational immunology research assistant, familiar with peptide-MHC
 
 ## Project Overview
 
-**Title**: Label-Fidelity Decomposition Reveals Label Circularity in Peptide-MHC-I Benchmarking
+**Title**: Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking
 
 **Research question**: How do architecture choice, label quality, and peptide encoding affect peptide-MHC binding prediction performance?
 
 **Design type**: Systematic computational benchmark with external validation
 
-**Core finding**: A CNN modestly outperforms a Deep FFN (91.9% ± 0.9% vs 90.6% ± 1.2%); canonical binding is largely captured by the anchor motif, while non-canonical binders reach ~0.65 sensitivity across four sequence predictors (partly a threshold artifact). IEDB benchmark: 97.6% sensitivity (41/42 epitopes), ROC AUC 0.970.
+**Core finding**: Two high-fidelity labelers (MHCflurry, NetMHCpan; both ~0.94 AUC on 6,524 affinities) agree on only 62% of the boundary — label-definition divergence, not circularity. Canonical binding is largely captured by the anchor motif; non-canonical binders reach 0.45–0.65 sensitivity across four sequence predictors at matched canonical sensitivity 0.95. IEDB benchmark: 97.6% sensitivity (41/42), ROC AUC 0.970.
 
 **Target venue**: *PLOS Computational Biology*
 
@@ -105,10 +105,10 @@ Peptide epitope/
 
 | Section | Key Content |
 |---------|-------------|
-| Abstract | 6-architecture benchmark; CNN > Deep FFN (91.9% vs 90.6%); non-canonical plateau ~0.65; IEDB 97.6% sensitivity |
+| Abstract | 6-architecture benchmark; CNN > Deep FFN (91.5% vs 90.6%); non-canonical 0.45–0.65 (matched); IEDB 97.6% sensitivity |
 | Introduction | Gap: no controlled architecture comparison + no label quality quantification |
 | Methods | 100K random 9-mers → MHCflurry labeling → 5,190 balanced → 6 architectures + 3 encoding schemes + multi-allele extension |
-| Results | CNN best (91.9%), PSSM 82.6%, random null ~34.5%, IEDB 41/42 (97.6%), non-canonical plateau ~0.65, KRAS G12V neoepitope |
+| Results | CNN best (91.5%), PSSM 82.6%, random null ~34.5%, IEDB 41/42 (97.6%), non-canonical 0.45–0.65 (matched), KRAS G12V neoepitope |
 | Discussion | Label source sets the practical ceiling; limitations (single-allele design) |
 | Conclusion | Release open-source pipeline; translational predictions need experimental validation |
 
