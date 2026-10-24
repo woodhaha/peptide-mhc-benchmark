@@ -37,10 +37,10 @@ def save(fig, name):
 
 # ---- Figure 1: architecture comparison ----
 arch = load_json("02_Data/cleaned/multiseed_results.json")
-order = ["CNN", "Deep FFN", "FFN (Jessen)", "LSTM", "ResNet", "Random Forest"]
+order = ["CNN", "Deep FFN", "FFN (Nielsen)", "LSTM", "ResNet", "Random Forest"]
 means = [arch[m]["mean"] * 100 for m in order]
 sds = [arch[m]["sd"] * 100 for m in order]
-labels = [m if m != "FFN (Jessen)" else "FFN" for m in order]
+labels = [m if m != "FFN (Nielsen)" else "FFN" for m in order]
 
 fig, ax = plt.subplots(figsize=(5.5, 3.6))
 y = np.arange(len(order))[::-1]
