@@ -48,7 +48,7 @@
     "bytes": 2827
   },
   "scripts/build_release.py": {
-    "sha256": "fe3a43ebc238128377ab1bc0fb60d417dd0f48ac5418ea48d7a85ed7a0c1ec03",
-    "bytes": 4745
+    "sha256": "bc5f04e4711933525a891cecada15b98472fc63f6c2733deff0b0f308f17b35e",
+    "bytes": 6678
   }
 }

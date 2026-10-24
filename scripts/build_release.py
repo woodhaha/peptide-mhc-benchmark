@@ -73,21 +73,36 @@ def snapshot():
     r = subprocess.run([sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True)
     (RELEASE / "requirements.txt").write_text(r.stdout, encoding="utf-8")
 
+    # Package the reproducibility-critical files into a tarball for the Zenodo deposit
+    import tarfile
+    with tarfile.open(RELEASE / "source_data.tar.gz", "w:gz") as tf:
+        for rel in SNAPSHOT_FILES:
+            p = ROOT / rel
+            if p.exists():
+                tf.add(p, arcname=rel)
+
     # Zenodo metadata from CITATION.cff (best-effort)
     try:
         import yaml
         cff = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
-        authors = [{"name": f"{a.get('given-names','')} {a.get('family-names','')}".strip()}
-                   for a in cff.get("authors", [])]
+        creators = []
+        for a in cff.get("authors", []):
+            fam = a.get("family-names", ""); giv = a.get("given-names", "")
+            creators.append({"person_or_org": {
+                "type": "personal",
+                "name": f"{fam}, {giv}".strip(", "),
+                "given_name": giv, "family_name": fam,
+            }})
         zenodo = {
-            "title": cff.get("title", ""),
-            "creators": authors,
-            "description": cff.get("abstract", ""),
-            "keywords": cff.get("keywords", []),
-            "upload_type": "software",
-            "license": cff.get("license", ""),
-            "access_right": "open",
-            "publication_date": date.today().isoformat(),
+            "metadata": {
+                "title": cff.get("title", ""),
+                "description": cff.get("abstract", ""),
+                "publication_date": date.today().isoformat(),
+                "creators": creators,
+                "publisher": "Zenodo",
+                "resource_type": {"id": "software"},
+                "rights": [{"id": (cff.get("license") or "mit").lower()}],
+            }
         }
         (RELEASE / "zenodo_metadata.json").write_text(json.dumps(zenodo, indent=2), encoding="utf-8")
     except Exception as e:
@@ -98,13 +113,43 @@ def snapshot():
 
 
 def upload_zenodo():
+    import urllib.request, urllib.error
     token = os.environ.get("ZENODO_TOKEN")
     if not token:
         print("  (skip upload) set ZENODO_TOKEN to auto-upload via the Zenodo API")
         return
-    print("  uploading to Zenodo (not implemented — use the API or the web UI)")
-    # Zenodo REST: POST https://zenodo.org/api/depositions (create), then PUT files.
-    # Left as a documented stub; the metadata in zenodo_metadata.json is drop-in ready.
+    meta = json.loads((RELEASE / "zenodo_metadata.json").read_text(encoding="utf-8"))
+    api = "https://zenodo.org/api/records"
+
+    def call(method, url, data=None, ctype="application/json"):
+        r = urllib.request.Request(url, method=method, data=data)
+        r.add_header("Authorization", f"Bearer {token}")
+        if ctype:
+            r.add_header("Content-Type", ctype)
+        try:
+            with urllib.request.urlopen(r) as resp:
+                body = resp.read()
+                return json.loads(body.decode()) if body else {}
+        except urllib.error.HTTPError as e:
+            print(f"  !! Zenodo HTTP {e.code}: {e.read().decode()[:400]}")
+            sys.exit(1)
+
+    print("  [upload] creating draft record ...")
+    dep = call("POST", api, data=json.dumps(meta).encode())
+    dep_id = dep["id"]
+    print(f"  [upload] record id = {dep_id}")
+
+    files = [f for f in sorted(RELEASE.iterdir()) if f.is_file() and f.name != "zenodo_metadata.json"]
+    call("POST", f"{api}/{dep_id}/draft/files", data=json.dumps([{"key": f.name} for f in files]).encode())
+    for f in files:
+        print(f"  [upload] uploading {f.name} ...")
+        call("PUT", f"{api}/{dep_id}/draft/files/{f.name}/content", data=f.read_bytes(), ctype="application/octet-stream")
+
+    print("  [upload] publishing ...")
+    pub = call("POST", f"{api}/{dep_id}/draft/actions/publish")
+    doi = pub.get("doi") or (pub.get("metadata", {}) or {}).get("doi", "?")
+    print(f"\n  DONE. DOI = {doi}")
+    print(f"  -> replace '10.5281/zenodo.XXXXXXX' with {doi} in the manuscript + cover letter")
 
 
 if __name__ == "__main__":

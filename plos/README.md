@@ -31,7 +31,7 @@
 - [x] Data & code availability, Author contributions (CRediT), Competing interests, Funding, Ethics statements
 - [x] Figure↔data consistency audited (Fig 1,3,4,5,7,8,9 numeric; Fig 6 t-SNE qualitative)
 - [x] Reproducibility manifest (13 files, SHA256) + pinned environment
-- [ ] **Zenodo upload → replace `10.5281/zenodo.XXXXXXX` placeholder** (needs `ZENODO_TOKEN`)
+- [x] **Zenodo DOI: `10.5281/zenodo.23615309`**
 - [ ] Confirm GitHub repo `github.com/woodhaha/peptide-mhc-benchmark` is public
 
 ---
