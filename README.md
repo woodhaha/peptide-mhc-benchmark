@@ -1,14 +1,14 @@
 # Peptide-MHC Binding Prediction Benchmark
 
-> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that label-definition divergence, distinct from label circularity, is a named failure mode in peptide-MHC-I benchmarking.**
+> **A systematic benchmark showing that benchmark composition can manufacture false conclusions — and that cutpoint sensitivity is a named failure mode in peptide-MHC-I benchmarking.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![R 4.6.0+](https://img.shields.io/badge/R-4.6.0%2B-blue)
 ![Python 3.13+](https://img.shields.io/badge/Python-3.13%2B-blue)
 
-Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, plus a multi-allele extension, external validation against 42 IEDB epitopes (after re-verification excluded seven mis-annotated peptides), and a data-integrity re-analysis that corrected three benchmark artifacts.
+Systematic benchmarking of six deep-learning architectures (with multi-seed estimates) for HLA-A\*02:01 peptide-MHC-I binding prediction, external validation against 42 IEDB epitopes (after re-verification excluded seven mis-annotated peptides), and a data-integrity re-analysis that corrected two benchmark artifacts.
 
-**Manuscript**: `06_Bioinformatics_Submission/manuscript_plos_numbered.md` (32 numbered references, ~4,700 words, 11 figures, 10 tables) — targeting *PLOS Computational Biology*
+**Manuscript**: `06_Bioinformatics_Submission/manuscript_plos_numbered.md` (30 numbered references, ~3,000 words, 7 figures, 5 tables) — targeting *PLOS Computational Biology*
 
 ---
 
@@ -23,7 +23,7 @@ Systematic benchmarking of six deep-learning architectures (with multi-seed esti
 | ResNet | 87.6% ± 1.8% |
 | Random Forest | 79.7% ± 0.4% |
 
-Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: it reaches ~0.65 sensitivity across four sequence predictors (15-allele panel), though this convergence is partly a threshold artifact.
+Architecture has a modest effect (top four within ~2 pp; CNN modestly best). Random labels fall to chance (~33%), confirming no noise overfitting. The genuinely hard problem is **non-canonical binding**: a zero-parameter anchor rule underperforms the trained model, which recovers non-canonical binders the rule misses.
 
 ---
 
@@ -120,17 +120,16 @@ Five HLA class I alleles are supported (A\*02:01, A\*01:01, A\*03:01, B\*07:02, 
 
 ### Benchmark Artifacts (Methods Hygiene)
 
-Three apparent findings dissolved under controlled re-analysis:
+Two apparent findings dissolved under controlled re-analysis:
 
 ```
-per-allele > pan         → 10.6× data-size artifact
 label quality dominates  → degenerate random-null artifact
 Deep FFN > CNN           → stale-checkpoint artifact
 ```
 
-A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-training shows a CNN modestly outperforms the Deep FFN.
+A true i.i.d. random-label control falls to chance (~33%), and multi-seed re-training shows a CNN ranks above the Deep FFN (a small, statistically inconclusive margin).
 
-### MHCflurry Label-Definition Divergence
+### MHCflurry Cutpoint Sensitivity
 
 When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), it achieves **100% accuracy** — quantifying the 8.5 percentage point gap as the information loss between a known decision boundary and a finite-sample approximation.
 
@@ -147,10 +146,6 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 | **Figure 5** | Cancer hotspot mutation analysis — delta scores for 7 epitope-altering mutations |
 | **Figure 6** | t-SNE of the Deep FFN 45-dim penultimate layer, coloured by binding class |
 | **Figure 7** | ESM-2 embedding comparison — 5 encoding strategies |
-| **Figure 8** | Rebalanced pan model non-canonical sensitivity across five HLA-I alleles |
-| **Figure 9** | Predictor plateau — canonical vs Type B sensitivity for Deep FFN, MHCflurry, MUNIS, BigMHC |
-| **Figure 10** | Pan16 — per-allele non-canonical sensitivity for the 15-allele panel (pooled 0.819) |
-| **Figure 11** | Temporal holdout — pre-2021 vs post-2022 sensitivity across three alleles |
 
 ---
 
@@ -158,7 +153,7 @@ When MHCflurry 2.2.1 is evaluated on the held-out test set (which it labelled), 
 
 ```bibtex
 @article{zhou2026benchmarking,
-  title={Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking},
+  title={Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction},
   author={Huang, Yunshi and Chen, Weisheng and Cai, Yiqi and Zhuang, Xiaopeng and Zhou, Zhuxian and Xue, Xiangyang and Zhou, Zhuha},
   journal={Submitted},
   year={2026}

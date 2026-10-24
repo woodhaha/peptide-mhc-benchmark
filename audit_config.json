@@ -14,10 +14,10 @@
         "README.md",
         "CLAUDE.md"
       ],
-      "38/42": [
+      "36/42": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "90.5%": [
+      "85.7%": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "40 of the 42": [
@@ -26,7 +26,13 @@
       "McNemar": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "label-definition divergence": [
+      "cutpoint sensitivity": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "Spearman": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "0.97": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "0.937": [
@@ -51,12 +57,6 @@
       "5,190": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "12 of 15": [
-        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
-      ],
-      "0.819": [
-        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
-      ],
       "MHCflurry 2.2.1": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md",
         "README.md"
@@ -79,13 +79,19 @@
       "46/49": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "36/42": [
+      "38/42": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
-      "85.7%": [
+      "90.5%": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "large majority": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "label-definition divergence": [
+        "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
+      ],
+      "energy-compensated": [
         "06_Bioinformatics_Submission/manuscript_plos_numbered.md"
       ],
       "46/48": [

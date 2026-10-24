@@ -16,12 +16,12 @@ REFS = [
     ("Fasoulis", 2024, None), ("Harndahl", 2012, None), ("Henikoff", 1992, "Henikoff"),
     ("Hermann", 2024, None), ("Jappe", 2020, None), ("Kapoor", 2023, "Narayanan"),
     ("Lin", 2023, None), ("Lundegaard", 2011, None), ("Malekzadeh", 2020, None),
-    ("Mares", 2025, None), ("Nielsen", 2003, None), ("O'Donnell", 2020, None),
-    ("Preibisch", 2026, None), ("Quandt", 2018, None), ("Rammensee", 1995, None),
+    ("Mares", 2025, None), ("Munim", 2026, None), ("Nielsen", 2003, None), ("Northcutt", 2021, None), ("O'Donnell", 2020, None),
+    ("Paul", 2020, None), ("Peters", 2018, None), ("Preibisch", 2026, None), ("Quandt", 2018, None), ("Rammensee", 1995, None),
     ("Reynisson", 2020, None), ("Rives", 2021, None), ("Ruppert", 1993, None),
-    ("Sarkizova", 2020, None), ("Schuh", 2026, None), ("Tadros", 2025, None),
-    ("Vita", 2019, None), ("Vo", 2025, None), ("Wohlwend", 2025, None),
-    ("Wu", 2020, None), ("Xu", 2026, None),
+    ("Sanz-Guerrero", 2026, "von der Wense"), ("Schuh", 2026, None),
+    ("Vo", 2025, None), ("Wohlwend", 2025, None),
+    ("Xu", 2026, None), ("Zhao", 2018, "Sher"),
 ]
 
 def cit_re(surname, year, second):
@@ -69,7 +69,7 @@ body2 = re.sub(r"\(([^()]*)\)", repl, body)
 ref_entries = [l for l in refs_block.strip().split("\n") if l.strip() and l.strip() != "## References"]
 # ref_entries[0] is empty (leading newline) — filter empties already done
 ref_entries = [l for l in ref_entries if l.strip()]
-assert len(ref_entries) == 32, f"expected 32 refs, got {len(ref_entries)}"
+assert len(ref_entries) == 34, f"expected 34 refs, got {len(ref_entries)}"
 
 reordered = [ref_entries[i] for i in order]
 numbered = [f"{n}. {r}" for n, r in enumerate(reordered, 1)]
@@ -83,7 +83,7 @@ print("=== citation -> number mapping (order of appearance) ===")
 for n, i in enumerate(order, 1):
     s, y, s2 = REFS[i]
     print(f"  [{n}] {s}{' and '+s2 if s2 else ' et al.'}, {y}")
-print(f"\nTotal unique refs cited: {len(order)} / 32")
-uncited = [i for i in range(32) if i not in order]
+print(f"\nTotal unique refs cited: {len(order)} / {len(REFS)}")
+uncited = [i for i in range(len(REFS)) if i not in order]
 print(f"Uncited refs: {uncited}")
 print(f"Wrote {DST}")

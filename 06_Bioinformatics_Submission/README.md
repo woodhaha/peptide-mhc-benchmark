@@ -1,6 +1,6 @@
 # Submission Package — PLOS Computational Biology
 
-Single manuscript: **"Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking"**.
+Single manuscript: **"Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction"**.
 
 ## Final deliverables
 
@@ -45,4 +45,4 @@ Single manuscript: **"Label-Fidelity Decomposition Distinguishes Label-Definitio
 
 ## 投稿清单
 
-1. **PLOS Computational Biology**：`manuscript_plos_numbered.md` + `cover_letter_plos.md` + 主稿 Fig 1–11 + `manuscript_data_package.tar.gz`
+1. **PLOS Computational Biology**：`manuscript_plos_numbered.md` + `cover_letter_plos.md` + 主稿 Fig 1–7 + `manuscript_data_package.tar.gz`

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or benchmark in your research, please cite it as below."
-title: "Label-Fidelity Decomposition Distinguishes Label-Definition Divergence from Circularity in Peptide-MHC-I Benchmarking"
+title: "Benchmark Hygiene Reveals the Non-Canonical Frontier of Peptide-MHC-I Binding Prediction"
 type: software
 authors:
   - family-names: Huang
@@ -18,7 +18,7 @@ authors:
   - family-names: Zhou
     given-names: Zhuha
 year: 2026
-abstract: "Systematic benchmark of six deep-learning architectures for peptide-MHC-I binding prediction, quantifying label-definition divergence (versus circularity) and the non-canonical binding frontier across five HLA-I alleles and a 15-allele panel."
+abstract: "Systematic benchmark of six deep-learning architectures for peptide-MHC-I binding prediction, quantifying cutpoint sensitivity (a ~4-fold calibration offset between two high-fidelity predictors that rank peptides near-identically) and the non-canonical binding frontier."
 keywords:
   - peptide-MHC
   - binding prediction
